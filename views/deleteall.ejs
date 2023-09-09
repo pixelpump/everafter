@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="UIcontainer">
+        <img class="logo" src="/images/logo_light.png">
+    <h1><span style="color:red"> VERY LAST WARNING</span></h1>
+    <h3>Clicking the button below will delete every single image that has been uploaded so far. </h3>
+    <h1>Delete All Files for User: <%= user.username %></h1>
+    <form action="/deleteall" method="post">
+      <input type="submit" value="OK, Delete All Files... FOREVER!" class="w3-button w3-red w3-round">
+    </form>
+</div>
+</body>
+</html>

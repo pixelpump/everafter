@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Everafter Public Upload</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+
+         
+.mainImage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+        #imageFeed {
+        overflow: hidden;
+        position: fixed;
+        bottom: 22px;
+        left: 0;
+        width: 100%;
+        max-height: 209px;
+        
+        z-index: 2; /* This will make it float on top of the mainImage */
+        opacity:70%;
+        
+        }
+
+        #mainImage1 {
+    opacity: 1;
+}
+
+.refresh {
+    position: absolute;
+        top: 0px;
+        right: 0px;
+        opacity: .2;
+        z-index: 999;
+        max-width: 25%;
+}
+
+.closeslides {
+    position: absolute;
+        bottom: 200px;
+        right: 0px;
+        opacity: .2;
+        z-index: 999;
+        max-width: 25%;
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="refresh"> <a href="javascript:window.location.href=window.location.href"><img src="/images/refresh.png" class="" alt="refresh button" /></a> </div>
+
+
+
+     <!-- <h1>Live Feed for User: <%= userId %></h1> -->
+    <div id="mainImage1" class="mainImage"></div>
+    <div id="mainImage2" class="mainImage"></div>
+    <div id="imageFeed">
+    <!-- Thumbnails will be appended here -->
+</div>
+
+
+<div class="closeslides"> 
+    <a href="javascript:void(0);" onclick="toggleImageFeed()">
+      <img src="/images/close.png" class="" alt="close button" />
+    </a> 
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+const userId = "<%= userId %>"; // Make sure this line is at the top of your script
+
+// Your existing JavaScript code
+let currentImageIndex = 0;
+let imageArray = [];
+let currentMainImage = 1; // Start with mainImage1
+
+function fetchLatestImages() {
+    fetch(`/get-public-latest-images/${userId}`)
+    .then(response => response.json())
+    .then(data => {
+        imageFeed.innerHTML = '';  // Clear existing thumbnails
+        imageArray = data.files;  // Update the image array
+
+        data.files.forEach(file => {
+            const img = document.createElement('img');
+            img.src = `/eauploads/${userId}/${file}`;
+            img.width = 150;
+            img.style.padding = '10px';
+            imageFeed.appendChild(img);
+        });
+
+        updateMainImage();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function updateMainImage() {
+    if (imageArray.length > 0) {
+        const mainImage = document.getElementById(`mainImage${currentMainImage}`);
+        mainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
+        mainImage.style.opacity = 1;
+
+        // Switch to the other main image div for the next update
+        const otherMainImage = document.getElementById(`mainImage${currentMainImage === 1 ? 2 : 1}`);
+        otherMainImage.style.opacity = 0;
+
+        currentMainImage = currentMainImage === 1 ? 2 : 1;
+        currentImageIndex = (currentImageIndex + 1) % imageArray.length;
+    }
+}
+
+function toggleImageFeed() {
+  const imageFeed = document.getElementById('imageFeed');
+  if (imageFeed.style.display === 'none') {
+    imageFeed.style.display = 'block';
+  } else {
+    imageFeed.style.display = 'none';
+  }
+}
+
+// Fetch latest images every 5 seconds
+setInterval(fetchLatestImages, 5000);
+
+    </script>
+</body>
+</html>

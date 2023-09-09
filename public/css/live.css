@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    overflow: hidden; /* Hide scrollbars */
+}
+
+body::-webkit-scrollbar{
+    display: none;
+  }
+
+#image-container {
+    padding-top: 1vh;
+}
+
+.image-item {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.image-item img {
+    max-width: 100%; /* Make sure images don't exceed their container */
+    height: 1410px;
+    /* height: auto;  Allow images to scale proportionally */
+}
+
+#logo-container img {
+    position: absolute;
+    right: 16px; /* Adjust the position */
+    bottom: 16px; /* Adjust the position */
+    opacity: 0.2;
+    max-width: 120px; /* Adjust the size for better mobile scaling */
+}
+
+/* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+@media (max-width: 668px) {
+    .image-item img {
+     height: auto; /* Allow images to scale proportionally */
+    }
+
+}
+
+@media (min-height: 900px) {
+    .image-item img {
+        height: 860px;
+    }
+}
+
+
+
+@media (min-height: 1080px) {
+    .image-item img {
+        height: 1040px;
+    }
+}
+
+@media (min-height: 1440px) {
+    .image-item img {
+        height: 1410px;
+    }
+}
+
+@media (min-height: 1600px) {
+    .image-item img {
+        height: 1560px;
+    }
+}
+
+@media (min-height: 2160px) {
+    .image-item img {
+        height: 2120px;
+    }
+}
+
+@media (min-height: 2880px) {
+    .image-item img {
+        height: 2840px;
+    }
+}
+
+@media (min-height: 4320px) {
+    .image-item img {
+        height: 4280px;
+    }
+}
+
+
+
+  
+#logo-container img {
+    position: absolute;
+    right: 16px; /* Adjust the position */
+    bottom: 16px; /* Adjust the position */
+    opacity: 0.2;
+    max-width: 120px; /* Adjust the size for better mobile scaling */
+}

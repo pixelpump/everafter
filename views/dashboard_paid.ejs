@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Paid</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <!-- Include header -->
+  <%- include('partials/header') %>
+
+    <div class="UIcontainer">
+        <img class="logo" src="/images/logo_light.png">
+    <h4>Welcome, <%= user.username %> </h4>
+
+    <% if (locals.success) { %>
+        <p class="success-message"><%= success %></p>
+    <% } %>
+
+    
+    <div><a href="/public-upload/<%= user.username %>"> <p class="w3-button w3-dark-grey w3-round">Start Uploading Images <span class="tinybuttontext"><br> (because uploading isn't just for geusts)</span></p></a></div>
+    <br>
+    <div><a href="/livefeed/<%= user.username %>"> <p class="w3-button w3-dark-grey w3-round">View the Live Feed <span class="tinybuttontext"><br> (this is what you send to the big screen)</span></p></a></div>
+    
+    
+    <br>
+
+    <!-- Trigger/Open the QR Modal -->
+<button onclick="document.getElementById('id01').style.display='block'"
+class="w3-button w3-dark-grey w3-round">QR Code <span class="tinybuttontext"><br> (for easy sharing the upload link with your guests)</span></button>
+
+<!-- The QR Modal -->
+<div id="id01" class="w3-modal">
+  <div class="w3-modal-content">
+    <div class="w3-container">
+      <span onclick="document.getElementById('id01').style.display='none'"
+      class="w3-button w3-display-topright">&times;</span>
+      <a href="<%= qrCodeDataURL %>" download><img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="w3-image"></a>
+      <p>This is a QR code that you can use to share with event guests to allow them to upload images. They can point their phone's
+         camera at it and then click on the link it generates. It's much easier than typing it in to a web browser.
+        If you click (or tap) on it it will download to your device so you can print it, or even upload it to the live feed so all your
+         guests can see it and start uploading pictures for you.</p>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+    <!-- Trigger/Open the Help Modal -->
+    <button onclick="document.getElementById('id02').style.display='block'"
+    class="w3-button w3-dark-grey w3-round">Help!</button>
+    
+    <!-- The help Modal -->
+    <div id="id02" class="w3-modal">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="document.getElementById('id02').style.display='none'"
+          class="w3-button w3-display-topright">&times;</span>
+          
+          <p>This is the Help modal... fill it up with helpful.</p>
+          
+          <p>WARNING: You can delete all your images by pressing the button below. And by delete, we mean gone forever,
+             so please be careful and be sure that's what you really want to do. This is usefull for testing when
+              you are getting set up. The idea is that you can upload a few tests just to be sure everything is
+               working the way you'd like it to, then when you're done, delete all images and start fresh.<br>
+
+               <a href="/deleteall"<p class="w3-button w3-red w3-round">DELETE ALL IMAGES</a> </p>
+               
+          
+        </div>
+      </div>
+    </div>
+
+
+  
+</div>
+
+<script>
+    // Get the modals
+    var modal1 = document.getElementById('id01');
+    var modal2 = document.getElementById('id02');
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal1) {
+        modal1.style.display = "none";
+      }
+      if (event.target == modal2) {
+        modal2.style.display = "none";
+      }
+    }
+</script>
+  <!-- Include footer -->
+  <%- include('partials/footer') %>
+</body>
+</html>

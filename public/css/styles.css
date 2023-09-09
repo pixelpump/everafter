@@ -1,0 +1,402 @@
+/* Add your CSS styles here xxx */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+.menu {
+  color: #b5b5b5;
+}
+
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  }
+  
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #b5b5b5;
+}
+
+.UIcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding-top: 12vh;
+  background-color: #000;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: #b5b5b5;
+}
+
+.payment-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgb(238, 238, 238);
+  font-size: 1.2em;
+  padding: 6em 4em 5em;
+}
+.tinybuttontext {
+  font-size: .7em;
+}
+
+.main_nav {
+color: #b5b5b5;
+}
+.EAfooter {
+  color: #b5b5b5;
+  }
+
+.qrcodecontainer {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}  
+
+.heroexplainer {
+
+  justify-content: center;
+  max-width: 50vw;
+
+}
+.centered {
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+.uploadpageimage {
+
+    max-width: 130px;
+    max-height: 130px;
+    margin: 10px;
+
+}
+
+.livecontainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+
+h2 {
+    margin-top: 0;
+    color:#56513d;
+    font-size: 33px;
+    text-transform: uppercase;
+
+}
+
+.subtitle {
+    margin-top: 0;
+    color:#b5b5b5;
+    font-size: 15px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+
+}
+
+.logo_top {
+
+  max-width: 32vw;
+}
+
+.title {
+  margin-top: 0;
+  color:#b5b5b5;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+
+}
+
+.buttonmock{
+  background-color:#b5b5b5;
+  color:#ffffff;
+  padding: 6px;
+}
+
+.hints {
+  margin-top: 0;
+  color:#b5b5b5;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.everything {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 55vw;
+ 
+
+}
+
+#uploadButton {
+    background-color: #b5b5b5;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+ 
+}
+#uploadButton:hover {
+    background-color: #808080;
+}
+#uploadStatus {
+    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 33px;
+    letter-spacing: 1.2px;
+    word-spacing: 1px;
+    color: #b5b5b5;
+    font-weight: 400;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: uppercase;
+
+}
+
+.instructions {
+    
+    padding-top:100px;
+    padding-bottom:20px;
+    padding: 30;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    letter-spacing: 1.2px;
+    word-spacing: 1px;
+    color: #b5b5b5;
+    font-weight: 300;
+
+}
+#thumbnails
+{
+padding: 5px;
+
+}
+
+#uploadedImages {
+    margin-top: 20px;
+}
+.image {
+    display: inline-block;
+    margin: 10px;
+}
+.image img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.imagefilename {
+	color:silver;
+}
+
+.uploadedimage img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;    
+
+}
+
+/* Media query for mobile screens */
+@media (max-width: 600px) {
+    .container {
+        padding-top: 10vh;
+    }
+
+    .UIcontainer {
+      padding-top: 10vh;
+  }
+
+    .uploadpageimage {
+        max-width: 100%;
+    }
+
+    /* Increase font sizes for better readability on mobile */
+    h2 {
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    #uploadButton {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #000000;
+    }
+
+    #uploadStatus {
+        font-size: 18px;
+    }
+
+    /* Add more font size adjustments as needed */
+
+   
+}
+
+.modaltext {
+
+  color: #2b2b2b;
+
+}
+
+/* loader animation */
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 165px;
+  height: 80px;
+  padding: 40px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(176, 21, 21);
+  margin: -4px 0 0 -4px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+/* ADMIN SECTION */
+
+.adminlogo {
+  max-width: 200px;
+}
+
+.downloadbutt {
+  background-color: #b5b5b5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+
+}
+#downloadbutt:hover {
+  background-color: #b5b5b5;
+}
+
+.look {
+  max-width: 66px;
+}
+
+.nowlive {
+  color:rgb(167, 1, 1);
+}

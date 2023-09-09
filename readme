@@ -1,0 +1,7 @@
+first run the server
+
+node server.js
+
+then run the webserver
+
+http-server --cors

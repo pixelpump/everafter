@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Everafter Public Upload</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="/images/logo_light.png">
+        <h4>Upload Files</h4>
+        <form id='uploadForm' action='/public-upload/<%= userId %>/submit' method='post' enctype="multipart/form-data">
+            <input type="file" id="sampleFile" name="sampleFile" multiple />
+            <!-- Removed the submit button -->
+        </form>
+        <br>
+        <br>
+        <div id="thumbnails">
+            <!-- Thumbnails will appear here -->
+        </div>
+        <br>
+        <div id="successMessage" style="display:none;">
+            Thanks for the pics :) You're awesome!
+        </div>
+        <br><br>
+        <a href="/livefeed/<%= userId %>" class="w3-button w3-dark-grey w3-round">WATCH LIVE FEED</a> 
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadForm = document.getElementById('uploadForm');
+            const successMessage = document.getElementById('successMessage');
+            const thumbnails = document.getElementById('thumbnails');
+    
+            // Make sure userId is defined
+            const userId = "<%= typeof userId !== 'undefined' ? userId : '' %>";
+            if (!userId) {
+                console.error('userId is not defined');
+                return;
+            }
+    
+            uploadForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const formData = new FormData(uploadForm);
+    
+                fetch(`/public-upload/${userId}/submit`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Show the success message
+                    successMessage.style.display = 'block';
+    
+                    // Clear previous thumbnails
+                    thumbnails.innerHTML = '';
+    
+                   // Show thumbnails for uploaded images
+                    data.files.forEach(file => {
+                        const img = document.createElement('img');
+                        img.src = file.path;  // Using file.path directly
+                        img.width = 150;
+                        img.style.padding = '5px';  // Add padding of 10 pixels
+                        thumbnails.appendChild(img);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Get the file input element
+            const fileInput = document.getElementById('sampleFile');
+
+            // Listen for changes to the file input element
+            fileInput.addEventListener('change', function() {
+                // Trigger the form submit
+                uploadForm.dispatchEvent(new Event('submit'));
+            });
+        });
+    </script>
+</body>
+</html>
