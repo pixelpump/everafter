@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Everafter Public Upload</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/w3.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+ <%- include('partials/header.ejs') %>
+
+ 
 <body>
-    <div class="container">
-        <img class="logo" src="/images/logo_light.png">
+
+
+
+    <div class="maincontainer">
+        
+        <a href="../"><img class="logo" src="https://everafter.pics/images/ea_large_logo_full_blk.png"></a>
+
+
+
+
         <h4>Upload Files</h4>
         <form id='uploadForm' action='/public-upload/<%= userId %>/submit' method='post' enctype="multipart/form-data">
             <input type="file" id="sampleFile" name="sampleFile" multiple />
@@ -27,6 +29,24 @@
         <br><br>
         <a href="/livefeed/<%= userId %>" class="w3-button w3-dark-grey w3-round">WATCH LIVE FEED</a> 
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

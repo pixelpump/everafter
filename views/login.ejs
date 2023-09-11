@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/w3.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+<%- include('partials/header.ejs') %>
 <body>
-    <div class="UIcontainer">
-        <img class="logo" src="/images/logo_light.png">
+    <div class="maincontainer">
+    
+        
+         <a href="./"><img class="logo" src="https://everafter.pics/images/ea_large_logo_full_blk.png"></a>
+        
+          
+          
+
     <h1>Login</h1>
     <% if (locals.error) { %>
         <p class="error-message"><%= error %></p>
@@ -17,13 +15,14 @@
     
     <form action="/login" method="post">
         <label for="username">Username:</label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" required class="form-style">
         <br>
         <label for="password">Password:</label>
-        <input type="password" name="password" required autocomplete="on">
+        <input type="password" name="password" required autocomplete="on"class="form-style">
         <br>
-        <input type="submit" value="Login">
+        <input type="submit" value="Login"class="login">
     </form>
 </div>
+</section>
 </body>
 </html>

@@ -11,10 +11,11 @@ const flash = require('connect-flash');
 const fs = require('fs');
 const path = require('path');
 const QRCode = require('qrcode');
-
-
 const app = express();
 const multer = require('multer');
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET; // Load from environment variable
+
+
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -95,7 +96,7 @@ app.use((req, res, next) => {
 //});
 
 // Connect to MongoDB 
-console.log(process.env.MONGODB_URI);
+// console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // User model Schema for MongoDB
@@ -242,7 +243,9 @@ app.get('/upload', (req, res) => {
  //   res.render('dashboard_paid', { user: req.user, username: req.user.username });
 //});
 
-
+app.get('/signuplogin', (req, res) => {
+    res.render('signuplogin'); 
+});
   
 
 app.get('/signup', (req, res) => {
@@ -255,7 +258,14 @@ app.post('/signup', (req, res) => {
     User.register(new User({ username: username, email: email }), password, (err, user) => {
         if (err) {
             console.error("Registration error:", err);
-            req.flash('error', err.message);
+    
+            // Check for MongoDB duplicate key error
+            if (err.name === 'MongoError' && err.code === E11000) {
+                req.flash('error', 'Email already registered.');
+            } else {
+                req.flash('error', err.message);
+            }
+    
             return res.redirect('/signup');
         }
         passport.authenticate('local', (err, user, info) => {
@@ -283,36 +293,79 @@ app.post('/signup', (req, res) => {
     });
 });
 
-app.post('/charge', async (req, res) => {
-    const amount = 3500; // e.g., $35.00
 
+
+// STRIPE?  //
+
+
+const calculateOrderAmount = (items) => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
+
+app.post("/create-payment-intent", async (req, res) => {
     try {
-        const customer = await stripe.customers.create({
-            email: req.body.stripeEmail,
-            source: req.body.stripeToken
+        const { items } = req.body;
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: calculateOrderAmount(items),
+            currency: "cad",
+            metadata: { userId: req.user._id.toString() },
+            automatic_payment_methods: {
+                enabled: true,
+            },
         });
-
-        const charge = await stripe.charges.create({
-            amount,
-            description: 'Sample Charge',
-            currency: 'usd',
-            customer: customer.id
+        res.send({
+            clientSecret: paymentIntent.client_secret,
         });
-
-        // Payment was successful, update the user's hasPaid attribute
-        const updatedUser = await User.findByIdAndUpdate(req.user._id, { hasPaid: true }, { new: true });
-
-        // Continue with whatever you want to do next, e.g., redirecting the user
-        res.redirect('/dashboard_paid');
-
-    } catch (err) {
-        console.error("Error:", err);
-        res.status(500).send(err.message);
+    } catch (error) {
+        console.error("Error creating payment intent:", error);
+        res.status(500).send({ error: "An error occurred while creating the payment intent." });
     }
+});
+  
+
+
+
+
+app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+    const sig = request.headers['stripe-signature'];
+    let event;
+  
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  
+    // Handle the event
+    switch (event.type) {
+        case 'payment_intent.succeeded':
+            const paymentIntent = event.data.object;
+            const userId = paymentIntent.metadata.userId;
+          
+            User.findByIdAndUpdate(userId, { hasPaid: true }, { new: true }, (err, user) => {
+              if (err) {
+                console.error("Error updating user:", err);
+                // Handle error
+              } else {
+                console.log("User payment status updated:", user);
+                // Handle successful update
+              }
+            });
+            break;
+        // ... (other cases if needed)
+        default:
+            console.log(`Unhandled event type ${event.type}`);
+    }
+
+    response.status(200).send('Webhook received');  // You can send a response back to Stripe
 });
 
 
 
+// END STRIPE //
 
 app.get('/login', (req, res) => {
     res.render('login');
