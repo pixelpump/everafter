@@ -2,7 +2,7 @@
 const stripe = Stripe("pk_test_gDK5AuzzZwsU6esWDxkMR0Id");
 
 // The items the customer wants to buy
-const items = [{ id: "Everafter" }];
+const items = [{ id: "everafter" }];
 
 let elements;
 
@@ -51,7 +51,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "http://localhost:3000/checkedout.html",
+      return_url: "http://localhost/success",
       receipt_email: emailAddress,
     },
   });

@@ -36,10 +36,6 @@ const storage = multer.diskStorage({
     }
 });
 
-
-
-
-  
   const upload = multer({ 
     storage: storage,
     fileFilter: function (req, file, cb) {
@@ -53,15 +49,8 @@ const storage = multer.diskStorage({
     }
   });
 
-
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
-
 
 
 // Session middleware should come before the flash middleware
@@ -301,36 +290,55 @@ app.post('/signup', (req, res) => {
 });
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
+//
+//    #####  ####### ######  ### ######  ####### 
+//   #     #    #    #     #  #  #     # #       
+//   #          #    #     #  #  #     # #       
+//    #####     #    ######   #  ######  #####   
+//         #    #    #   #    #  #       #       
+//   #     #    #    #    #   #  #       #       
+//    #####     #    #     # ### #       ####### 
+//
+///////////////////////////////////////////////////////////////////////////////////////////
 
-// STRIPE?  //
 
+
+
+app.use(express.static("public"));
+
+app.use(express.json());
+
+///////////////////////  STRIPE CHECKOUT  /////////////////////////////////////////////////
 
 const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount  PRICE!! THISIS THE PRICE!!
+  // Replace this constant with a calculation of the order's amount
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  return 3900;
+  return 1400;
 };
 
-app.post('/create-checkout-session', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-          price: 'price_1NoyUZJfkR1FcZoksQznYJu4',
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: `${YOUR_DOMAIN}/success`,
-      cancel_url: `${YOUR_DOMAIN}/cancel`,
-    });
-  
-    res.redirect(303, session.url);
-  });
-  //////////////////////////////////////////////////////////////
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
 
-  ////////////////////NEW CODE FROM STRIPE
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "cad",
+    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
+
+ 
+
+  ////////////////////  STRIPE WEBHOOK  //////////////////////////////////
 
   app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
     const sig = request.headers['stripe-signature'];
@@ -369,29 +377,20 @@ app.post('/create-checkout-session', async (req, res) => {
   });
 
 
-/////////////////////////////////////////////////////////////////
+
+/////////////////////////// END STRIPE //////////////////////////////
 
 
+//   ### ##    ## ##   ##  ###  #### ##  ### ###   ## ##   
+//    ##  ##  ##   ##  ##   ##  # ## ##   ##  ##  ##   ##  
+//    ##  ##  ##   ##  ##   ##    ##      ##      ####     
+//    ## ##   ##   ##  ##   ##    ##      ## ##    #####   
+//    ## ##   ##   ##  ##   ##    ##      ##          ###  
+//    ##  ##  ##   ##  ##   ##    ##      ##  ##  ##   ##  
+//   #### ##   ## ##    ## ##    ####    ### ###   ## ##   
+                                                      
 
-  
-
-
-
-// END STRIPE //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///////////////////////////////////////////////////////////////////////
 
 
 
@@ -444,6 +443,35 @@ app.get('/deleteall', (req, res) => {
     res.render('deleteall', { user: req.user });
 });
 
+  // Public live feed route
+  app.get('/livefeed/:userId', async (req, res) => {
+    const userId = req.params.userId;
+
+    // You may want to check if this userId corresponds to a paid user
+    // For now, let's assume it does and render the live feed
+    res.render('livefeed', { userId });
+});
+
+
+
+
+app.get('/payment', (req, res) => {
+    res.render('payment'); // This should be your payment.ejs 
+});
+
+//app.get('/checkout', (req, res) => {
+//    res.render('checkout'); // This should be your checkout.ejs 
+//});
+
+app.get('/checkout', (req, res) => {
+    res.render('checkout', { user: req.user });
+});
+
+
+app.get('/success', (req, res) => {
+    res.render('success'); // This should be your checkout success page
+});
+
 
 
 
@@ -484,6 +512,20 @@ app.post('/deleteall', (req, res) => {
 //    res.render('dashboard_paid', { user: req.user });
 // });
 
+////////////////////////////////////////////////////////////////////////////////////////
+//
+//    ### ###  ##  ###  ###  ##   ## ##   #### ##    ####    ## ##   ###  ##   ## ##   
+//     ##  ##  ##   ##    ## ##  ##   ##  # ## ##     ##    ##   ##    ## ##  ##   ##  
+//     ##      ##   ##   # ## #  ##         ##        ##    ##   ##   # ## #  ####     
+//     ## ##   ##   ##   ## ##   ##         ##        ##    ##   ##   ## ##    #####   
+//     ##      ##   ##   ##  ##  ##         ##        ##    ##   ##   ##  ##      ###  
+//     ##      ##   ##   ##  ##  ##   ##    ##        ##    ##   ##   ##  ##  ##   ##  
+//    ####      ## ##   ###  ##   ## ##    ####      ####    ## ##   ###  ##   ## ##   
+//
+/////////////////////////////////////////////////////////////////////////////////////////
+                                                                                 
+
+
 
 function ensurePaid(req, res, next) {
     if (req.isAuthenticated() && req.user.hasPaid) {
@@ -517,34 +559,6 @@ function createDirectoryForUser(req, res, next) {
     next();
   }
 
-  // Public live feed route
-app.get('/livefeed/:userId', async (req, res) => {
-    const userId = req.params.userId;
-
-    // You may want to check if this userId corresponds to a paid user
-    // For now, let's assume it does and render the live feed
-    res.render('livefeed', { userId });
-});
-
-
-
-
-app.get('/payment', (req, res) => {
-    res.render('payment'); // This should be your payment.ejs 
-});
-
-//app.get('/checkout', (req, res) => {
-//    res.render('checkout'); // This should be your checkout.ejs 
-//});
-
-app.get('/checkout', (req, res) => {
-    res.render('checkout', { user: req.user });
-});
-
-
-app.get('/success', (req, res) => {
-    res.render('success'); // This should be your checkout success page
-});
 
 
 app.listen(80, () => {
