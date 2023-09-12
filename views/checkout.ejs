@@ -20,28 +20,31 @@
     
     <div class="maincontainer">
         
-        <a href="./"><img class="logo" src="https://everafter.pics/images/ea_large_logo_full_blk.png"></a>
+        <a href="./"><img class="productimage" src="/images/ea_large_logo_full_blk.png"></a>
     <h1>Everafter Payment</h1>
-    <p class="signup_info">Please enter your credit card information below and then click "Submit Payment" to purchase Everafter for one event.</p>
 
 
 
 
- <!-- Display a payment form -->
- <form id="payment-form">
-    <div id="link-authentication-element">
-      <!--Stripe.js injects the Link Authentication Element-->
-    </div>
-    <div id="payment-element">
-      <!--Stripe.js injects the Payment Element-->
-    </div>
-    <button id="submit">
-      <div class="spinner hidden" id="spinner"></div>
-      <span id="button-text">Pay now</span>
-    </button>
-    <div id="payment-message" class="hidden"></div>
-  </form>
+    <section>
+      <div class="product">
+        <img class= "productimage" src="/images/ea_logo_small_nosubheader_blk.png" alt="Everafter Image logo" />
+        <div class="description">
+          <h3>One Everafter Event</h3>
+          <h5>$35.00 USD</h5>
+        </div>
+      </div>
+      <form action="/create-checkout-session" method="POST">
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form>
+    </section>
 
+
+    <p class="signup_info">Please enter your credit card information below and then click "Pay Now" to purchase Everafter for one event.</p>
+
+
+
+  <div id="messages" role="alert" style="display: none;"></div>
   <br>
 
 <div class="checkout_notes">Already paid? No worries, you might just have to <a href="/login"> login again.</a></div>

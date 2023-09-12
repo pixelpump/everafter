@@ -1,12 +1,14 @@
 require('dotenv').config();
 const express = require('express');
+const https = require('https');
+const port = 3000;
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose');
 const session = require('express-session');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const cors = require('cors');
+
 const flash = require('connect-flash');
 const fs = require('fs');
 const path = require('path');
@@ -15,7 +17,7 @@ const app = express();
 const multer = require('multer');
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET; // Load from environment variable
 
-
+const YOUR_DOMAIN = 'http://everafter.pics';
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -52,12 +54,15 @@ const storage = multer.diskStorage({
   });
 
 
-app.use(cors({
-    origin: 'http://127.0.0.1:8081',
-    credentials: true
-}));
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+
+
+
 
 // Session middleware should come before the flash middleware
 app.use(session({
@@ -95,8 +100,10 @@ app.use((req, res, next) => {
 //    res.render('dashboard_paid', { user: req.user });
 //});
 
+
+
 // Connect to MongoDB 
-// console.log(process.env.MONGODB_URI);
+ console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // User model Schema for MongoDB
@@ -299,51 +306,49 @@ app.post('/signup', (req, res) => {
 
 
 const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
+  // Replace this constant with a calculation of the order's amount  PRICE!! THISIS THE PRICE!!
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  return 1400;
+  return 3900;
 };
 
-app.post("/create-payment-intent", async (req, res) => {
-    try {
-        const { items } = req.body;
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: calculateOrderAmount(items),
-            currency: "cad",
-            metadata: { userId: req.user._id.toString() },
-            automatic_payment_methods: {
-                enabled: true,
-            },
-        });
-        res.send({
-            clientSecret: paymentIntent.client_secret,
-        });
-    } catch (error) {
-        console.error("Error creating payment intent:", error);
-        res.status(500).send({ error: "An error occurred while creating the payment intent." });
-    }
-});
+app.post('/create-checkout-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+          price: 'price_1NoyUZJfkR1FcZoksQznYJu4',
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${YOUR_DOMAIN}/success`,
+      cancel_url: `${YOUR_DOMAIN}/cancel`,
+    });
   
+    res.redirect(303, session.url);
+  });
+  //////////////////////////////////////////////////////////////
 
+  ////////////////////NEW CODE FROM STRIPE
 
-
-
-app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+  app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
     const sig = request.headers['stripe-signature'];
+  
     let event;
   
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
     } catch (err) {
-      return response.status(400).send(`Webhook Error: ${err.message}`);
+      response.status(400).send(`Webhook Error: ${err.message}`);
+      return;
     }
   
     // Handle the event
     switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            const userId = paymentIntent.metadata.userId;
+      case 'payment_intent.succeeded':
+        const paymentIntentSucceeded = event.data.object;
+        const userId = paymentIntent.metadata.userId;
           
             User.findByIdAndUpdate(userId, { hasPaid: true }, { new: true }, (err, user) => {
               if (err) {
@@ -355,17 +360,40 @@ app.post('/webhook', express.raw({type: 'application/json'}), (request, response
               }
             });
             break;
-        // ... (other cases if needed)
-        default:
-            console.log(`Unhandled event type ${event.type}`);
+      default:
+        console.log(`Unhandled event type ${event.type}`);
     }
+  
+    // Return a 200 response to acknowledge receipt of the event
+    response.send();
+  });
 
-    response.status(200).send('Webhook received');  // You can send a response back to Stripe
-});
+
+/////////////////////////////////////////////////////////////////
+
+
+
+  
 
 
 
 // END STRIPE //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -415,6 +443,11 @@ app.get('/deleteall', (req, res) => {
     }
     res.render('deleteall', { user: req.user });
 });
+
+
+
+
+
 
 app.post('/deleteall', (req, res) => {
     if (!req.isAuthenticated()) {
@@ -512,6 +545,8 @@ app.get('/checkout', (req, res) => {
 app.get('/success', (req, res) => {
     res.render('success'); // This should be your checkout success page
 });
-app.listen(3000, () => {
-    console.log('Server started on http://localhost:3000');
+
+
+app.listen(80, () => {
+    console.log('Server started on http://localhost:80');
 });
