@@ -2,72 +2,22 @@
 <html>
 <head>
     <title>Everafter Public Upload</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/live.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/w3.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
-body{
-background-color: rgb(26, 27, 27);
-
-}
-         
-.mainImage {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: opacity 1s ease-in-out;
-    z-index: 1;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-        #imageFeed {
-        overflow: hidden;
-        position: fixed;
-        bottom: 22px;
-        left: 0;
-        width: 100%;
-        max-height: 209px;
-        
-        z-index: 2; /* This will make it float on top of the mainImage */
-        opacity:70%;
-        
-        }
-
-        #mainImage1 {
-    opacity: 1;
-}
-
-.refresh {
-    position: absolute;
-        top: 0px;
-        right: 0px;
-        opacity: .2;
-        z-index: 999;
-        max-width: 25%;
-}
-
-.closeslides {
-    position: absolute;
-        bottom: 200px;
-        right: 0px;
-        opacity: .2;
-        z-index: 999;
-        max-width: 25%;
-}
-
 
     </style>
 </head>
-<body>
+<body> 
+
+
 
 <div class="refresh"> <a href="javascript:window.location.href=window.location.href"><img src="/images/refresh.png" class="" alt="refresh button" /></a> </div>
+
+<a href="#menu" id="toggle"><span>sfsfdsd</span></a>
 
 
 
@@ -157,6 +107,14 @@ function toggleImageFeed() {
 
 // Fetch latest images every 5 seconds
 setInterval(fetchLatestImages, 5000);
+
+
+
+
+
+
+
+
 
     </script>
 </body>

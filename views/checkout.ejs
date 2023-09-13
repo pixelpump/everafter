@@ -63,7 +63,7 @@ form {
 
 /* Buttons and links */
 button {
-  background: #5469d4;
+  background: #a70101;
   font-family: Arial, sans-serif;
   color: #ffffff;
   border-radius: 4px;
@@ -162,6 +162,23 @@ button:disabled {
   }
 }
 
+.chkdescription{
+
+  padding-top: 12px;
+  text-align: center;
+}
+.stripepowered {
+  width: 30vw;
+    min-width: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  .stripepowered {
+    width: 50vw;
+    min-width: 300px;
+  }
+}
+
 </style>
 <body>
     
@@ -175,10 +192,11 @@ button:disabled {
 
     <section>
       <div class="product">
-        <img class= "productimage" src="/images/ea_logo_small_nosubheader_blk.png" alt="Everafter Image logo" />
-        <div class="description">
+        <img class= "productimage" src="/images/one_ticket.png" alt="Everafter Image logo" />
+        <div class="chkdescription">
           <h3>One Everafter Event</h3>
           <h5>$35.00 USD</h5>
+          <img class= "stripepowered" src="/images/stripepowered.png" alt="Stripe logo" />
         </div>
       </div>
       <!-- Display a payment form -->
