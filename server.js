@@ -534,7 +534,7 @@ app.get('/deleteall', (req, res) => {
 });
 
   // Public live feed route
-  app.get('/livefeed/:userId', async (req, res) => {
+  app.get('/livefeed_public/:userId', async (req, res) => {
     const userId = req.params.userId;
 
     // You may want to check if this userId corresponds to a paid user

@@ -30,7 +30,19 @@ aPdxP$^3R!9rPKc
 fH6J5f_jwv+XFA6a
 
 
-pm2 start hello.js
+pm2 start server.js
+
+$ pm2 restart app_name
+$ pm2 reload app_name
+$ pm2 stop app_name
+$ pm2 delete app_name
+
+pm2 logs
+
+pm2 [list|ls|status]
+
+pm2 monit
+
 as per https://pm2.keymetrics.io/docs/usage/quick-start/
 
 
