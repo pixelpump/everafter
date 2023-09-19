@@ -533,13 +533,16 @@ app.get('/deleteall', (req, res) => {
     res.render('deleteall', { user: req.user });
 });
 
-  // Public live feed route
+  // Public live feed route without image moderation
   app.get('/livefeed_public/:userId', async (req, res) => {
     const userId = req.params.userId;
+    res.render('livefeed_public', { userId });
+});
 
-    // You may want to check if this userId corresponds to a paid user
-    // For now, let's assume it does and render the live feed
-    res.render('livefeed', { userId });
+// Registered User live feed route
+app.get('/livefeed/:userId', ensureAuthenticated, async (req, res) => {
+  const userId = req.params.userId;
+  res.render('livefeed', { userId });
 });
 
 
@@ -590,7 +593,7 @@ app.post('/deleteall', (req, res) => {
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //
 //    ### ###  ##  ###  ###  ##   ## ##   #### ##    ####    ## ##   ###  ##   ## ##   
 //     ##  ##  ##   ##    ## ##  ##   ##  # ## ##     ##    ##   ##    ## ##  ##   ##  
@@ -600,7 +603,16 @@ app.post('/deleteall', (req, res) => {
 //     ##      ##   ##   ##  ##  ##   ##    ##        ##    ##   ##   ##  ##  ##   ##  
 //    ####      ## ##   ###  ##   ## ##    ####      ####    ## ##   ###  ##   ## ##   
 //
-/////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////// 
+
+// send public to public livefeed
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+      return next();
+  }
+  // Redirect to the public live feed with the same userId if not authenticated
+  res.redirect(`/livefeed_public/${req.params.userId}`);
+}
                                                                                  
 // Function to delete files in a directory
 const deleteFilesInDir = (dirPath) => {
