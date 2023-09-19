@@ -2,23 +2,17 @@
 
 
 <body>
-
-    
-
         <div class="maincontainer">
         
             <a href="./"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
         
-          
-          
-    
-
      <!-- Display error message if it exists -->
      <% if (locals.error) { %>
         <p class="error-message"><%= error %></p>
     <% } %>
-    <span class="pagetitle">Signup</span>
-    <p class="signup_info">Note: The signup name you choose will determine the URL (web link) that users will send files to. So make it memorable but easy to type.</p>
+
+    <!-- <span class="pagetitle">Signup</span> -->
+    <!-- <p class="textContainer">Note: The signup name you choose will determine the URL (web link) that users will send files to. So make it memorable but easy to type.</p> -->
     <form action="/signup" method="post">
         <label for="username" class="eaformlable">Username:</label>
         <input type="text" name="username" required class="form-style">
@@ -29,16 +23,20 @@
         <label for="password" class="eaformlable">Password:</label>
         <input type="password" name="password" required autocomplete="on" class="form-style">
         <br>
-        <input type="submit" value="Signup" class="login">
+        <p class="tinybuttontext">By clicking Signup you agree to Everafter's<a href="terms.html"> Terms & Coditions </a></p>
+
+
+        <br>
+        <input type="submit" value="Signup" class="eabutton">
     </form>
 
-
-    
+<br><br>
+    <p class="tinybuttontext"> Already have an account? <a href="/login">Log in here.</a> </p>
 
     </div>
 
-
-
     
 </body>
+
+
 </html>

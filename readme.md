@@ -25,13 +25,15 @@ VIDEO UPLOADS? e.g. for guests who can't attend.
 
 
 DO Root
+CanimLake1967
 aPdxP$^3R!9rPKc
 fH6J5f_jwv+XFA6a
 
 
 pm2 start hello.js
+as per https://pm2.keymetrics.io/docs/usage/quick-start/
 
 
 sudo systemctl start apache2
 sudo systemctl stop apache2
-sudo systemctl restart apache2
+sudo systemctl restart apache2ls

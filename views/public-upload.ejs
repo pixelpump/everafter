@@ -1,50 +1,40 @@
- <%- include('partials/header.ejs') %>
-
- 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Everafter Public Uploader</title>
+    <meta name="description" content="Everafter" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 <body>
-
-
 
     <div class="maincontainer">
         
         <a href="../"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
 
 
-
-
-        <h4>Upload Files</h4>
-        <form id='uploadForm' action='/public-upload/<%= userId %>/submit' method='post' enctype="multipart/form-data">
-            <input type="file" id="sampleFile" name="sampleFile" multiple />
-            <!-- Removed the submit button -->
-        </form>
-        <br>
         <br>
         <div id="thumbnails">
             <!-- Thumbnails will appear here -->
         </div>
-        <br>
         <div id="successMessage" style="display:none;">
-            Thanks for the pics :) You're awesome!
-        </div>
-        <br><br>
-        <a href="/livefeed/<%= userId %>" class="w3-button w3-dark-grey w3-round">WATCH LIVE FEED</a> 
+            Thanks! Successful Upload!
+       </div>
+<br>
+        <form id='uploadForm' action='/public-upload/<%= userId %>/submit' method='post' enctype="multipart/form-data">
+            <label for="sampleFile" class="eabutton">
+               Select an Image for Upload
+            </label>
+            <input class="eabutton" type="file" id="sampleFile" name="sampleFile" multiple style="display:none;" />
+            <br><br><p class="eabuttonsubtext">Click the button above to select an image file to upload to the big screen, and also to the host for safekeeping.</p>
+        </form>
+        <a href="/livefeed/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> 
+        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -101,6 +91,11 @@
                 uploadForm.dispatchEvent(new Event('submit'));
             });
         });
+
+      
+
+      
+
     </script>
 </body>
 </html>

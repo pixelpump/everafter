@@ -1,4 +1,24 @@
-<%- include('partials/header.ejs') %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Everafter Demo Login</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <!--<script src="/js/ea.js"></script>-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMNZYYZD42"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMNZYYZD42');
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 <body>
     <div class="maincontainer">
     
@@ -8,10 +28,10 @@
           
           
 
-    <h1>Login</h1>
+         <!--<span class="pagetitle">Demo Login</span> 
     <% if (locals.error) { %>
         <p class="error-message"><%= error %></p>
-    <% } %>
+    <% } %>-->
     
     <form action="/login" method="post">
         <label for="username">Username:</label>
@@ -20,9 +40,14 @@
         <label for="password">Password:</label>
         <input type="password" name="password" required autocomplete="on"class="form-style">
         <br>
-        <input type="submit" value="Login"class="login">
+        <input type="submit" value="Login"class="eabutton">
     </form>
+<br>
+<div class="fronttext eacenter">   
+
+    <!--<p class="tinybuttontext">If you're just here for a demo the username is <span class="demored">"demo"</span> and the password is also <span class="demored">"demo"</span></p> -->
 </div>
-</section>
+</div>
+
 </body>
 </html>

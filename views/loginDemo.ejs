@@ -1,0 +1,38 @@
+<%- include('partials/header.ejs') %>
+<body>
+    <div class="maincontainer">
+    
+        
+         <a href="./"><img class="logo" src="/images/ea_large_logo_full_blk_demo.png"></a>
+        
+          
+          
+
+        <!-- <span class="pagetitle">Demo User Login</span>
+    <% if (locals.error) { %>
+        <p class="error-message"><%= error %></p>
+    <% } %>-->
+    <div class="fronttext eacenter">
+        <p> This demo will show you exactly how Everafter works and how elegant our solution is.</p><p> Add some images to the demo feed,
+             and then be sure to click the "View the Live Feed" button. It will open a new browser tab that can then be cast to a big screen. </p>
+    <p class="">For this demonstration the username is <span class="demored">demo</span> and the password is also <span class="demored">demo</span>. Have fun, play nice :)</p>
+    <p> Please note that any images uploaded here will <span class="demored">automatically be deleted every 15 minutes</span>. 
+    </div>
+    <form action="/login" method="post">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required class="form-style">
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required autocomplete="on"class="form-style">
+        <br>
+        <input type="submit" value="Try Me!"class="demoeabutton">
+    </form>
+<br>
+<div class="fronttext eacenter">   
+<p class="tinybuttontext"> Already convinced and want an account? <a href="/signup">Sign up here.</a> </p>
+    
+</div>
+</div>
+
+</body>
+</html>

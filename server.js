@@ -15,9 +15,10 @@ const path = require('path');
 const QRCode = require('qrcode');
 const app = express();
 const multer = require('multer');
-const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET; // Load from environment variable
+const archiver = require('archiver');
+const endpointSecret = "whsec_30zsnokm0CKtRGppM20Mo8CoSPPn2N24"; // Load from environment variable
 
-const YOUR_DOMAIN = 'http://everafter.pics';
+const YOUR_DOMAIN = 'https://everafter.pics';
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -48,6 +49,61 @@ const storage = multer.diskStorage({
       cb("Error: File upload only supports the following filetypes - " + filetypes);
     }
   });
+
+ ////////////////////  STRIPE WEBHOOK  //////////////////////////////////
+
+app.post('/webhook', express.raw({type: 'application/json'}), async (request, response) => {
+  const sig = request.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  } catch (err) {
+    console.error("Error constructing event:", err);
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  console.log("Received event:", JSON.stringify(event, null, 2));
+
+  // Handle the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      const userId = paymentIntent.metadata.userId;
+  
+      if (!userId) {
+        console.error("UserId not found in metadata");
+        break;
+      }
+  
+      try {
+        const updatedUser = await User.findByIdAndUpdate(userId, { hasPaid: true }, { new: true });
+        console.log("User payment status updated:", updatedUser);
+        // Handle successful update
+      } catch (err) {
+        console.error("Error updating user:", err);
+        // Handle error
+      }
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+  
+  // Return a 200 response to acknowledge receipt of the event
+  response.send({received: true});
+});
+
+/////////////////////////// END STRIPE webhook //////////////////////////////
+
+  function ensurePaid(req, res, next) {
+    if (req.isAuthenticated() && req.user.hasPaid) {
+      return next();
+    }
+    // Redirect to a payment page or some other page if the user hasn't paid
+    res.redirect('/checkout');
+  }
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -100,7 +156,7 @@ const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     email: { type: String, unique: true, required: true },
-    hasPaid: { type: Boolean, default: false }  // Add this line
+    hasPaid: { type: Boolean, default: false }   // set default to false, use true in the beta :)
 });
 
 UserSchema.plugin(passportLocalMongoose);
@@ -126,8 +182,75 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+//image moderation
+app.delete('/eauploads/:userId/:imageName', (req, res) => {
+  const { userId, imageName } = req.params;
+
+  // Existing file path
+  const currentFilePath = path.join(__dirname, 'eauploads', userId, imageName);
+
+  // New "deleted" directory path
+  const deletedDirPath = path.join(__dirname, 'eauploads', userId, 'deleted');
+  
+  // Make sure the "deleted" directory exists
+  if (!fs.existsSync(deletedDirPath)) {
+    fs.mkdirSync(deletedDirPath, { recursive: true });
+  }
+
+  // Path to move the deleted file
+  const newFilePath = path.join(deletedDirPath, imageName);
+
+  // Move the file
+  fs.rename(currentFilePath, newFilePath, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ message: 'Failed to move file' });
+    }
+    res.status(200).send({ message: 'File moved to deleted directory' });
+  });
+});
+
 
 // Routes  
+
+///////////// ONE CLICK DOWNLOAD //////////////////////////////
+
+app.get('/download/:userId', function(req, res) {
+  const userId = req.params.userId;
+  const dir = `./eauploads/${userId}/`;
+
+  // Check if the directory exists
+  if (!fs.existsSync(dir)) {
+    res.status(404).send('User directory does not exist.');
+    return;
+  }
+
+  // Set the archive name
+  const archiveName = `user_${userId}_files.zip`;
+  
+  // Create the ZIP stream
+  const archive = archiver('zip', {
+    zlib: { level: 9 } // Sets the compression level.
+  });
+
+  // Set headers for the browser to recognize a zip file
+  res.writeHead(200, {
+    'Content-Type': 'application/zip',
+    'Content-Disposition': `attachment; filename=${archiveName}`
+  });
+
+  // Pipe the ZIP archive to the response
+  archive.pipe(res);
+
+  // Append files from a directory
+  archive.directory(dir, false);
+
+  // Finalize the archive
+  archive.finalize();
+});
+
+
+////////////// End OC Downlaod /////////////////////////////
 
 
 app.get('/dashboard_paid', ensurePaid, async (req, res) => {
@@ -146,28 +269,38 @@ app.get('/dashboard_paid', ensurePaid, async (req, res) => {
     }
 });
 
+app.get('/livefeed', ensurePaid, async (req, res) => {
+  try {
+      const qrCodeURL = `https://everafter.pics/public-upload/${req.user.username}`;
+      const options = {scale: 20,   };
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeURL, options);
+      
+
+      console.log("QR Code Data URL:", qrCodeDataURL);  // Log the data URL for debugging
+
+      res.render('dashboard_paid', { user: req.user, qrCodeDataURL: qrCodeDataURL });
+  } catch (error) {
+      console.error("Error generating QR code:", error);
+      res.render('dashboard_paid', { user: req.user });  // Fallback if QR code generation fails
+  }
+});
+
 
 
 app.get('/get-public-latest-images/:userId', (req, res) => {
-    const userId = req.params.userId;
-    const dir = `./eauploads/${userId}/`;
+  const { userId } = req.params;
+  const dirPath = path.join(__dirname, 'eauploads', userId);
 
-    fs.readdir(dir, (err, files) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Could not read directory' });
-        }
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      return res.status(500).send({ message: 'Failed to read directory' });
+    }
 
-        // Sort files by modified time
-        files = files.map(file => ({
-            name: file,
-            time: fs.statSync(path.join(dir, file)).mtime.getTime()
-        }))
-        .sort((a, b) => b.time - a.time)
-        .map(file => file.name);
-
-        res.json({ files });
-    });
+    // Filter out the "deleted" directory and any other non-image files if needed
+    const imageFiles = files.filter(file => file !== 'deleted' /* && other conditions, e.g., file extension checks */);
+    
+    res.json({ files: imageFiles });
+  });
 });
 
 
@@ -235,9 +368,7 @@ app.get('/upload', (req, res) => {
     res.render('public-upload', { userId });
   });
   
- // app.get('/dashboard_paid', ensurePaid, (req, res) => {
- //   res.render('dashboard_paid', { user: req.user, username: req.user.username });
-//});
+
 
 app.get('/signuplogin', (req, res) => {
     res.render('signuplogin'); 
@@ -324,7 +455,8 @@ app.post("/create-payment-intent", async (req, res) => {
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
     amount: calculateOrderAmount(items),
-    currency: "cad",
+    currency: "USD",
+    metadata: { userId: req.user._id.toString() },
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
       enabled: true,
@@ -338,47 +470,7 @@ app.post("/create-payment-intent", async (req, res) => {
 
  
 
-  ////////////////////  STRIPE WEBHOOK  //////////////////////////////////
 
-  app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
-    const sig = request.headers['stripe-signature'];
-  
-    let event;
-  
-    try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-    } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
-      return;
-    }
-  
-    // Handle the event
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntentSucceeded = event.data.object;
-        const userId = paymentIntent.metadata.userId;
-          
-            User.findByIdAndUpdate(userId, { hasPaid: true }, { new: true }, (err, user) => {
-              if (err) {
-                console.error("Error updating user:", err);
-                // Handle error
-              } else {
-                console.log("User payment status updated:", user);
-                // Handle successful update
-              }
-            });
-            break;
-      default:
-        console.log(`Unhandled event type ${event.type}`);
-    }
-  
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
-  });
-
-
-
-/////////////////////////// END STRIPE //////////////////////////////
 
 
 //   ### ##    ## ##   ##  ###  #### ##  ### ###   ## ##   
@@ -398,13 +490,11 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/loginDemo', (req, res) => {
+  res.render('loginDemo');
+});
 
-//app.post('/login', passport.authenticate('local', {
-//    successRedirect: '/dashboard',
-//    failureRedirect: '/login',
-//    failureFlash: 'Invalid username or password.',
-//    successFlash: 'Welcome!'
-//}));
+
 
 app.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
@@ -413,7 +503,7 @@ app.post('/login', passport.authenticate('local', {
     if (req.user.hasPaid) {
         res.redirect('/dashboard_paid');
     } else {
-        res.redirect('/dashboard');  // or any other default page for logged-in but unpaid users
+        res.redirect('/checkout');  // or any other default page for logged-in but unpaid users
     }
 });
 
@@ -455,24 +545,19 @@ app.get('/deleteall', (req, res) => {
 
 
 
-app.get('/payment', (req, res) => {
-    res.render('payment'); // This should be your payment.ejs 
-});
-
-//app.get('/checkout', (req, res) => {
-//    res.render('checkout'); // This should be your checkout.ejs 
+//app.get('/payment', (req, res) => {
+//    res.render('payment'); // This should be your payment.ejs 
 //});
+
 
 app.get('/checkout', (req, res) => {
     res.render('checkout', { user: req.user });
 });
 
-
+///STRIPE SUCCESS PAGE? ///
 app.get('/success', (req, res) => {
     res.render('success'); // This should be your checkout success page
 });
-
-
 
 
 
@@ -503,14 +588,7 @@ app.post('/deleteall', (req, res) => {
     });
   });
 
-// app.get('/dashboard_paid', (req, res) => {
-//    console.log("User object in dashboard route:", req.user);
-//    if (!req.isAuthenticated()) {
-//        console.log("User not authenticated for dashboard");
-//        return res.redirect('/login');
-//    }
-//    res.render('dashboard_paid', { user: req.user });
-// });
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -524,40 +602,34 @@ app.post('/deleteall', (req, res) => {
 //
 /////////////////////////////////////////////////////////////////////////////////////////
                                                                                  
+// Function to delete files in a directory
+const deleteFilesInDir = (dirPath) => {
+  fs.readdir(dirPath, (err, files) => {
+    if (err) throw err;
 
-
-
-function ensurePaid(req, res, next) {
-    if (req.isAuthenticated() && req.user.hasPaid) {
-        const dir = `./eauploads/${req.user.username}`;
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        return next();
-    } else {
-        // Redirect to a payment page or show an error message
-        res.redirect('/checkout');
+    for (const file of files) {
+      fs.unlink(path.join(dirPath, file), (err) => {
+        if (err) throw err;
+      });
     }
-}
+  });
+};
 
-
-
-function redirectToDashboardPaidIfPaid(req, res, next) {
-    if (req.isAuthenticated() && req.user.hasPaid) {
-        return res.redirect('/dashboard_paid');
-    }
-    next();
-}
-// folder creation by reg and logged in user
-function createDirectoryForUser(req, res, next) {
-    if (req.isAuthenticated() && req.user.hasPaid) {
-      const dir = `./eauploads/${req.user._id}`;
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
-    }
-    next();
+// Set interval to delete files in "eauploads/demo" every 15 minutes (900000 milliseconds)
+setInterval(() => {
+  const demoDir = './eauploads/demo';
+  
+  if (fs.existsSync(demoDir)) {
+    deleteFilesInDir(demoDir);
+    console.log(`Deleted files in ${demoDir} at ${new Date().toISOString()}`);
+  } else {
+    console.log(`Directory ${demoDir} doesn't exist.`);
   }
+  
+}, 900000);
+
+
+ 
 
 
 

@@ -4,18 +4,27 @@
         <a href="./"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
     <h1>Welcome, <%= user.username %>!</h1>
 
+    
+    <div class="textContainer eacenter">
     <% if (locals.success) { %>
         <p class="success-message"><%= success %></p>
     <% } %>
 
-    <p>Super secure payments add stripe logo and cred</p>
-    
+    <p>Click the Purchase button below and you'll be taken to our Stripe checkout.</p>
+        </div>
+    <br>
     <form action="/checkout" method="get">
-        <input type="submit" value="Purchase" class="login">
+        <input type="submit" value="Purchase" class="eabutton">
     </form> <br>
-    <form action="/logout" method="post">
-        <input type="submit" value="Logout">
-    </form>
+
+<!-- remove this when the beta is over
+    <form action="/dashboard_paid" method="get">
+        <input type="submit" value="Dashboard" class="eabutton">
+    </form> <br>-->
+
+<!-- end remove this when the beta is over-->
+  <!-- Include footer -->
+  <%- include('partials/footer') %>
 </div>
 </body>
 </html>

@@ -5,56 +5,191 @@
     <link rel="stylesheet" href="/css/live.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/w3.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-
-
-    </style>
+    <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1"> -->
 </head>
+
+<style> 
+
+#blurredmain {
+  visibility: hidden;
+}
+
+#id01 {
+
+  z-index: 11;
+}
+  #myDIV {
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    
+  }
+
+  #blurredmain {
+
+  }
+
+  .mainimage_blurred {
+    position: fixed;
+    z-index: 2;
+    filter: blur(55px);
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease-in-out;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-attachment: fixed;
+
+
+  }
+  </style>
+<script>
+
+function showhidemainmenu() {
+  var x = document.getElementById("sidemenu");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
 <body> 
 
+  <div id="myDIV">
+    
+  
+
+  <div class="sidemenuwrapper">
+   <!-- SIDE MENU STARTS-->
+   <button onclick="showhidemainmenu()"class="menu-item"><i class="fa-solid fa-gear" style="color: #f0f0f0;"></i></button>
+  </div>
+   <div id="sidemenu">
+    <a href="javascript:window.location.href=window.location.href" class="menu-item"><i class="fa-solid fa-arrows-rotate" style="color: #f0f0f0;"></i></a>
+    <a href="javascript:void(0);" onclick="toggleImageFeed()" class="menu-item"><i class="fa-solid fa-image" style="color: #f0f0f0;"></i></a>
+    
+    <button onclick="myFunction1()" class="menu-item"><i class="fa-regular fa-lightbulb" style="color: #c5c8ce;"></i></button>
+    <button onclick="myFunction2()" class="menu-item"><i class="fa-solid fa-lightbulb" style="color: #2a2b2d;"></i></button>
+    <button onclick="myFunction3()" class="menu-item"><i class="fa-solid fa-eye" style="color: #c5c8ce;"></i></i></button>
 
 
-<div class="refresh"> <a href="javascript:window.location.href=window.location.href"><img src="/images/refresh.png" class="" alt="refresh button" /></a> </div>
+    <button onclick="toggleModal()" class="menu-item"><i class="fa-solid fa-circle-info" style="color: #f0f0f0;"></i> </button>
+    
+    
+  </div>
+ 
 
-<a href="#menu" id="toggle"><span>sfsfdsd</span></a>
 
+  
+ 
+
+
+<script>
+  function myFunction1() {
+    document.getElementById("myDIV").style.backgroundColor = "white";
+  }
+  function myFunction2() {
+    document.getElementById("myDIV").style.backgroundColor = "black";
+  }
+
+  function myFunction3() {
+  var x = document.getElementById("blurredmain");
+  if (x.style.visibility === "hidden" || x.style.visibility === "") {
+    x.style.visibility = "visible";
+  } else {
+    x.style.visibility = "hidden";
+  }
+}
+
+function toggleModal() {
+  var modal = document.getElementById("id01");
+  if (modal.style.display === "block") {
+    modal.style.display = "none";
+  } else {
+    modal.style.display = "block";
+  }
+}
+  </script>
+
+
+
+
+<!-- SIDE MENU ENDS-->
+
+
+<!-- QR CODE BACKGROUND 
+
+ADD THE CODE TO RENDER THE QR CODE HERE
+
+END QR CODE BACKGROUND -->
+
+
+
+<!-- HELP MODAL -->
+<div id="id01" class="w3-modal">
+  <div class="w3-modal-content w3-animate-opacity w3-card-4">
+    <header class="w3-container w3-light-gray"> 
+      <span onclick="document.getElementById('id01').style.display='none'" 
+      class="w3-button w3-display-topright">&times;</span>
+      <h2>Everafter Help</h2>
+    </header>
+    <div class="w3-container">
+
+      <img src="/images/help_menu_live.png"class="w3-image">
+      <br><br>
+      <h3>Live Feed Controls</h3>
+      <p>Live feed controls can be accessed from the live feed menu which looks like a little grey gear in the top right of the live feed screen.
+        Clicking the gear icon toggles the rest of the menu on and off. The idea is that you'd toggle it off while casting the live feed to the main screen, just so it's not a distraction.
+      </p>
+      <h3>Refreshing the image feed</h3>
+      <p>As there can sometimes be hundreds of images uploaded from an event and the uploaded images loop through a cycle, there may be an occasion where a you might not want to wait for an image that was just loaded to loop around to be shown. Clicking refresh will reset the live feed to immediately start again with the last image uploaded being shown first, the second last uploaded to be shown second, etc..  </p>
+      
+      <img src="/images/help_moderate.png" class="w3-image">
+      <h3>The Moderation Panel</h3>
+      <p>The moderation panel allows you to delete images from the live feed. Clicking the moderation panel icon will bring up a gallery of every image that has so far been uploaded.
+        Each of those images have a small red "X" in their top right corner. Clicking that red "X" will send that image to a deleted folder. The image is not gone forever, it is just no longer visible in the live feed.
+        When the event is over and you get your one-click download link, the deleted files will be included in that zip file. 
+      </p>
+    </div>
+    <footer class="w3-container w3-light-gray">
+      <p>Everafter 2023</p>
+    </footer>
+  </div>
+</div>
+
+
+
+
+ 
+<!-- MAIN IMAGE FEEDS-->
+<!-- BLURRED MAIN IMAGE FEEDS--->
+<div id="blurredmain">
+<div id="blurredMainImage1" class="mainimage_blurred"></div>
+<div id="blurredMainImage2" class="mainimage_blurred"></div>
+</div> 
+<!-- END BLURRED MAIN IMAGE FEEDS-->
 
 
      <!-- <h1>Live Feed for User: <%= userId %></h1> -->
     <div id="mainImage1" class="mainImage"></div>
     <div id="mainImage2" class="mainImage"></div>
-    <div id="imageFeed">
-    <!-- Thumbnails will be appended here -->
+    <div id="imageFeed" class="imagefeed"></div>
+
+    <!-- END MAIN IMAGE FEEDS-->
+
+
+
+
 </div>
 
-
-<div class="closeslides"> 
-    <a href="javascript:void(0);" onclick="toggleImageFeed()">
-      <img src="/images/close.png" class="" alt="close button" />
-    </a> 
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script>
+<script>
 const userId = "<%= userId %>"; // Make sure this line is at the top of your script
 
-// Your existing JavaScript code
+
 let currentImageIndex = 0;
 let imageArray = [];
 let currentMainImage = 1; // Start with mainImage1
@@ -67,11 +202,23 @@ function fetchLatestImages() {
         imageArray = data.files;  // Update the image array
 
         data.files.forEach(file => {
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'image-wrapper';
+
             const img = document.createElement('img');
             img.src = `/eauploads/${userId}/${file}`;
-            img.width = 150;
+            img.width = 180;
             img.style.padding = '10px';
-            imageFeed.appendChild(img);
+
+            const deleteBtn = document.createElement('span');
+            deleteBtn.className = 'delete-icon';
+            deleteBtn.innerHTML = '<i class="fa-solid fa-delete-left" style="color: #b8141d;"></i>';
+            deleteBtn.onclick = () => deleteImage(file);
+
+            imgDiv.appendChild(img);
+            imgDiv.appendChild(deleteBtn);
+
+            imageFeed.appendChild(imgDiv);
         });
 
         updateMainImage();
@@ -82,38 +229,72 @@ function fetchLatestImages() {
 }
 
 function updateMainImage() {
-    if (imageArray.length > 0) {
-        const mainImage = document.getElementById(`mainImage${currentMainImage}`);
-        mainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
-        mainImage.style.opacity = 1;
+  if (imageArray.length > 0) {
+    const mainImage = document.getElementById(`mainImage${currentMainImage}`);
+    const blurredMainImage = document.getElementById(`blurredMainImage${currentMainImage}`);
+    
+    mainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
+    blurredMainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
+    
+    mainImage.style.opacity = 1;
+    blurredMainImage.style.opacity = 1;
 
-        // Switch to the other main image div for the next update
-        const otherMainImage = document.getElementById(`mainImage${currentMainImage === 1 ? 2 : 1}`);
-        otherMainImage.style.opacity = 0;
+    const otherMainImage = document.getElementById(`mainImage${currentMainImage === 1 ? 2 : 1}`);
+    const otherBlurredMainImage = document.getElementById(`blurredMainImage${currentMainImage === 1 ? 2 : 1}`);
+    
+    otherMainImage.style.opacity = 0;
+    otherBlurredMainImage.style.opacity = 0;
 
-        currentMainImage = currentMainImage === 1 ? 2 : 1;
-        currentImageIndex = (currentImageIndex + 1) % imageArray.length;
-    }
+    currentMainImage = currentMainImage === 1 ? 2 : 1;
+    currentImageIndex = (currentImageIndex + 1) % imageArray.length;
+  }
 }
 
 function toggleImageFeed() {
   const imageFeed = document.getElementById('imageFeed');
-  if (imageFeed.style.display === 'none') {
-    imageFeed.style.display = 'block';
+  if (imageFeed.classList.contains('visible')) {
+    imageFeed.classList.remove('visible');
   } else {
-    imageFeed.style.display = 'none';
+    imageFeed.classList.add('visible');
   }
 }
 
+function deleteImage(imageName) {
+  fetch(`/eauploads/${userId}/${imageName}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if (response.ok) {
+      // Remove the image from the UI
+      const imageElements = document.querySelectorAll(`.image-wrapper img[src="/eauploads/${userId}/${imageName}"]`);
+      imageElements.forEach(elem => {
+        elem.parentElement.remove();
+      });
+      // Update the main image array
+      imageArray = imageArray.filter(file => file !== imageName);
+      updateMainImage();
+    } else {
+      console.error('Failed to delete image');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
 // Fetch latest images every 5 seconds
 setInterval(fetchLatestImages, 5000);
-
-
-
-
-
-
-
 
 
     </script>

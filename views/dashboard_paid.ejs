@@ -1,9 +1,23 @@
-<%- include('partials/header.ejs') %>
-<body>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Everafter Dashboard</title>
+    
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!--<script src="/js/ea.js"></script> -->
+    <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+ 
 
   <div class="maincontainer">
-    <a href="./"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
+    <img class="logo" src="/images/ea_large_logo_full_blk.png">
     <h4>Welcome, <%= user.username %> </h4>
 
     <% if (locals.success) { %>
@@ -11,16 +25,16 @@
     <% } %>
 
     
-    <div><a href="/public-upload/<%= user.username %>"> <p class="w3-button w3-dark-grey w3-round">Start Uploading Images <span class="tinybuttontext"><br> (because uploading isn't just for geusts)</span></p></a></div>
+    <div><a href="/public-upload/<%= user.username %>"> <p class="eabutton">Start Uploading Images <span class="tinybuttontext"><br> (because uploading isn't just for guests)</span></p></a></div>
     <br>
-    <div><a href="/livefeed/<%= user.username %>"> <p class="w3-button w3-dark-grey w3-round">View the Live Feed <span class="tinybuttontext"><br> (this is what you send to the big screen)</span></p></a></div>
+    <div><a href="/livefeed/<%= user.username %>" target="_blank"> <p class="eabutton">View the Live Feed <span class="tinybuttontext"><br> (this is what you send to the big screen. it opens in a new window)</span></p></a></div>
     
     
     <br>
 
     <!-- Trigger/Open the QR Modal -->
 <button onclick="document.getElementById('id01').style.display='block'"
-class="w3-button w3-dark-grey w3-round">QR Code <span class="tinybuttontext"><br> (for easy sharing the upload link with your guests)</span></button>
+class="eabutton"></i> Your Event QR Code <span class="tinybuttontext"><br> (for easy sharing the upload link with your guests)</span></button>
 
 <!-- The QR Modal -->
 <div id="id01" class="w3-modal">
@@ -28,11 +42,11 @@ class="w3-button w3-dark-grey w3-round">QR Code <span class="tinybuttontext"><br
     <div class="w3-container">
       <span onclick="document.getElementById('id01').style.display='none'"
       class="w3-button w3-display-topright">&times;</span>
-      <a href="<%= qrCodeDataURL %>" download><img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="w3-image"></a>
+      <a href="<%= qrCodeDataURL %>" download><img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="w3-image eacenter"></a> <br>
       <p>This is a QR code that you can use to share with event guests to allow them to upload images. They can point their phone's
          camera at it and then click on the link it generates. It's much easier than typing it in to a web browser.
         If you click (or tap) on it it will download to your device so you can print it, or even upload it to the live feed so all your
-         guests can see it and start uploading pictures for you.</p>
+         guests can see it and start uploading pictures for you.</p><br><br><br>
     </div>
   </div>
 </div>
@@ -41,7 +55,7 @@ class="w3-button w3-dark-grey w3-round">QR Code <span class="tinybuttontext"><br
 
     <!-- Trigger/Open the Help Modal -->
     <button onclick="document.getElementById('id02').style.display='block'"
-    class="w3-button w3-dark-grey w3-round">Help!</button>
+    class="eabutton">Help!</button>
     
     <!-- The help Modal -->
     <div id="id02" class="w3-modal">
@@ -49,17 +63,35 @@ class="w3-button w3-dark-grey w3-round">QR Code <span class="tinybuttontext"><br
         <div class="w3-container">
           <span onclick="document.getElementById('id02').style.display='none'"
           class="w3-button w3-display-topright">&times;</span>
-          
-          <p>This is the Help modal... fill it up with helpful.</p>
-          
-          <p>WARNING: You can delete all your images by pressing the button below. And by delete, we mean gone forever,
-             so please be careful and be sure that's what you really want to do. This is usefull for testing when
-              you are getting set up. The idea is that you can upload a few tests just to be sure everything is
-               working the way you'd like it to, then when you're done, delete all images and start fresh.<br>
+          <div class="helptext">
+          <h3>Everafter is really simple</h3>
+          <p>Upload a file and it becomes viewable on your own custom live feed. That's really the main bit. </p> 
+          <p>To upload an image, guests don't even need to be logged in, they just need a simple web link.
+            They can get that link easily by either scanning the QR code that is generated for you when you click on the QR Code button in the dashboard (or the one we just generated for you below), or they can just type it out as 
+            they are usually pretty simple, it will be something like everafter.pics/livefeed/yourusername. When guests visit that link, they are presented with a nice little interface where they can immediately start uploading files.
+            There's also a handy link for them to view the live feed that they can view directly on their own device.</p>
 
-               <a href="/deleteall"<p class="w3-button w3-red w3-round">DELETE ALL IMAGES</a> </p>
-               
+            <img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="smallqr"><br><br>
+
+
+
+          <h3>You are in control</h3>
+          <p>The primary account possesses moderator functions. Essentially, this grants the ability to oversee uploads and, if necessary, delete files. To moderate images,
+             the user should click the toolbar <i class="fa-solid fa-gear" style="color: #96969e;"></i> located at the top right corner of the Live Feed page and then select the <i class="fa-solid fa-image" style="color: #96969e;"></i> moderation icon. This action will display a gallery
+              of all uploaded images. Each image will feature a <i class="fa-solid fa-delete-left" style="color: #d90d0d;"></i> red delete icon in its top right corner. A single click on this red icon will remove the image from the Live
+               Feed. Subsequently, the removed image will be archived in a "deleted" folder, which will be incorporated into the one-click downloadable zip file after the
+                event concludes."</p>
+
+
           
+
+            <img src="/images/help_moderate.png"alt="using the moderation functions image" class="smallqr"> <br><br>
+          
+            <h3>You get the goods</h3>
+            <p>When the event is over, the event host can download every file that was shared by guests in one convenient zip file. Archive it for saffety, or because you aren't scraping images from some social media platform, for printing.
+               
+             <p class="eacenter">Still have questions? Contact us at <a href="mailto:customersupport@everafter.pics"target="_blank">  customersupport@everafter.pics</a></p>  
+          </div>
         </div>
       </div>
     </div>
@@ -69,19 +101,19 @@ class="w3-button w3-dark-grey w3-round">QR Code <span class="tinybuttontext"><br
 </div>
 
 <script>
-    // Get the modals
-    var modal1 = document.getElementById('id01');
-    var modal2 = document.getElementById('id02');
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal1) {
-        modal1.style.display = "none";
-      }
-      if (event.target == modal2) {
-        modal2.style.display = "none";
-      }
+  // Get the modals
+  var modal1 = document.getElementById('id01');
+  var modal2 = document.getElementById('id02');
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal1) {
+      modal1.style.display = "none";
     }
+    if (event.target == modal2) {
+      modal2.style.display = "none";
+    }
+  }
 </script>
   <!-- Include footer -->
   <%- include('partials/footer') %>
