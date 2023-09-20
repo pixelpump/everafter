@@ -22,6 +22,9 @@ body{
         background-repeat: no-repeat;
         background-position: center top;
         background-attachment: fixed;
+        /*filter: grayscale(100%);*/
+        filter: sepia(100%);
+        filter: drop-shadow(8px 8px 10px black);
     }
 
     @media (max-width: 600px) {

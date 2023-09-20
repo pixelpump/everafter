@@ -1,5 +1,8 @@
-// This is your test publishable API key.
-const stripe = Stripe("pk_test_gDK5AuzzZwsU6esWDxkMR0Id");
+// This is your TEST publishable API key.
+//const stripe = Stripe("pk_test_gDK5AuzzZwsU6esWDxkMR0Id");
+
+// This is your LIVE publishable API key.
+const stripe = Stripe("pk_live_0ucnBu5fRkQL7DYb5aWaUSXQ");
 
 // The items the customer wants to buy
 const items = [{ id: "everafter" }];

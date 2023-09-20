@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Everafter Admin Uploader</title>
+    <meta name="description" content="Everafter" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <div class="maincontainer">
+        
+        <a href="/dashboard_paid"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
+
+
+        <br>
+        <div id="thumbnails">
+            <!-- Thumbnails will appear here -->
+        </div>
+        <div id="successMessage" style="display:none;">
+            Thanks! Successful Upload!
+       </div>
+<br>
+        <form id='uploadForm' action='/admin-upload/<%= userId %>/submit' method='post' enctype="multipart/form-data">
+            <label for="sampleFile" class="eabutton">
+               Select an Image for Upload
+            </label>
+            <input class="eabutton" type="file" id="sampleFile" name="sampleFile" multiple style="display:none;" />
+            <br><br><p class="eabuttonsubtext">Click the button above to select an image file to upload to the big screen, and also to the host for safekeeping.</p>
+        </form>
+        <a href="/livefeed/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> 
+        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p>
+
+        <a href="/dashboard_paid" class="eabutton"> Dashboard</a> 
+        <p class="eabuttonsubtext">Click above to go back to your admin dashboard.</p>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadForm = document.getElementById('uploadForm');
+            const successMessage = document.getElementById('successMessage');
+            const thumbnails = document.getElementById('thumbnails');
+    
+            // Make sure userId is defined
+            const userId = "<%= typeof userId !== 'undefined' ? userId : '' %>";
+            if (!userId) {
+                console.error('userId is not defined');
+                return;
+            }
+    
+            uploadForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const formData = new FormData(uploadForm);
+    
+                fetch(`/admin-upload/${userId}/submit`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Show the success message
+                    successMessage.style.display = 'block';
+    
+                    // Clear previous thumbnails
+                    thumbnails.innerHTML = '';
+    
+                   // Show thumbnails for uploaded images
+                    data.files.forEach(file => {
+                        const img = document.createElement('img');
+                        img.src = file.path;  // Using file.path directly
+                        img.width = 150;
+                        img.style.padding = '5px';  // Add padding of 10 pixels
+                        thumbnails.appendChild(img);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Get the file input element
+            const fileInput = document.getElementById('sampleFile');
+
+            // Listen for changes to the file input element
+            fileInput.addEventListener('change', function() {
+                // Trigger the form submit
+                uploadForm.dispatchEvent(new Event('submit'));
+            });
+        });
+
+      
+
+      
+
+    </script>
+</body>
+</html>

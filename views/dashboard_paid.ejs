@@ -25,7 +25,7 @@
     <% } %>
 
     
-    <div><a href="/public-upload/<%= user.username %>"> <p class="eabutton">Start Uploading Images <span class="tinybuttontext"><br> (because uploading isn't just for guests)</span></p></a></div>
+    <div><a href="/admin-upload/<%= user.username %>"> <p class="eabutton">Start Uploading Images <span class="tinybuttontext"><br> (because uploading isn't just for guests)</span></p></a></div>
     <br>
     <div><a href="/livefeed/<%= user.username %>" target="_blank"> <p class="eabutton">View the Live Feed <span class="tinybuttontext"><br> (this is what you send to the big screen. it opens in a new window)</span></p></a></div>
     
@@ -50,7 +50,8 @@ class="eabutton"></i> Your Event QR Code <span class="tinybuttontext"><br> (for 
     </div>
   </div>
 </div>
-
+<br><br>
+<a href="/download/<%= user.username %>"" class="eabutton">One Click Download <span class="tinybuttontext"><br>Every image in a zip file</span></a> 
 <br><br>
 
     <!-- Trigger/Open the Help Modal -->

@@ -1,4 +1,31 @@
 require('dotenv').config();
+
+
+// TESTING KEYS //////////////////////////////////////////////////////////////////////////////////
+//const stripe = require('stripe')('sk_test_GaC5n8imZIcK11aWtIjJXGEu');
+//const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+//console.log('STRIPE_SECRET_KEY:', process.env.STRIPE_SECRET_KEY)
+
+//const endpointSecret = 'whsec_30zsnokm0CKtRGppM20Mo8CoSPPn2N24';
+//const endpointSecret = ('STRIPE_ENDPOINT_SECRET:', process.env.STRIPE_ENDPOINT_SECRET)
+//console.log('STRIPE_ENDPOINT_SECRET:', process.env.STRIPE_ENDPOINT_SECRET)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+// LIVE KEYS //////////////////////////////////////////////////////////////////////////////////
+const stripe = require('stripe')('sk_live_QE4ZDUJgU1V6WYN4xwqlmcYI');
+//const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+//console.log('STRIPE_SECRET_KEY:', process.env.STRIPE_SECRET_KEY)
+
+const endpointSecret = 'whsec_qXazbsVBbKHgQqtr2e7Ldc5z14FCmHGZ';
+//const endpointSecret = ('STRIPE_ENDPOINT_SECRET:', process.env.STRIPE_ENDPOINT_SECRET)
+//console.log('STRIPE_ENDPOINT_SECRET:', process.env.STRIPE_ENDPOINT_SECRET)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 const express = require('express');
 const https = require('https');
 const port = 3000;
@@ -7,7 +34,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose');
 const session = require('express-session');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 
 const flash = require('connect-flash');
 const fs = require('fs');
@@ -16,9 +43,13 @@ const QRCode = require('qrcode');
 const app = express();
 const multer = require('multer');
 const archiver = require('archiver');
-const endpointSecret = "whsec_30zsnokm0CKtRGppM20Mo8CoSPPn2N24"; // Load from environment variable
 
 const YOUR_DOMAIN = 'https://everafter.pics';
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/everafter.pics/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/everafter.pics/fullchain.pem')
+};
+
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -50,6 +81,9 @@ const storage = multer.diskStorage({
     }
   });
 
+
+
+
  ////////////////////  STRIPE WEBHOOK  //////////////////////////////////
 
 app.post('/webhook', express.raw({type: 'application/json'}), async (request, response) => {
@@ -65,7 +99,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
     return;
   }
 
-  console.log("Received event:", JSON.stringify(event, null, 2));
+  console.log("Huzzahh!! Received Stripe Webhook event:", JSON.stringify(event, null, 2));
 
   // Handle the event
   switch (event.type) {
@@ -93,9 +127,25 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
   
   // Return a 200 response to acknowledge receipt of the event
   response.send({received: true});
+ 
+
 });
 
 /////////////////////////// END STRIPE webhook //////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   function ensurePaid(req, res, next) {
     if (req.isAuthenticated() && req.user.hasPaid) {
@@ -339,13 +389,27 @@ app.post('/public-upload/:userId/submit', upload.array('sampleFile', 10), (req, 
     
 });
 
+app.post('/admin-upload/:userId/submit', upload.array('sampleFile', 10), (req, res) => {
+  const fileInfos = req.files.map(file => ({ name: file.filename, path: `/eauploads/${req.params.userId}/${file.filename}` }));
+  res.json({ success: true, files: fileInfos });
+  
+});
+
 
   
-  app.get('/public-upload/:userId', (req, res) => {
-    const userId = req.params.userId;
-    // You may want to check if this userId corresponds to a paid user
-    res.render('public-upload', { userId });
+
+app.get('/admin-upload/:userId', (req, res) => {
+  const userId = req.params.userId;
+  // You may want to check if this userId corresponds to a paid user
+  res.render('admin-upload', { userId });
 });
+
+app.get('/public-upload/:userId', (req, res) => {
+  const userId = req.params.userId;
+  // You may want to check if this userId corresponds to a paid user
+  res.render('public-upload', { userId });
+});
+
 
 app.get('/loggingout', (req, res) => {
     console.log("Logging out route triggered");  // Add this line
@@ -362,12 +426,7 @@ app.get('/upload', (req, res) => {
   });
 
 
-  app.get('/public-upload/:userId', (req, res) => {
-    const userId = req.params.userId;
-    // You may want to check if this userId corresponds to a paid user
-    res.render('public-upload', { userId });
-  });
-  
+
 
 
 app.get('/signuplogin', (req, res) => {
@@ -443,10 +502,8 @@ app.use(express.json());
 ///////////////////////  STRIPE CHECKOUT  /////////////////////////////////////////////////
 
 const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
+
+  return 100;  /// SET THIS BACK TO 3500 WHEN LIVE
 };
 
 app.post("/create-payment-intent", async (req, res) => {
@@ -469,9 +526,6 @@ app.post("/create-payment-intent", async (req, res) => {
 });
 
  
-
-
-
 
 //   ### ##    ## ##   ##  ###  #### ##  ### ###   ## ##   
 //    ##  ##  ##   ##  ##   ##  # ## ##   ##  ##  ##   ##  
@@ -524,14 +578,7 @@ app.get('/dashboard', (req, res) => {
     res.render('dashboard', { user: req.user });
 });
 
-app.get('/deleteall', (req, res) => {
-    console.log("User object in deleteall route:", req.user);
-    if (!req.isAuthenticated()) {
-        console.log("User not authenticated for to delete images");
-        return res.redirect('/login');
-    }
-    res.render('deleteall', { user: req.user });
-});
+
 
   // Public live feed route without image moderation
   app.get('/livefeed_public/:userId', async (req, res) => {
@@ -565,31 +612,6 @@ app.get('/success', (req, res) => {
 
 
 
-app.post('/deleteall', (req, res) => {
-    if (!req.isAuthenticated()) {
-      return res.redirect('/login');
-    }
-  
-    const userId = req.user.username;
-    const dir = `./eauploads/${userId}/`;
-  
-    fs.readdir(dir, (err, files) => {
-      if (err) {
-        console.error("Error reading directory:", err);
-        return res.status(500).send("An error occurred while reading the directory.");
-      }
-  
-      for (const file of files) {
-        fs.unlink(path.join(dir, file), err => {
-          if (err) {
-            console.error("Error deleting file:", err);
-          }
-        });
-      }
-  
-      res.redirect('/dashboard_paid'); // Redirect to dashboard or any other page
-    });
-  });
 
 
 
@@ -605,6 +627,11 @@ app.post('/deleteall', (req, res) => {
 //
 ///////////////////////////////////////////////////////////////////////////////////////// 
 
+
+
+
+
+
 // send public to public livefeed
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -616,15 +643,17 @@ function ensureAuthenticated(req, res, next) {
                                                                                  
 // Function to delete files in a directory
 const deleteFilesInDir = (dirPath) => {
-  fs.readdir(dirPath, (err, files) => {
-    if (err) throw err;
+  const files = fs.readdirSync(dirPath);
 
-    for (const file of files) {
-      fs.unlink(path.join(dirPath, file), (err) => {
-        if (err) throw err;
-      });
+  for (const file of files) {
+    const fullPath = path.join(dirPath, file);
+    const stat = fs.statSync(fullPath);
+
+    if (stat.isFile()) {
+      fs.unlinkSync(fullPath);
     }
-  });
+    // Handle directories here if needed
+  }
 };
 
 // Set interval to delete files in "eauploads/demo" every 15 minutes (900000 milliseconds)
@@ -646,5 +675,5 @@ setInterval(() => {
 
 
 app.listen(3000, () => {
-    console.log('Server started on http://localhost:3000');
+    console.log('Daniel, Your server is fired up on http://localhost:3000');
 });
