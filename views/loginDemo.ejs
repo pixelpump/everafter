@@ -3,7 +3,7 @@
     <div class="maincontainer">
     
         
-         <a href="./"><img class="logo" src="/images/ea_large_logo_full_blk_demo.png"></a>
+         <a href="./"><img class="logo" src="/images/eademo_white.png"></a>
         
           
           
@@ -13,11 +13,21 @@
         <p class="error-message"><%= error %></p>
     <% } %>-->
     <div class="fronttext eacenter">
-        <p> This demo will show you exactly how Everafter works and how elegant our solution is.</p><p> Add some images to the demo feed,
+        <p>Add some images to the demo feed,
              and then be sure to click the "View the Live Feed" button. It will open a new browser tab that can then be cast to a big screen. </p>
-    <p class="">For this demonstration the username is <span class="demored">demo</span> and the password is also <span class="demored">demo</span>. Have fun, play nice :)</p>
-    <p> Please note that any images uploaded here will <span class="demored">automatically be deleted every 15 minutes</span>. 
+    
     </div>
+    <div class="demoalert">
+    <div class="w3-panel w3-green w3-display-container w3-center">
+        <span onclick="this.parentElement.style.display='none'"
+        class="w3-button w3-large w3-display-topright ">&times;</span>
+        <h3>Hey there good lookin'!</h3> <h4>Please read this first. It'll help. Honest.</h4>
+        <p> Any images uploaded here will  automatically be deleted every<span class="blink"> 15 minutes.</span> So, they might all just suddenly go
+             away while you're messing around. That obviously won't happen with the real version. 
+        <p>For this demonstration the username is<span class="blink"> demo</span> and the password is also<span class="blink"> demo.</span> Have fun, play nice :)</p>
+        <br><br><span onclick="this.parentElement.style.display='none'"class="w3-button w3-white w3-border w3-center ">OK Let's get on with it</span><br><br><br><br>
+      </div></div>
+
     <form action="/login" method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" required class="form-style">
@@ -27,7 +37,7 @@
         <br>
         <input type="submit" value="Try Me!"class="demoeabutton">
     </form>
-<br>
+    <br><br><br>
 <div class="fronttext eacenter">   
 <p class="tinybuttontext"> Already convinced and want an account? <a href="/signup">Sign up here.</a> </p>
     

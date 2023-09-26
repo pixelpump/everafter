@@ -24,7 +24,11 @@ body{
         background-attachment: fixed;
         /*filter: grayscale(100%);*/
         filter: sepia(100%);
-        filter: drop-shadow(8px 8px 10px black);
+        filter: drop-shadow(0px 0px 4px black);
+    }
+    #mainimagewrap {
+
+
     }
 
     @media (max-width: 600px) {

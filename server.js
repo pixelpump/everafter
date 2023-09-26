@@ -126,7 +126,8 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
   }
   
   // Return a 200 response to acknowledge receipt of the event
-  response.send({received: true});
+  //response.send({received: true});
+  response.json({received: true});
  
 
 });
@@ -147,13 +148,19 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
 
 
 
-  function ensurePaid(req, res, next) {
-    if (req.isAuthenticated() && req.user.hasPaid) {
+function ensurePaid(req, res, next) {
+  if (req.isAuthenticated()) {
+    if (req.user.hasPaid) {
       return next();
+    } else {
+      // Redirect to a payment page if the user hasn't paid
+      return res.redirect('/checkout');
     }
-    // Redirect to a payment page or some other page if the user hasn't paid
-    res.redirect('/checkout');
+  } else {
+    // Redirect to login page if user is not authenticated
+    return res.redirect('/login');
   }
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -503,7 +510,7 @@ app.use(express.json());
 
 const calculateOrderAmount = (items) => {
 
-  return 100;  /// SET THIS BACK TO 3500 WHEN LIVE
+  return 3500;  /// SET THIS BACK TO 3500 WHEN LIVE!!
 };
 
 app.post("/create-payment-intent", async (req, res) => {
@@ -550,15 +557,16 @@ app.get('/loginDemo', (req, res) => {
 
 
 
+// Login route
 app.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login',
-    failureFlash: 'Invalid username or password.'
+  failureRedirect: '/login',
+  failureFlash: 'Invalid username or password.'
 }), (req, res) => {
-    if (req.user.hasPaid) {
-        res.redirect('/dashboard_paid');
-    } else {
-        res.redirect('/checkout');  // or any other default page for logged-in but unpaid users
-    }
+  if (req.user.hasPaid) {
+    res.redirect('/dashboard_paid');
+  } else {
+    res.redirect('/checkout'); // or any other default page for logged-in but unpaid users
+  }
 });
 
 app.post('/logout', function(req, res, next) {
@@ -601,7 +609,21 @@ app.get('/livefeed/:userId', ensureAuthenticated, async (req, res) => {
 
 
 app.get('/checkout', (req, res) => {
+  if (req.isAuthenticated()) {
     res.render('checkout', { user: req.user });
+  } else {
+    // Redirect to login or render a different view for non-authenticated users
+    res.redirect('/login');
+  }
+});
+
+app.get('/checkout_new', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render('checkout_new', { user: req.user });
+  } else {
+    // Redirect to login or render a different view for non-authenticated users
+    res.redirect('/login');
+  }
 });
 
 ///STRIPE SUCCESS PAGE? ///

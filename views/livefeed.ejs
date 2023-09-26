@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/css/w3.css">
     <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
 <style> 
@@ -16,14 +18,8 @@
 </style>
 <script>
 
-function showhidemainmenu() {
-  var x = document.getElementById("sidemenu");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
+
+
 </script>
 
 <body> 
@@ -34,19 +30,20 @@ function showhidemainmenu() {
 
   <div class="sidemenuwrapper">
    <!-- SIDE MENU STARTS-->
-   <button onclick="showhidemainmenu()"class="menu-item"><i class="fa-solid fa-gear" style="color: #f0f0f0;"></i></button>
+   <button onclick="showhidemainmenu()"class="menu-item"title="Toggle this menu"><i class="fa-solid fa-gear" style="color: #f0f0f0;"></i></button>
   </div>
    <div id="sidemenu">
-    <a href="javascript:window.location.href=window.location.href" class="menu-item"><i class="fa-solid fa-arrows-rotate" style="color: #f0f0f0;"></i></a>
-    <a href="javascript:void(0);" onclick="toggleImageFeed()" class="menu-item"><i class="fa-solid fa-image" style="color: #f0f0f0;"></i></a>
+    <a href="javascript:window.location.href=window.location.href" class="menu-item" title="Refresh the live feed"><i class="fa-solid fa-arrows-rotate" style="color: #f0f0f0;"></i></a>
+    <a href="javascript:void(0);" onclick="toggleImageFeed()" class="menu-item" title="Toggle Moderation mode"><i class="fa-solid fa-image" style="color: #f0f0f0;"></i></a>
     
-    <button onclick="myFunction1()" class="menu-item"><i class="fa-regular fa-lightbulb" style="color: #c5c8ce;"></i></button>
-    <button onclick="myFunction2()" class="menu-item"><i class="fa-solid fa-lightbulb" style="color: #2a2b2d;"></i></button>
-    <button onclick="myFunction3()" class="menu-item"><i class="fa-solid fa-eye" style="color: #c5c8ce;"></i></i></button>
-
-
-    <button onclick="toggleModal()" class="menu-item"><i class="fa-solid fa-circle-info" style="color: #f0f0f0;"></i> </button>
+    <button onclick="myFunction1()" class="menu-item"title="Set the background to light mode"><i class="fa-regular fa-lightbulb" style="color: #c5c8ce;"></i></button>
+    <button onclick="myFunction2()" class="menu-item"title="Set the background to dark mode"><i class="fa-solid fa-lightbulb" style="color: #2a2b2d;"></i></button>
+    <button onclick="myFunction3()" class="menu-item"title="Toggle blurred background"><i class="fa-solid fa-eye" style="color: #c5c8ce;"></i></button>
+    <!--<button onclick="myFunction4()" class="menu-item"title="Toggle shadow effect"><i class="fa-solid fa-images" style="color: #b0b0b0;"></i></button> -->
+    <button onclick="toggleFullScreen()" class="menu-item" title="Toggle this page full screen"><i class="fa-solid fa-expand" style="color: #c5c8ce;"></i></i></i></button>
     
+    <button onclick="toggleModal()" class="menu-item"title="Open Help"><i class="fa-solid fa-circle-info" style="color: #f0f0f0;"></i> </button>
+    <google-cast-launcher></google-cast-launcher>
     
   </div>
  
@@ -56,32 +53,6 @@ function showhidemainmenu() {
  
 
 
-<script>
-  function myFunction1() {
-    document.getElementById("myDIV").style.backgroundColor = "white";
-  }
-  function myFunction2() {
-    document.getElementById("myDIV").style.backgroundColor = "black";
-  }
-
-  function myFunction3() {
-  var x = document.getElementById("blurredmain");
-  if (x.style.visibility === "hidden" || x.style.visibility === "") {
-    x.style.visibility = "visible";
-  } else {
-    x.style.visibility = "hidden";
-  }
-}
-
-function toggleModal() {
-  var modal = document.getElementById("id01");
-  if (modal.style.display === "block") {
-    modal.style.display = "none";
-  } else {
-    modal.style.display = "block";
-  }
-}
-  </script>
 
 
 
@@ -143,10 +114,11 @@ END QR CODE BACKGROUND -->
 
 
      <!-- <h1>Live Feed for User: <%= userId %></h1> -->
+     <div id="mainimagewrap">
     <div id="mainImage1" class="mainImage"></div>
     <div id="mainImage2" class="mainImage"></div>
     <div id="imageFeed" class="imagefeed"></div>
-
+  </div>
     <!-- END MAIN IMAGE FEEDS-->
 
 
@@ -156,6 +128,87 @@ END QR CODE BACKGROUND -->
 
 <script>
 const userId = "<%= userId %>"; // Make sure this line is at the top of your script
+
+
+
+
+function myFunction1() {
+    document.getElementById("myDIV").style.backgroundColor = "white";
+  }
+  function myFunction2() {
+    document.getElementById("myDIV").style.backgroundColor = "black";
+  }
+
+  function myFunction3() {
+  var x = document.getElementById("blurredmain");
+  if (x.style.visibility === "hidden" || x.style.visibility === "") {
+    x.style.visibility = "visible";
+  } else {
+    x.style.visibility = "hidden";
+  }
+}
+function myFunction4() {
+  var x = document.getElementById("mainimagewrap");
+  if (x.style.visibility === "hidden" || x.style.visibility === "") {
+    x.style.visibility = "visible";
+  } else {
+    x.style.visibility = "hidden";
+  }
+}
+
+
+
+
+
+
+function toggleModal() {
+  var modal = document.getElementById("id01");
+  if (modal.style.display === "block") {
+    modal.style.display = "none";
+  } else {
+    modal.style.display = "block";
+  }
+}
+
+
+function toggleFullScreen() {
+  if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+   (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if (document.documentElement.requestFullScreen) {  
+      document.documentElement.requestFullScreen();  
+    } else if (document.documentElement.mozRequestFullScreen) {  
+      document.documentElement.mozRequestFullScreen();  
+    } else if (document.documentElement.webkitRequestFullScreen) {  
+      document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+    }  
+  } else {  
+    if (document.cancelFullScreen) {  
+      document.cancelFullScreen();  
+    } else if (document.mozCancelFullScreen) {  
+      document.mozCancelFullScreen();  
+    } else if (document.webkitCancelFullScreen) {  
+      document.webkitCancelFullScreen();  
+    }  
+  }  
+}
+
+
+
+
+function showhidemainmenu() {
+  var x = document.getElementById("sidemenu");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+
+
+
+
+
 
 
 let currentImageIndex = 0;
@@ -266,5 +319,6 @@ setInterval(fetchLatestImages, 5000);
 
 
     </script>
+        <script src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
 </body>
 </html>

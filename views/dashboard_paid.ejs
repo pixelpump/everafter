@@ -2,7 +2,13 @@
 <html>
 <head>
     <title>Everafter Dashboard</title>
-    
+    <meta name="description" content="An elegant app for real-time photo sharing at weddings and events.">
+    <meta name="keywords" content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography">
+    <meta property="og:title" content="Everafter: Elegant Real-Time Photo Sharing for Events">
+    <meta property="og:description" content="An app for real-time photo sharing at weddings and events. Take complete control of your event photos.">
+    <meta property="og:image" content="https://everafter.pics/images/everafter_opengraph.png">
+    <meta property="og:url" content="https://everafter.pics">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!--<script src="/js/ea.js"></script> -->
@@ -25,16 +31,17 @@
     <% } %>
 
     
-    <div><a href="/admin-upload/<%= user.username %>"> <p class="eabutton">Start Uploading Images <span class="tinybuttontext"><br> (because uploading isn't just for guests)</span></p></a></div>
+   <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" title="(because uploading isn't just for guests)">Start Uploading Images </p></a>
+   
     <br>
-    <div><a href="/livefeed/<%= user.username %>" target="_blank"> <p class="eabutton">View the Live Feed <span class="tinybuttontext"><br> (this is what you send to the big screen. it opens in a new window)</span></p></a></div>
-    
+    <a href="/livefeed/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
+   
     
     <br>
 
     <!-- Trigger/Open the QR Modal -->
-<button onclick="document.getElementById('id01').style.display='block'"
-class="eabutton"></i> Your Event QR Code <span class="tinybuttontext"><br> (for easy sharing the upload link with your guests)</span></button>
+<button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i> Your Event QR Code </button>
+
 
 <!-- The QR Modal -->
 <div id="id01" class="w3-modal">
@@ -51,7 +58,8 @@ class="eabutton"></i> Your Event QR Code <span class="tinybuttontext"><br> (for 
   </div>
 </div>
 <br><br>
-<a href="/download/<%= user.username %>"" class="eabutton">One Click Download <span class="tinybuttontext"><br>Every image in a zip file</span></a> 
+<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file">One Click Download </a> 
+
 <br><br>
 
     <!-- Trigger/Open the Help Modal -->
