@@ -12,6 +12,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+    </style>
+
+
 </head>
 <body>
 
@@ -35,10 +40,18 @@
             <input class="eabutton" type="file" id="sampleFile" name="sampleFile" multiple style="display:none;" />
             <br><br><p class="eabuttonsubtext">Click the button above to select an image file to upload to the big screen, and also to the host for safekeeping.</p>
         </form>
-        <a href="/livefeed_public/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> 
-        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p>
-    </div>
+        
+        
+<!-- Replace the existing 'Live' button with this -->
+<div id="liveButton">
+<a  href="/livefeed_public/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> <br><br>
 
+        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p>
+
+
+
+       
+</div>
 
 
     <script>
@@ -96,6 +109,41 @@
         });
 
       
+
+
+        ////////////////////livefeed toggle //////////////////////
+
+// Capture userId from EJS template
+const userId = "<%= typeof userId !== 'undefined' ? userId : '' %>";
+
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing upload form code ...
+
+    // Check Live Feed Status
+    if (!userId) {
+        console.error('userId is not defined');
+        return;
+    }
+
+    fetch(`/checkLiveFeedStatus/${userId}`, {
+    method: 'GET',
+})
+    .then(response => response.json())
+    .then(data => {
+        console.log("Received data: ", data);  // Debugging line
+        // Assume the API returns a JSON object with a 'liveFeedEnabled' field
+        if (data.liveFeedEnabled) {
+            document.getElementById('liveButton').style.display = 'block';
+        } else {
+            document.getElementById('liveButton').style.display = 'none';
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching live feed status:', error);
+    });
+});
+
+
 
       
 

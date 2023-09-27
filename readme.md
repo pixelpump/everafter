@@ -2,7 +2,8 @@ Everafter Alfha .001
 
 to do
 
-
+Add option to disable the Slideshow entirely.
+Add full image moderation - images are queued up until approved.
 
 Intergrate Google OAth?
 

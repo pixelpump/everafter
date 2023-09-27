@@ -18,24 +18,153 @@
     <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "j1edop3vjd");
+  </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const liveFeedToggle = document.getElementById('liveFeedToggle');
+
+    liveFeedToggle.addEventListener('change', function() {
+      fetch('/update-livefeed-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: '<%= user.username %>',
+          liveFeedEnabled: liveFeedToggle.checked,
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.success) {
+          console.error('Failed to update live feed status');
+        }
+      });
+    });
+  });
+
+</script>
+
+<style>
+
+    /* The container */
+    .livecheck {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  padding-top: 5px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: .7em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all .3s;
+}
+
+/* Hide the browser's default checkbox */
+.livecheck input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #72122C;
+  border: 0.25em solid currentColor;
+  border-radius: 0.15em;
+  transition: all .3s;
+}
+
+/* On mouse-over, add a grey background color */
+.livecheck:hover input ~ .checkmark {
+  background-color: #189136;
+  transition: all .3s;
+}
+
+/* When the checkbox is checked, add a blue background */
+.livecheck input:checked ~ .checkmark {
+  background-color: green;
+  transition: all .3s;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.livecheck input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.livecheck .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  transition: all .3s;
+}
+  </style>
+
+
+
 </head>
 <body>
  
 
   <div class="maincontainer">
-    <img class="logo" src="/images/ea_large_logo_full_blk.png">
+    <img class="dashlogo" src="/images/ea_large_logo_full_blk.png">
     <h4>Welcome, <%= user.username %> </h4>
 
     <% if (locals.success) { %>
         <p class="success-message"><%= success %></p>
     <% } %>
 
-    
+
+
+
+   <!-- livefeed checkbox  OLD 
+<label for="liveFeedToggle">Enable View Live Feed Button for Guests:</label>
+<input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>> -->
+
+
+
    <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" title="(because uploading isn't just for guests)">Start Uploading Images </p></a>
    
     <br>
     <a href="/livefeed/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
-   
+   <!-- livefeed checkbox  -->
+<label for="liveFeedToggle" class="livecheck">Enable View Live Feed Button for Guests:
+  <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
+  <span class="checkmark"></span>
+</label>
+  <!-- End livefeed checkbox  -->
     
     <br>
 
@@ -46,11 +175,11 @@
 <!-- The QR Modal -->
 <div id="id01" class="w3-modal">
   <div class="w3-modal-content">
-    <div class="w3-container">
+    <div class="qr-container">
       <span onclick="document.getElementById('id01').style.display='none'"
       class="w3-button w3-display-topright">&times;</span>
       <a href="<%= qrCodeDataURL %>" download><img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="w3-image eacenter"></a> <br>
-      <p>This is a QR code that you can use to share with event guests to allow them to upload images. They can point their phone's
+      <p>Above is a custom QR code generated just for you that you can use to share with event guests to allow them to upload images. They can point their phone's
          camera at it and then click on the link it generates. It's much easier than typing it in to a web browser.
         If you click (or tap) on it it will download to your device so you can print it, or even upload it to the live feed so all your
          guests can see it and start uploading pictures for you.</p><br><br><br>
@@ -69,7 +198,7 @@
     <!-- The help Modal -->
     <div id="id02" class="w3-modal">
       <div class="w3-modal-content">
-        <div class="w3-container">
+        <div class="qr-container">
           <span onclick="document.getElementById('id02').style.display='none'"
           class="w3-button w3-display-topright">&times;</span>
           <div class="helptext">
@@ -98,15 +227,14 @@
           
             <h3>You get the goods</h3>
             <p>When the event is over, the event host can download every file that was shared by guests in one convenient zip file. Archive it for saffety, or because you aren't scraping images from some social media platform, for printing.
-               
-             <p class="eacenter">Still have questions? Contact us at <a href="mailto:customersupport@everafter.pics"target="_blank">  customersupport@everafter.pics</a></p>  
+              <br><br><br><br>
+             <p class="eacenter">Still have questions? Read our <a href="/faq.html"target="_blank">F.A.Q. here </a>, or contact us at <a href="mailto:customersupport@everafter.pics"target="_blank">  customersupport@everafter.pics</a></p>  
           </div>
         </div>
       </div>
     </div>
 
 
-  
 </div>
 
 <script>
@@ -123,8 +251,13 @@
       modal2.style.display = "none";
     }
   }
+
+
+
 </script>
-  <!-- Include footer -->
+
+
+<br><br><br><!-- Include footer -->
   <%- include('partials/footer') %>
 </body>
 </html>

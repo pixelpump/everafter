@@ -24,7 +24,9 @@ body {
 }
 
 
-
+a {
+  text-decoration: none;
+}
 
 
 
@@ -53,6 +55,31 @@ body {
   }
 }
 
+.dashlogo {
+  z-index: 2;
+  -webkit-filter: drop-shadow(2px 2px 5px #1b1b1b);
+  filter: drop-shadow(2px 2px 5px #151515);
+  width: 40vw;
+  max-width: 200px;
+  opacity: 1;
+  padding-top: 10vh;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 600px) {
+  .dashlogo {
+      width: 90vw;
+      padding-top: 3vh;
+  }
+}
+
+@media (max-width: 800px) {
+  .dashlogo {
+      width: 80vw;
+      padding-top: 3vh;
+  }
+}
+
 .logoindex {
   z-index: 2;
   -webkit-filter: drop-shadow(2px 2px 5px #1b1b1b);
@@ -64,17 +91,19 @@ body {
 }
 
 /* Media query for mobile screens */
-@media (max-width: 600px) {
-  .logoindex {
-      width: 90vw;
-      padding-top: 10vh;
-  }
-}
+
 
 @media (max-width: 800px) {
   .logoindex {
       width: 80vw;
-      padding-top: 3vh;
+      padding-top: 20vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .logoindex {
+      width: 90vw;
+      padding-top: 25vh;
   }
 }
 
@@ -118,11 +147,11 @@ body {
   text-align: center;
 }
 
-input {
+/*input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  }
+  }*/
 
   section {
     padding: 5vw;
@@ -652,8 +681,7 @@ input[type="submit"].login:focus{outline: none;}
 
 .checkout_notes {
   min-height: 40px;
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding: 40px;
   color: #363636;
 }
 
@@ -765,7 +793,7 @@ input[type="submit"].login:focus{outline: none;}
    
  }
  .eabuttonsubtext {
-     color: #6e6868;
+     color: #eae4e4;
      font-size: .8em;
      max-width: 300px;
  }
@@ -859,11 +887,27 @@ font-weight: 700;
 text-align: left;
 padding: 30px;
 }
+
+
+
+
 .smallqr {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 80%;
+}
+
+@media (max-width: 800px) {
+  .smallqr  {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .smallqr {
+    width: 95%;
+  }
 }
 
 .demoalert {
@@ -897,5 +941,31 @@ padding: 30px;
 
 .fbvideo {
 
+
+}
+.qr-container {
+  padding: 68px;
+  background-color: #0f0f0ff2;
+  text-align: center;
+}
+.qr-container a {
+  color: #a70101;
+}
+
+
+@media (max-width: 800px) {
+  .qr-container  {
+    padding: 38px;
+  }
+}
+
+@media (max-width: 600px) {
+  .qr-container {
+    padding: 12px;
+  }
+}
+
+#liveButton {
+text-align: center;
 
 }
