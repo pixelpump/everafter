@@ -158,9 +158,10 @@
    <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" title="(because uploading isn't just for guests)">Start Uploading Images </p></a>
    
     <br>
-    <a href="/livefeed/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
+    <a href="/livefeed_public/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
+    <a href="/moderation/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is where you will moderate incoming images)">Moderate Images </p></a>
    <!-- livefeed checkbox  -->
-<label for="liveFeedToggle" class="livecheck">Enable View Live Feed Button for Guests:
+<label for="liveFeedToggle" class="livecheck">Enable View Live Feed Button for Guests
   <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
   <span class="checkmark"></span>
 </label>

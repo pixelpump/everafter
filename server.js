@@ -43,7 +43,7 @@ const QRCode = require('qrcode');
 const app = express();
 const multer = require('multer');
 const archiver = require('archiver');
-
+//const Image = require('./server.js'); //path to image moodel
 const YOUR_DOMAIN = 'https://everafter.pics';
 const options = {
   key: fs.readFileSync('/etc/letsencrypt/live/everafter.pics/privkey.pem'),
@@ -222,7 +222,82 @@ const User = mongoose.model('User', UserSchema);
 
 
 ///mongo image moderation
+const ImageSchema = new mongoose.Schema({
+  userId: { type: String, ref: 'User' },
+  filename: String,
+  status: { type: String, default: 'pending' } // can be 'pending', 'approved', 'rejected'
+});
 
+const Image = mongoose.model('Image', ImageSchema);
+
+app.get('/get-public-latest-images/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log("Type of userId:", typeof userId);  // This will likely be 'string'
+    const images = await Image.find({ userId, status: 'approved' });
+    res.json({ files: images.map(image => image.filename) });
+  } catch (err) {
+    console.error("Error in /get-public-latest-images/:userId: ", err);  
+    res.status(500).send('Error fetching images');
+  }
+});
+
+// Example server-side code to fetch all images
+app.get('/get-all-images/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  
+  try {
+    const images = await Image.find({ 
+      userId: userId,
+      status: { $in: ['approved', 'pending', 'rejected'] }
+    });
+    
+    console.log("Images fetched:", images);
+    res.json({ files: images });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.post('/approve-image/:imageId', async (req, res) => {
+  try {
+    const imageId = req.params.imageId;
+    await Image.updateOne({ _id: imageId }, { status: 'approved' });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).send('Error approving image');
+  }
+});
+app.post('/reject-image/:imageId', async (req, res) => {
+  try {
+    const imageId = req.params.imageId;
+    await Image.updateOne({ _id: imageId }, { status: 'rejected' });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).send('Error rejecting image');
+  }
+});
+
+// Fetches only 'approved' images
+app.get('/get-moderated-images/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const images = await Image.find({ userId, status: 'approved' });
+    res.json({ files: images });
+  } catch (err) {
+    res.status(500).send('Error fetching images');
+  }
+});
+
+app.post('/update-image-status', async (req, res) => {
+  try {
+    const { userId, filename, status } = req.body; // assume these are sent in the request body
+    await Image.updateOne({ userId, filename }, { status });
+    res.json({ message: 'Status updated' });
+  } catch (err) {
+    res.status(500).send('Error updating image status');
+  }
+});
 
 // Passport setup
 passport.use(new LocalStrategy(User.authenticate()));
@@ -384,7 +459,21 @@ app.get('/livefeed', ensurePaid, async (req, res) => {
   }
 });
 
+app.get('/livefeed', ensurePaid, async (req, res) => {
+  try {
+      const qrCodeURL = `https://everafter.pics/public-upload/${req.user.username}`;
+      const options = {scale: 20,   };
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeURL, options);
+      
 
+      console.log("QR Code Data URL:", qrCodeDataURL);  // Log the data URL for debugging
+
+      res.render('dashboard_paid', { user: req.user, qrCodeDataURL: qrCodeDataURL });
+  } catch (error) {
+      console.error("Error generating QR code:", error);
+      res.render('dashboard_paid', { user: req.user });  // Fallback if QR code generation fails
+  }
+});
 
 app.get('/get-public-latest-images/:userId', (req, res) => {
   const { userId } = req.params;
@@ -438,19 +527,41 @@ app.post('/public-upload/:userId/submit', upload.array('sampleFile', 10), (req, 
     
 });
 
-app.post('/admin-upload/:userId/submit', upload.array('sampleFile', 10), (req, res) => {
-  const fileInfos = req.files.map(file => ({ name: file.filename, path: `/eauploads/${req.params.userId}/${file.filename}` }));
-  res.json({ success: true, files: fileInfos });
+// app.post('/admin-upload/:userId/submit', upload.array('sampleFile', 10), (req, res) => {
+//  const fileInfos = req.files.map(file => ({ name: file.filename, path: `/eauploads/${req.params.userId}/${file.filename}` }));
+//  res.json({ success: true, files: fileInfos });
   
-});
-
-
-  
+//});
 
 app.get('/admin-upload/:userId', (req, res) => {
   const userId = req.params.userId;
   // You may want to check if this userId corresponds to a paid user
   res.render('admin-upload', { userId });
+});
+  
+
+app.post('/admin-upload/:userId/submit', upload.array('sampleFile', 10), async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const fileInfos = req.files.map(file => {
+      // Create a new image document for each uploaded file
+      const newImage = new Image({
+        userId: userId,
+        filename: file.filename,
+        status: 'pending'
+      });
+      
+      // Save the new image document to MongoDB
+      newImage.save();
+
+      return { name: file.filename, path: `/eauploads/${userId}/${file.filename}` };
+    });
+    
+    res.json({ success: true, files: fileInfos });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send('Internal server error');
+  }
 });
 
 app.get('/public-upload/:userId', (req, res) => {
@@ -630,6 +741,8 @@ app.get('/dashboard', (req, res) => {
 
 
 
+
+
   // Public live feed route without image moderation
   app.get('/livefeed_public/:userId', async (req, res) => {
     const userId = req.params.userId;
@@ -640,6 +753,11 @@ app.get('/dashboard', (req, res) => {
 app.get('/livefeed/:userId', ensureAuthenticated, async (req, res) => {
   const userId = req.params.userId;
   res.render('livefeed', { userId });
+});
+
+app.get('/moderation/:userId', ensureAuthenticated, async (req, res) => {
+  const userId = req.params.userId;
+  res.render('moderation', { userId });
 });
 
 

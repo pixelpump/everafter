@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Everafter Public Upload</title>
-    <link rel="stylesheet" href="/css/live.css">
+    <link rel="stylesheet" href="/css/moderation.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/w3.css">
     <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
@@ -13,25 +13,7 @@
 </head>
 
 <style> 
-.image-container {
 
-}
-
-.image-wrapper {
-  padding-top: 40px;
-  padding-left: 40px;
-}
-
-.button-wrapper {
-
-}
-.moderatebuttons {
-  
-  position: absolute;
-  top: 23px;
-  right: 3px;
-
-}
 
 </style>
 <script>
@@ -63,11 +45,11 @@
     <button onclick="toggleModal()" class="menu-item"title="Open Help"><i class="fa-solid fa-circle-info" style="color: #f0f0f0;"></i> </button>
     <google-cast-launcher></google-cast-launcher>
 
-    <div id="moderationContainer">
+    <!--<div id="moderationContainer">
       <button onclick="toggleModerationMode()">Toggle Moderation Dashboard</button>
-      <button onclick="fetchModerationImages()">Refresh Images</button>
+      <button onclick="fetchModerationImages()">Refresh Images</button> 
      
-    </div>
+    </div> -->
   </div>
  
 
@@ -138,8 +120,8 @@ END QR CODE BACKGROUND -->
 
      <!-- <h1>Live Feed for User: <%= userId %></h1> -->
      <div id="mainimagewrap">
-    <div id="mainImage1" class="mainImage"></div>
-    <div id="mainImage2" class="mainImage"></div>
+    <!--<div id="mainImage1" class="mainImage"></div>
+    <div id="mainImage2" class="mainImage"></div> -->
     <div id="imageFeed" class="imagefeed"></div>
   </div>
     <!-- END MAIN IMAGE FEEDS-->
@@ -174,7 +156,7 @@ function addModerationButton() {
 ////image moderation /////////////////////////
 
 const userId = "<%= userId %>"; // Make sure this line is at the top of your script
-let isModerationMode = false;
+let isModerationMode = true;
 let isModerationEnabled = true; // For turning moderation completely on/off
 
 // Always fetch moderated images for the main feed
@@ -201,13 +183,22 @@ function renderImages(data) {
   imageArray = data.files.filter(file => file.status === 'approved').map(file => file.filename);
   
   // Update the main image
-  updateMainImage();
+  // updateMainImage();  // Uncomment this line if updateMainImage is defined and you want to call it here
 }
+
+// function renderImages(data) {
+//   // Update imageArray for main feed
+//   imageArray = data.files.filter(file => file.status === 'approved').map(file => file.filename);
+  
+//   // Update the main image
+//   updateMainImage(); dsfsdf
+// }
 
 // Function to toggle the moderation mode
 function toggleModerationMode() {
   isModerationMode = !isModerationMode;
   console.log("Moderation Mode:", isModerationMode);
+
 }
 
 // Function to toggle complete moderation on/off
@@ -217,12 +208,26 @@ function toggleModerationEnabled() {
   fetchMainFeedImages();  // Refresh the main feed
 }
 
+
+
+
+
+
+
+
+
 // MODERATION /////////////////////////////////////
 fetchMainFeedImages();
 
+
+
 // Declare imageArray if not already declared
 let imageArray = [];
-////keep this one ////
+
+
+
+
+////IMAGE FEED CODE ////
 function fetchModerationImages() {
   let url = isModerationMode ? `/get-all-images/${userId}` : `/get-moderated-images/${userId}`;
   fetch(url)
@@ -232,12 +237,18 @@ function fetchModerationImages() {
     const imageFeed = document.getElementById('imageFeed');
     imageFeed.innerHTML = '';  // Clear existing thumbnails
     
+    // Sort the files array based on the timestamp in the filename in descending order
+    data.files.sort((a, b) => {
+      const timestampA = parseInt(a.filename.split('-')[1], 10);
+      const timestampB = parseInt(b.filename.split('-')[1], 10);
+      return timestampB - timestampA;
+    });
+    
     // Update imageArray based on the moderation mode
     if (isModerationMode) {
       imageArray = data.files.map(file => file.filename);
     } else {
       imageArray = data.files.filter(file => file.status === 'approved').map(file => file.filename);
-
     }
     
     data.files.forEach(file => {
@@ -257,11 +268,12 @@ function fetchModerationImages() {
      // Add a green border for approved images
       if (file.status === 'approved') {
         img.style.border = '1px solid green';
-       }
+      }
       
       // Add a red border for rejected images
       if (file.status === 'rejected') {
-        img.style.border = '1px solid red';       }
+        img.style.border = '1px solid red';
+      }
 
       imgDiv.appendChild(img);
 
@@ -285,7 +297,7 @@ function fetchModerationImages() {
     });
 
     // Call updateMainImage() to immediately update the main image
-    updateMainImage();
+    //updateMainImage();
   });
 }
 
@@ -313,66 +325,7 @@ function rejectImage(imageId) {
   });
 }
 
-// Fetch and populate images
-// function fetchModerationImages() {
-//   let url = `/get-all-images/${userId}`;
-//   fetch(url)
-//   .then(response => response.json())
-//   .then(data => {
-//     const imageFeed = document.getElementById('imageFeed');
-//     imageFeed.innerHTML = '';  // Clear existing thumbnails
-    
-//     // Update imageArray for main feed
-//     imageArray = data.files.filter(file => file.status === 'approved').map(file => file.filename);
 
-//     // Populate thumbnails
-//     data.files.forEach(file => {
-//       // Skip rejected images if not in moderation mode
-//       if (file.status === 'rejected' && !isModerationMode) {
-//         return;
-//       }
-
-//       const imgDiv = document.createElement('div');
-//       imgDiv.className = 'image-wrapper';
-
-//       const img = document.createElement('img');
-//       img.src = `/eauploads/${userId}/${file.filename}`;
-//       img.width = 180;
-//       img.style.padding = '10px';
-
-//       // Add a green border for approved images
-//       if (file.status === 'approved') {
-//         img.style.border = '1px solid green';
-//       }
-      
-//       // Add a red border for rejected images
-//       if (file.status === 'rejected') {
-//         img.style.border = '1px solid red';
-//       }
-
-//       imgDiv.appendChild(img);
-
-//       if (isModerationMode) {
-//   const approveBtn = document.createElement('button');
-//   approveBtn.innerHTML = '<i class="fa-solid fa-thumbs-up" style="color: #1ab71d;"></i>';
-//   approveBtn.onclick = () => approveImage(file._id);
-//   imgDiv.appendChild(approveBtn);
-
-  
-
-//   const rejectBtn = document.createElement('button');
-//   rejectBtn.innerHTML = '<i class="fa-solid fa-thumbs-down" style="color: #c3131c;"></i>';
-//   rejectBtn.onclick = () => rejectImage(file._id);
-//   imgDiv.appendChild(rejectBtn);
-// }
-
-//       imageFeed.appendChild(imgDiv);
-//     });
-    
-//     // Update the main image
-//     updateMainImage();
-//   });
-// }
      
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -465,68 +418,33 @@ let currentImageIndex = 0;
 let currentMainImage = 1; // Start with mainImage1
 
 
-///////////////////////////////// OLD image delete function ///////////////////////////////////////////////
-// function fetchLatestImages() {   //renamed this for a test
-//     fetch(`/get-public-latest-images/${userId}`)
-//   .then(response => response.json())
-//     .then(data => {
-//         imageFeed.innerHTML = '';  // Clear existing thumbnails
-//         imageArray = data.files;  // Update the image array
-
-//        data.files.forEach(file => {
-//             const imgDiv = document.createElement('div');
-//             imgDiv.className = 'image-wrapper';
-
-//             const img = document.createElement('img');
-//             img.src = `/eauploads/${userId}/${file}`;
-//             img.width = 180;
-//             img.style.padding = '10px';
-
-//            const deleteBtn = document.createElement('span');
-//             deleteBtn.className = 'delete-icon';
-//             deleteBtn.innerHTML = '<i class="fa-solid fa-delete-left" style="color: #b8141d;"></i>';
-//             deleteBtn.onclick = () => deleteImage(file);
-
-//             imgDiv.appendChild(img);
-//             imgDiv.appendChild(deleteBtn);
-
-//             imageFeed.appendChild(imgDiv);
-//         });
-
-//         updateMainImage();
-//     })
-//     .catch(error => {
-//        console.error('Error:', error);
-//     });
-//     }
-/////////////////////////////////end image delete function ///////////////////////////////////////////////
 
 
 
 
 
 /////////////////////////////////Main Image Feed ///////////////////////////////////////////////
-function updateMainImage() {
-  if (imageArray.length > 0) {
-    const mainImage = document.getElementById(`mainImage${currentMainImage}`);
-    const blurredMainImage = document.getElementById(`blurredMainImage${currentMainImage}`);
+// function updateMainImage() {
+//   if (imageArray.length > 0) {
+//     const mainImage = document.getElementById(`mainImage${currentMainImage}`);
+//     const blurredMainImage = document.getElementById(`blurredMainImage${currentMainImage}`);
     
-    mainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
-    blurredMainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
+//     mainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
+//     blurredMainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
     
-    mainImage.style.opacity = 1;
-    blurredMainImage.style.opacity = 1;
+//     mainImage.style.opacity = 1;
+//     blurredMainImage.style.opacity = 1;
 
-    const otherMainImage = document.getElementById(`mainImage${currentMainImage === 1 ? 2 : 1}`);
-    const otherBlurredMainImage = document.getElementById(`blurredMainImage${currentMainImage === 1 ? 2 : 1}`);
+//     const otherMainImage = document.getElementById(`mainImage${currentMainImage === 1 ? 2 : 1}`);
+//     const otherBlurredMainImage = document.getElementById(`blurredMainImage${currentMainImage === 1 ? 2 : 1}`);
     
-    otherMainImage.style.opacity = 0;
-    otherBlurredMainImage.style.opacity = 0;
+//     otherMainImage.style.opacity = 0;
+//     otherBlurredMainImage.style.opacity = 0;
 
-    currentMainImage = currentMainImage === 1 ? 2 : 1;
-    currentImageIndex = (currentImageIndex + 1) % imageArray.length;
-  }
-}
+//     currentMainImage = currentMainImage === 1 ? 2 : 1;
+//     currentImageIndex = (currentImageIndex + 1) % imageArray.length;
+//   }
+// }
 /////////////////////////////////END Main Image Feed ///////////////////////////////////////////////
 
 
@@ -542,28 +460,7 @@ function toggleImageFeed() {
 
 
 
-function deleteImage(imageName) {
-  fetch(`/eauploads/${userId}/${imageName}`, {
-    method: 'DELETE'
-  })
-  .then(response => {
-    if (response.ok) {
-      // Remove the image from the UI
-      const imageElements = document.querySelectorAll(`.image-wrapper img[src="/eauploads/${userId}/${imageName}"]`);
-      imageElements.forEach(elem => {
-        elem.parentElement.remove();
-      });
-      // Update the main image array
-      imageArray = imageArray.filter(file => file !== imageName);
-      updateMainImage();
-    } else {
-      console.error('Failed to delete image');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
+
 
 // Get the modal
 var modal = document.getElementById('id01');
@@ -577,10 +474,10 @@ window.onclick = function(event) {
 
 
 // Fetch latest images every 5 seconds
-setInterval(fetchModerationImages, 5000);
+setInterval(fetchModerationImages, 1000);
 
 
     </script>
-        <script src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+
 </body>
 </html>
