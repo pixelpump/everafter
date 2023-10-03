@@ -11,16 +11,15 @@ body{
             #imageFeed {
             background-color: rgba(62, 62, 62, 0.95);
             overflow: scroll;
-            position: fixed;
+            /* position: fixed;
             bottom: 22px;
-            left: 0;
-            width: 100%;
+            left: 0; */
             max-height: 100vh;
             padding-top: 0px;
-            z-index: 9; /* This will make it float on top of the mainImage */
+            /* z-index: 9; This will make it float on top of the mainImage */
             opacity: 1;
-            transition: opacity 1s ease-in-out;
-            overflow-x: hidden; /* Hide horizontal scrollbar */
+            /* transition: opacity 1s ease-in-out; */
+            overflow-x: hidden; 
             }
 
             .image-wrapper {
@@ -28,15 +27,16 @@ body{
                 display: inline-block;
                 padding-top: 40px;
                 padding-left: 40px;
+                
               }
     
               .image-container {
-
+                
               }
               
               
               .button-wrapper {
-              
+              padding-top: 30px;
               }
               .moderatebuttons {
                 
@@ -85,9 +85,15 @@ max-width: 25%;
 .sidemenuwrapper{
     position:absolute;
     top:-2px;
-    right:7px;
+    right:43px;
     opacity: 30%;
     z-index: 99999;
+}
+
+@media screen and (max-width: 600px) {
+  .sidemenuwrapper {
+    top:222px;
+  }
 }
 
 
@@ -95,12 +101,17 @@ max-width: 25%;
      #sidemenu {
     position:absolute;
     top:45px;
-    right:7px;
+    right:43px;
     max-width: 230px;
     background-color: #333;
     color: white;
     z-index: 12;
             
+          }
+          @media screen and (max-width: 600px) {
+            #sidemenu {
+              top:272px;
+            }
           }
          /* Style for links inside the menu */
     #sidemenu a {

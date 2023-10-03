@@ -28,6 +28,8 @@
   </script>
 
 <script>
+
+  // Toggle Livefeed button for public
   document.addEventListener('DOMContentLoaded', function() {
     const liveFeedToggle = document.getElementById('liveFeedToggle');
 
@@ -51,13 +53,15 @@
     });
   });
 
+  
+
 </script>
 
 <style>
 
     /* The container */
     .livecheck {
-  display: block;
+  /*display: block;*/
   position: relative;
   padding-left: 35px;
   padding-top: 5px;
@@ -83,7 +87,7 @@
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0;
+  top: 7px;
   left: 0;
   height: 25px;
   width: 25px;
@@ -130,6 +134,97 @@
   transform: rotate(45deg);
   transition: all .3s;
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #27dc0f;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #08973a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.slidersidetext {
+  padding-left: 20vw;
+  padding-right: 20vw;
+  padding-top: 5px;
+  margin-bottom: 12px;
+  /* max-width: 300px; */
+  cursor: pointer;
+  /* font-size: .7em; */
+
+}
+#setupmenuopenclosed {
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden;
+    max-height: 0; /* This will initially hide the content */
+    opacity: 0;
+    text-align: center; 
+    padding-bottom: 50px;
+}
+
+#OKGOmenuopenclosed {
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden;
+    max-height: 0; /* This will initially hide the content */
+    opacity: 0;
+    text-align: center;
+    padding-bottom: 50px;
+}
+#setupFunction {
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden;
+    max-height: 0; /* This will initially hide the content */
+    opacity: 0;
+}
+
   </style>
 
 
@@ -154,42 +249,90 @@
 <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>> -->
 
 
+<button class="eabutton" title="(Just a couple of things to do before you get started uploading images)" onclick="setupFunction()">SETUP</button>
+<br>
 
-   <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" title="(because uploading isn't just for guests)">Start Uploading Images </p></a>
-   
-    <br>
-    <a href="/livefeed_public/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
-    <a href="/moderation/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is where you will moderate incoming images)">Moderate Images </p></a>
-   <!-- livefeed checkbox  -->
-<label for="liveFeedToggle" class="livecheck">Enable View Live Feed Button for Guests
-  <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
-  <span class="checkmark"></span>
-</label>
-  <!-- End livefeed checkbox  -->
-    
-    <br>
 
-    <!-- Trigger/Open the QR Modal -->
+
+<div id="setupmenuopenclosed" >
+
+  <!-- livefeed checkbox  -->
+<label for="liveFeedToggle" class="livecheck">
+<input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
+<span class="checkmark"></span>
+</label><br><br><br>Toggle the "View Live Feed" Button on or off for all Guests. <br>
+*Turn this off (not green) if you want to keep everything really private. Guests won't get a link to the live feed from  <br>
+their upload page. They will only be able to upload, and not to see what has been uploaded (Unless you put it up on a big screen). <br>
+<!-- End livefeed checkbox  -->
+
+
+
+
+<!-- <a href="/moderation/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is where you will moderate incoming images)">Moderate Uploaded Images </p></a> -->
+
+
+<!-- moderation checkbox  -->
+<label class="switch"> 
+<input type="checkbox" id="moderationToggle" checked>
+<span class="slider round"></span>
+</label> <p class="slidersidetext">When this switch is green you have enabled image moderation. 
+No images will be visible in your live-feed until you approve them. To do that click the button labeled "Moderate Uploaded Images" that will appear below.</p>
+<!-- end moderation checkbox  -->
+
+
+
+<br>
+<!-- Trigger/Open the QR Modal -->
 <button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i> Your Event QR Code </button>
 
 
 <!-- The QR Modal -->
 <div id="id01" class="w3-modal">
-  <div class="w3-modal-content">
-    <div class="qr-container">
-      <span onclick="document.getElementById('id01').style.display='none'"
-      class="w3-button w3-display-topright">&times;</span>
-      <a href="<%= qrCodeDataURL %>" download><img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="w3-image eacenter"></a> <br>
-      <p>Above is a custom QR code generated just for you that you can use to share with event guests to allow them to upload images. They can point their phone's
-         camera at it and then click on the link it generates. It's much easier than typing it in to a web browser.
-        If you click (or tap) on it it will download to your device so you can print it, or even upload it to the live feed so all your
-         guests can see it and start uploading pictures for you.</p><br><br><br>
-    </div>
-  </div>
+<div class="w3-modal-content">
+<div class="qr-container">
+<span onclick="document.getElementById('id01').style.display='none'"
+class="w3-button w3-display-topright">&times;</span>
+<a href="<%= qrCodeDataURL %>" download><img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="w3-image eacenter"></a> <br>
+<p>Above is a custom QR code generated just for you that you can use to share with event guests to allow them to upload images. They can point their phone's
+   camera at it and then click on the link it generates. It's much easier than typing it in to a web browser.
+  If you click (or tap) on it it will download to your device so you can print it, or even upload it to the live feed so all your
+   guests can see it and start uploading pictures for you.</p><br><br><br>
+</div>
+</div>
 </div>
 <br><br>
 <a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file">One Click Download </a> 
+</div>
+<!-- END OF SETUP DIV -->
 
+
+<button class="eabutton" title="(Let's start uploading and maybe moderating images for the live feed)" onclick="OKGOFunction()">OK GO</button>
+<br>
+
+<div id="OKGOmenuopenclosed">
+<!-- moderation button div starts here -->
+<div id="moderation_button_toggle">
+<a href="/moderation/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is where you will moderate incoming images)">Moderate Uploaded Images </p></a>
+</div>
+<!-- moderation button div ENDS here -->
+
+<!-- UPLOAD IMAGES STARTS HERE -->
+
+
+
+ <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" 
+    title="(because uploading isn't just for guests. You can upload whatever you like, as long as it is a png, jpg or gif)">Upload Images </p></a>
+ 
+<!-- UPLOAD IMAGES ENDS HERE -->
+
+
+
+
+    <br>
+    <a href="/livefeed_public/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
+    
+  
+   
 <br><br>
 
     <!-- Trigger/Open the Help Modal -->
@@ -234,11 +377,48 @@
         </div>
       </div>
     </div>
+  </div>
 
+
+
+  
 
 </div>
 
 <script>
+
+// function setupFunction() {
+//   var x = document.getElementById("setupmenuopenclosed");
+//   if (x.style.display === "none") {
+//     x.style.display = "block";
+//   } else {
+//     x.style.display = "none";
+//   }
+// }
+
+function setupFunction() {
+    var x = document.getElementById("setupmenuopenclosed");
+    if (x.style.maxHeight === "0px" || x.style.maxHeight === '') {
+        x.style.maxHeight = "500px";  // or whatever maximum height you expect the content to have
+        x.style.opacity = "1";
+    } else {
+        x.style.maxHeight = "0px";
+        x.style.opacity = "0";
+    }
+}
+
+function OKGOFunction() {
+    var x = document.getElementById("OKGOmenuopenclosed");
+    if (x.style.maxHeight === "0px" || x.style.maxHeight === '') {
+        x.style.maxHeight = "500px";  // or whatever maximum height you expect the content to have
+        x.style.opacity = "1";
+    } else {
+        x.style.maxHeight = "0px";
+        x.style.opacity = "0";
+    }
+}
+
+
   // Get the modals
   var modal1 = document.getElementById('id01');
   var modal2 = document.getElementById('id02');
@@ -253,6 +433,57 @@
     }
   }
 
+// Toggle moderation
+
+document.getElementById('moderationToggle').addEventListener('change', function() {
+  const username = '<%= user.username %>';  // Replace with the actual username or retrieve it dynamically
+  
+  // Get the moderation_button_toggle div
+  var moderationButtonToggleDiv = document.getElementById('moderation_button_toggle');
+  
+  // Toggle the display of the moderation_button_toggle div
+  moderationButtonToggleDiv.style.display = this.checked ? 'block' : 'none';
+
+  fetch('/toggle-moderation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username: username,  // Include the username field in the request body
+      moderation: this.checked,  // Send the new moderation state to the server
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+});
+
+// document.getElementById('moderationToggle').addEventListener('change', function() {
+//   const username = '<%= user.username %>';  // Replace with the actual username or retrieve it dynamically
+
+//   fetch('/toggle-moderation', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       username: username,  // Include the username field in the request body
+//       moderation: this.checked,  // Send the new moderation state to the server
+//     }),
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     console.log('Success:', data);
+//   })
+//   .catch((error) => {
+//     console.error('Error:', error);
+//   });
+// });
 
 
 </script>

@@ -33,17 +33,20 @@
    <button onclick="showhidemainmenu()"class="menu-item"title="Toggle this menu"><i class="fa-solid fa-gear" style="color: #f0f0f0;"></i></button>
   </div>
    <div id="sidemenu">
-    <a href="javascript:window.location.href=window.location.href" class="menu-item" title="Refresh the live feed"><i class="fa-solid fa-arrows-rotate" style="color: #f0f0f0;"></i></a>
-    <a href="javascript:void(0);" onclick="toggleImageFeed()" class="menu-item" title="Toggle Moderation mode"><i class="fa-solid fa-image" style="color: #f0f0f0;"></i></a>
+    <a href="javascript:window.location.href=window.location.href" class="menu-item" title="Refresh all the images"><i class="fa-solid fa-arrows-rotate" style="color: #f0f0f0;"></i></a>
+    <!-- <a href="javascript:void(0);" onclick="toggleImageFeed()" class="menu-item" title="Toggle Moderation mode"><i class="fa-solid fa-image" style="color: #f0f0f0;"></i></a> -->
     
-    <button onclick="myFunction1()" class="menu-item"title="Set the background to light mode"><i class="fa-regular fa-lightbulb" style="color: #c5c8ce;"></i></button>
+    <!-- <button onclick="myFunction1()" class="menu-item"title="Set the background to light mode"><i class="fa-regular fa-lightbulb" style="color: #c5c8ce;"></i></button>
     <button onclick="myFunction2()" class="menu-item"title="Set the background to dark mode"><i class="fa-solid fa-lightbulb" style="color: #2a2b2d;"></i></button>
-    <button onclick="myFunction3()" class="menu-item"title="Toggle blurred background"><i class="fa-solid fa-eye" style="color: #c5c8ce;"></i></button>
+    <button onclick="myFunction3()" class="menu-item"title="Toggle blurred background"><i class="fa-solid fa-eye" style="color: #c5c8ce;"></i></button> -->
     <!--<button onclick="myFunction4()" class="menu-item"title="Toggle shadow effect"><i class="fa-solid fa-images" style="color: #b0b0b0;"></i></button> -->
     <button onclick="toggleFullScreen()" class="menu-item" title="Toggle this page full screen"><i class="fa-solid fa-expand" style="color: #c5c8ce;"></i></i></i></button>
     
     <button onclick="toggleModal()" class="menu-item"title="Open Help"><i class="fa-solid fa-circle-info" style="color: #f0f0f0;"></i> </button>
-    <google-cast-launcher></google-cast-launcher>
+    
+
+    <button onclick="window.location.href='/dashboard_paid';" class="menu-item"title="Back to your dashboard"><i class="fa-solid fa-screwdriver-wrench" style="color: #858a93;"></i></i> </button>
+    
 
     <!--<div id="moderationContainer">
       <button onclick="toggleModerationMode()">Toggle Moderation Dashboard</button>
@@ -79,24 +82,27 @@ END QR CODE BACKGROUND -->
     <header class="w3-container w3-light-gray"> 
       <span onclick="document.getElementById('id01').style.display='none'" 
       class="w3-button w3-display-topright">&times;</span>
-      <h2>Everafter Help</h2>
+      <h2>Everafter Image Moderation Help</h2>
     </header>
     <div class="w3-container">
 
-      <img src="/images/help_menu_live.png"class="w3-image">
+      <!-- <img src="/images/help_menu_live.png"class="w3-image"> -->
       <br><br>
-      <h3>Live Feed Controls</h3>
-      <p>Live feed controls can be accessed from the live feed menu which looks like a little grey gear in the top right of the live feed screen.
-        Clicking the gear icon toggles the rest of the menu on and off. The idea is that you'd toggle it off while casting the live feed to the main screen, just so it's not a distraction.
+      <h3>Incoming Image Moderation </h3>
+      <p>When image moderation is set to "on" no images that anyone uploads will be viewable on the live feed until they are approved by you. 
       </p>
-      <h3>Refreshing the image feed</h3>
-      <p>As there can sometimes be hundreds of images uploaded from an event and the uploaded images loop through a cycle, there may be an occasion where a you might not want to wait for an image that was just loaded to loop around to be shown. Clicking refresh will reset the live feed to immediately start again with the last image uploaded being shown first, the second last uploaded to be shown second, etc..  </p>
+      <h3>Allowing Images</h3>
+      <p> Just click the <i class="fa-solid fa-thumbs-up" style="color: #1ab71d;"></i> green thumbs up at the top right of the corresponding image you'd like to approve and have shown on the live feed. </p>
       
-      <img src="/images/help_moderate.png" class="w3-image">
-      <h3>The Moderation Panel</h3>
-      <p>The moderation panel allows you to delete images from the live feed. Clicking the moderation panel icon will bring up a gallery of every image that has so far been uploaded.
-        Each of those images have a small red "X" in their top right corner. Clicking that red "X" will send that image to a deleted folder. The image is not gone forever, it is just no longer visible in the live feed.
-        When the event is over and you get your one-click download link, the deleted files will be included in that zip file. 
+      
+      <h3>Rejecting Images</h3>
+      <p>Just click the <i class="fa-solid fa-thumbs-down" style="color: #c3131c;"></i> red thumbs down at the top right of the corresponding image you'd like to reject and have NOT shown on the live feed.
+      </p>
+
+      <h3>Other Stuff</h3>
+      <p>The latest images will always appear at the top of the moderation window. When an image has been approved by you it will be indicated as such by a green outline (indicating that you clicked the green thumbs up icon beside the image), rejected images are outlined in red,
+         and images that have yet to be moderated will have no outline at all. If you are wondering why you have no images appearing in the live feed at all, it's likely because you have not approved any yet :) 
+
       </p>
     </div>
     <footer class="w3-container w3-light-gray">
@@ -111,10 +117,10 @@ END QR CODE BACKGROUND -->
  
 <!-- MAIN IMAGE FEEDS-->
 <!-- BLURRED MAIN IMAGE FEEDS--->
-<div id="blurredmain">
+<!-- <div id="blurredmain">
 <div id="blurredMainImage1" class="mainimage_blurred"></div>
 <div id="blurredMainImage2" class="mainimage_blurred"></div>
-</div> 
+</div>  -->
 <!-- END BLURRED MAIN IMAGE FEEDS-->
 
 
@@ -134,24 +140,24 @@ END QR CODE BACKGROUND -->
 <script>
 
 
-function addModerationButton() {
-  // Create a new button element
-  const btn = document.createElement("button");
+// function addModerationButton() {
+//   // Create a new button element
+//   const btn = document.createElement("button");
 
-  // Set the button's text content and onclick function
-  btn.textContent = "Toggle Moderation Dashboard";
-  btn.onclick = toggleModerationMode;
+//   // Set the button's text content and onclick function
+//   btn.textContent = "Toggle Moderation Dashboard";
+//   btn.onclick = toggleModerationMode;
 
-  // Get the imageFeed element
-  const imageFeed = document.getElementById("imageFeed");
+//   // Get the imageFeed element
+//   const imageFeed = document.getElementById("imageFeed");
 
-  // Prepend the button to the top of imageFeed
-  if (imageFeed.firstChild) {
-    imageFeed.insertBefore(btn, imageFeed.firstChild);
-  } else {
-    imageFeed.appendChild(btn);
-  }
-}
+//   // Prepend the button to the top of imageFeed
+//   if (imageFeed.firstChild) {
+//     imageFeed.insertBefore(btn, imageFeed.firstChild);
+//   } else {
+//     imageFeed.appendChild(btn);
+//   }
+// }
 
 ////image moderation /////////////////////////
 
@@ -262,17 +268,17 @@ function fetchModerationImages() {
 
       const img = document.createElement('img');
       img.src = `/eauploads/${userId}/${file.filename}`;
-      img.width = 180;
+      img.width = 280;
       img.style.padding = '10px'; 
 
      // Add a green border for approved images
       if (file.status === 'approved') {
-        img.style.border = '1px solid green';
+        img.style.border = '11px solid green';
       }
       
       // Add a red border for rejected images
       if (file.status === 'rejected') {
-        img.style.border = '1px solid red';
+        img.style.border = '11px solid red';
       }
 
       imgDiv.appendChild(img);
@@ -328,18 +334,18 @@ function rejectImage(imageId) {
 
      
 
-document.addEventListener("DOMContentLoaded", function() {
-  addModerationButton();
-  const imageFeed = document.getElementById('imageFeed');
-  console.log("Element:", imageFeed);
-  console.log("Type:", typeof imageFeed);
+// document.addEventListener("DOMContentLoaded", function() {
+//   addModerationButton();
+//   const imageFeed = document.getElementById('imageFeed');
+//   console.log("Element:", imageFeed);
+//   console.log("Type:", typeof imageFeed);
   
-  if (imageFeed && typeof imageFeed.appendChild === 'function') {
-    // Your existing code
-  } else {
-    console.error("imageFeed is not a DOM element with an appendChild method");
-  }
-});
+//   if (imageFeed && typeof imageFeed.appendChild === 'function') {
+//     // Your existing code
+//   } else {
+//     console.error("imageFeed is not a DOM element with an appendChild method");
+//   }
+// });
 
 ////end image moderation //////////////////
 
@@ -423,31 +429,6 @@ let currentMainImage = 1; // Start with mainImage1
 
 
 
-/////////////////////////////////Main Image Feed ///////////////////////////////////////////////
-// function updateMainImage() {
-//   if (imageArray.length > 0) {
-//     const mainImage = document.getElementById(`mainImage${currentMainImage}`);
-//     const blurredMainImage = document.getElementById(`blurredMainImage${currentMainImage}`);
-    
-//     mainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
-//     blurredMainImage.style.backgroundImage = `url('/eauploads/${userId}/${imageArray[currentImageIndex]}')`;
-    
-//     mainImage.style.opacity = 1;
-//     blurredMainImage.style.opacity = 1;
-
-//     const otherMainImage = document.getElementById(`mainImage${currentMainImage === 1 ? 2 : 1}`);
-//     const otherBlurredMainImage = document.getElementById(`blurredMainImage${currentMainImage === 1 ? 2 : 1}`);
-    
-//     otherMainImage.style.opacity = 0;
-//     otherBlurredMainImage.style.opacity = 0;
-
-//     currentMainImage = currentMainImage === 1 ? 2 : 1;
-//     currentImageIndex = (currentImageIndex + 1) % imageArray.length;
-//   }
-// }
-/////////////////////////////////END Main Image Feed ///////////////////////////////////////////////
-
-
 /////////////////////////////////Toggle the Image Feed Div ///////////////////////////////////////////////
 function toggleImageFeed() {
  const imageFeed = document.getElementById('imageFeed');
@@ -474,7 +455,7 @@ window.onclick = function(event) {
 
 
 // Fetch latest images every 5 seconds
-setInterval(fetchModerationImages, 1000);
+setInterval(fetchModerationImages, 5000);
 
 
     </script>

@@ -213,12 +213,17 @@ const UserSchema = new mongoose.Schema({
   password: String,
   email: { type: String, unique: true, required: true },
   hasPaid: { type: Boolean, default: false },  // set default to false, use true in the beta :)
-  liveFeedEnabled: { type: Boolean, default: true }
+  liveFeedEnabled: { type: Boolean, default: true },
+  moderation: { type: Boolean, default: true }  // Default to true for moderation enabled
 });
 
 UserSchema.plugin(passportLocalMongoose);
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema); 
+
+
+
+
 
 
 ///mongo image moderation
@@ -228,7 +233,31 @@ const ImageSchema = new mongoose.Schema({
   status: { type: String, default: 'pending' } // can be 'pending', 'approved', 'rejected'
 });
 
+
+
+
+/////////Switch between defaulting uploading images as Pending or Approved//////////////////// 
+
+ImageSchema.pre('save', async function(next) {
+  try {
+    if (this.isNew) {  // Check if it's a new document being saved
+      const user = await User.findOne({ username: this.userId });
+      if (user) {
+        console.log('User moderation setting:', user.moderation);  // Log the moderation setting
+        this.status = user.moderation ? 'pending' : 'approved';  // Set the status based on the user's moderation setting
+      } else {
+        console.error('User not found:', this.userId);  // Log error if user is not found
+      }
+    }
+    next();  // Continue to the next middleware or save operation
+  } catch (error) {
+    console.error('Error in pre-save middleware:', error);  // Log any errors that occur
+    next(error);  // Pass the error to the next middleware or error handler
+  }
+});
+
 const Image = mongoose.model('Image', ImageSchema);
+
 
 app.get('/get-public-latest-images/:userId', async (req, res) => {
   try {
@@ -319,6 +348,35 @@ app.post('/update-livefeed-status', async (req, res) => {
 });
 
 //////////////////check if live on or off in the DB ///////////////////
+
+// Create an Express route to handle the AJAX request,
+//  update the user's moderation setting in the database, and send a response back to the client
+
+app.post('/toggle-moderation', async (req, res) => {
+  const { username, moderation } = req.body;  // Extract username and moderation from the request body
+  
+  console.log(`Received request to toggle moderation for user ${username} to ${moderation}`);  // Log the received data
+
+  try {
+    // Attempt to update the user's moderation setting based on the provided username
+    const result = await User.updateOne({ username: username }, { moderation: moderation });
+    
+    console.log('Update result:', result);  // Log the result of the update operation
+
+    // If the update operation is successful, respond with a success message
+    res.status(200).json({ success: true });
+  } catch (error) {
+    // If there's an error during the operation, log the error and respond with an error message
+    console.error('Error updating moderation:', error);
+    res.status(500).json({ success: false });
+  }
+});
+
+
+
+
+
+
 app.get('/checkLiveFeedStatus/:userId', async (req, res) => {
   try {
       const userId = req.params.userId;
@@ -521,11 +579,11 @@ app.use('/eauploads', express.static(path.join(__dirname, 'eauploads')));
 
 
 
-app.post('/public-upload/:userId/submit', upload.array('sampleFile', 10), (req, res) => {
-    const fileInfos = req.files.map(file => ({ name: file.filename, path: `/eauploads/${req.params.userId}/${file.filename}` }));
-    res.json({ success: true, files: fileInfos });
+// app.post('/public-upload/:userId/submit', upload.array('sampleFile', 10), (req, res) => {
+//     const fileInfos = req.files.map(file => ({ name: file.filename, path: `/eauploads/${req.params.userId}/${file.filename}` }));
+//     res.json({ success: true, files: fileInfos });
     
-});
+// });
 
 // app.post('/admin-upload/:userId/submit', upload.array('sampleFile', 10), (req, res) => {
 //  const fileInfos = req.files.map(file => ({ name: file.filename, path: `/eauploads/${req.params.userId}/${file.filename}` }));
@@ -563,6 +621,100 @@ app.post('/admin-upload/:userId/submit', upload.array('sampleFile', 10), async (
     res.status(500).send('Internal server error');
   }
 });
+
+app.post('/public-upload/:userId/submit', upload.array('sampleFile', 10), async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const fileInfos = req.files.map(file => {
+      // Create a new image document for each uploaded file
+      const newImage = new Image({
+        userId: userId,
+        filename: file.filename,
+        status: 'pending'
+      });
+      
+      // Save the new image document to MongoDB
+      newImage.save();
+
+      return { name: file.filename, path: `/eauploads/${userId}/${file.filename}` };
+    });
+    
+    res.json({ success: true, files: fileInfos });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
+//////////////////UPLOAD FROM DASHBOARD TWEAK ////////////////////////////////////////
+
+app.get('/dashboard_paid/:userId', (req, res) => {
+  const userId = req.params.userId;
+  // You may want to check if this userId corresponds to a paid user
+  res.render('dashboard_paid', { userId });
+});
+  
+
+app.post('/dashboard_paid/:userId/submit', upload.array('sampleFile', 10), async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const fileInfos = req.files.map(file => {
+      // Create a new image document for each uploaded file
+      const newImage = new Image({
+        userId: userId,
+        filename: file.filename,
+        status: 'pending'
+      });
+      
+      // Save the new image document to MongoDB
+      newImage.save();
+
+      return { name: file.filename, path: `/eauploads/${userId}/${file.filename}` };
+    });
+    
+    res.json({ success: true, files: fileInfos });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.post('/dashboard_paid/:userId/submit', upload.array('sampleFile', 10), async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const fileInfos = req.files.map(file => {
+      // Create a new image document for each uploaded file
+      const newImage = new Image({
+        userId: userId,
+        filename: file.filename,
+        status: 'pending'
+      });
+      
+      // Save the new image document to MongoDB
+      newImage.save();
+
+      return { name: file.filename, path: `/eauploads/${userId}/${file.filename}` };
+    });
+    
+    res.json({ success: true, files: fileInfos });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+///////////////////////END UPLOAD FROM DASH TWEAK /////////////////////////////
+
+
+
+
+
+
+
+
+
+
 
 app.get('/public-upload/:userId', (req, res) => {
   const userId = req.params.userId;
@@ -838,17 +990,44 @@ const deleteFilesInDir = (dirPath) => {
   }
 };
 
+// Function to delete files in a directory and corresponding DB entries
+async function deleteFilesAndDBEntries(dir, userId) {
+  try {
+      // Delete DB entries
+      await Image.deleteMany({ userId: userId });
+
+      // Delete files
+      fs.readdir(dir, (err, files) => {
+          if (err) {
+              console.error('Error reading directory:', err);
+              return;
+          }
+
+          // Delete files
+          for (const file of files) {
+              fs.unlink(path.join(dir, file), err => {
+                  if (err) {
+                      console.error('Error deleting file:', err);
+                  }
+              });
+          }
+      });
+  } catch (err) {
+      console.error('Error deleting DB entries:', err);
+  }
+}
+
 // Set interval to delete files in "eauploads/demo" every 15 minutes (900000 milliseconds)
 setInterval(() => {
   const demoDir = './eauploads/demo';
-  
+
   if (fs.existsSync(demoDir)) {
-    deleteFilesInDir(demoDir);
-    console.log(`Deleted files in ${demoDir} at ${new Date().toISOString()}`);
+      deleteFilesAndDBEntries(demoDir, 'demo');
+      console.log(`Deleted files and DB entries in ${demoDir} at ${new Date().toISOString()}`);
   } else {
-    console.log(`Directory ${demoDir} doesn't exist.`);
+      console.log(`Directory ${demoDir} doesn't exist.`);
   }
-  
+
 }, 900000);
 
 

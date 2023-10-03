@@ -35,15 +35,18 @@
             <br><br><p class="eabuttonsubtext">Click the button above to select an image file to upload to the big screen, and also to the host for safekeeping.</p>
         </form>
         <a href="/livefeed_public/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> 
-        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p>
+        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p> <br>
 
-        <a href="/dashboard_paid" class="eabutton"> Dashboard</a> 
+        <a href="/dashboard_paid" class="eabutton">Back to your Dashboard</a> 
         <p class="eabuttonsubtext">Click above to go back to your admin dashboard.</p>
     </div>
 
 
 
     <script>
+
+
+/////////////////////////////////////IMAGE UPLOAD/////////////////////////////////////////
         document.addEventListener('DOMContentLoaded', function() {
             const uploadForm = document.getElementById('uploadForm');
             const successMessage = document.getElementById('successMessage');
@@ -97,7 +100,7 @@
             });
         });
 
-      
+      /////////////////////////////END IMAGE UPLOAD //////////////////////////////////////////////////
 
       
 
