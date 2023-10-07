@@ -18,7 +18,7 @@
     
     </div>
     <div class="demoalert">
-    <div class="w3-panel w3-green w3-display-container w3-center">
+    <div class="w3-panel w3-black w3-display-container w3-center">
         <span onclick="this.parentElement.style.display='none'"
         class="w3-button w3-large w3-display-topright ">&times;</span>
         
@@ -29,15 +29,15 @@
         <h3>Hey there good lookin'!</h3> <h4>Please read this first. It'll help. Honest.</h4>
         <p> Any images uploaded here will  automatically be deleted every<span class="blink"> 15 minutes.</span> So, they might all just suddenly go
              away while you're messing around. That obviously won't happen with the real version. </p>
-        <p>For this demonstration the username is<span class="blink"> demo</span> and the password is also<span class="blink"> demo.</span> Have fun, play nice :)</p>
+        <!-- <p>For this demonstration the username is<span class="blink"> demo</span> and the password is also<span class="blink"> demo.</span> Have fun, play nice :)</p> -->
         <br><br><span onclick="this.parentElement.style.display='none'"class="w3-button w3-white w3-border w3-center ">OK Let's get on with it</span><br><br><br><br> 
       </div></div>
 
     <form action="/login" method="post">
-        <label for="username">Username (Type: "demo"):</label>
-        <input type="text" name="username" required class="form-style" value="demo">>
+        <label for="username">Username ("demo"):</label>
+        <input type="text" name="username" required class="form-style" value="demo">
         <br>
-        <label for="password">Password (Type: "demo"):</label>
+        <label for="password">Password ("demo"):</label>
         <input type="password" name="password" required autocomplete="on"class="form-style" value="demo">
         <br>
         <input type="submit" value="Try Me!"class="demoeabutton">

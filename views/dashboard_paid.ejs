@@ -10,7 +10,8 @@
     <meta property="og:url" content="https://everafter.pics">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
     <!--<script src="/js/ea.js"></script> -->
     <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,7 +59,18 @@
 </script>
 
 <style>
-
+.w3-image{max-width:100%;height:auto}img{vertical-align:middle}a{color:inherit}
+.w3-modal{z-index:3;display:none;padding-top:100px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.4)}
+.w3-modal-content{margin:auto;background-color:#fff;position:relative;padding:0;outline:0;width:600px}
+.w3-display-topleft{position:absolute;left:0;top:0}.w3-display-topright{position:absolute;right:0;top:0}
+.w3-display-bottomleft{position:absolute;left:0;bottom:0}.w3-display-bottomright{position:absolute;right:0;bottom:0}
+.w3-display-middle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%)}
+.w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
+.w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
+.w3-display-topmiddle{position:absolute;left:50%;top:0;transform:translate(-50%,0%);-ms-transform:translate(-50%,0%)}
+.w3-display-bottommiddle{position:absolute;left:50%;bottom:0;transform:translate(-50%,0%);-ms-transform:translate(-50%,0%)}
+.w3-display-container:hover .w3-display-hover{display:block}.w3-display-container:hover span.w3-display-hover{display:inline-block}.w3-display-hover{display:none}
+.w3-display-position{position:absolute}
     /* The container */
     .livecheck {
   /*display: block;*/
@@ -192,8 +204,7 @@ input:checked + .slider:before {
 }
 
 .slidersidetext {
-  padding-left: 20vw;
-  padding-right: 20vw;
+
   padding-top: 5px;
   margin-bottom: 12px;
   /* max-width: 300px; */
@@ -203,11 +214,13 @@ input:checked + .slider:before {
 }
 #setupmenuopenclosed {
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    overflow: hidden;
+    /* overflow: hidden; */
     max-height: 0; /* This will initially hide the content */
     opacity: 0;
     text-align: center; 
-    padding-bottom: 50px;
+    margin-bottom: 50px;
+    max-width: 275px;
+    z-index: -1;
 }
 
 #OKGOmenuopenclosed {
@@ -224,7 +237,9 @@ input:checked + .slider:before {
     max-height: 0; /* This will initially hide the content */
     opacity: 0;
 }
-
+.dashboardtext {
+  max-width: 300px;
+}
   </style>
 
 
@@ -249,7 +264,7 @@ input:checked + .slider:before {
 <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>> -->
 
 
-<button class="eabutton" title="(Just a couple of things to do before you get started uploading images)" onclick="setupFunction()">SETUP</button>
+<button class="eabutton" title="(Just a couple of things to do before you get started uploading images)" onclick="setupFunction()"><i class="fa-solid fa-toggle-on" style="color: #ffffff;"></i> SETUP</button>
 <br>
 
 
@@ -260,11 +275,14 @@ input:checked + .slider:before {
 <label for="liveFeedToggle" class="livecheck">
 <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
 <span class="checkmark"></span>
-</label><br><br><br>Toggle the "View Live Feed" Button on or off for all Guests. <br>
-*Turn this off (not green) if you want to keep everything really private. Guests won't get a link to the live feed from  <br>
-their upload page. They will only be able to upload, and not to see what has been uploaded (Unless you put it up on a big screen). <br>
+</label>
 <!-- End livefeed checkbox  -->
-
+<br><br><span class="dashboardtext">Toggle the switch above to turn the "View Live Feed" Button on (green) or off for all Guests. <br><br>
+  <!-- Turn this off (not green) if you want to keep everything really private. Guests won't get a link to the live feed from  
+  their upload page. They will only be able to upload, and not to see what has been uploaded (Unless you put it up on a big screen). <br> <br>Toggle it green and guests will 
+be presented a link on their phone along with the "Image Upload" button so they can see the contents of the live feed on their device (as well as the big screen).
+ This is great feature for guests who perhaps can't attend and 
+want to watch as photos are added from home.</span><br><br> -->
 
 
 
@@ -276,15 +294,52 @@ their upload page. They will only be able to upload, and not to see what has bee
 <input type="checkbox" id="moderationToggle" checked>
 <span class="slider round"></span>
 </label> <p class="slidersidetext">When this switch is green you have enabled image moderation. 
-No images will be visible in your live-feed until you approve them. To do that click the button labeled "Moderate Uploaded Images" that will appear below.</p>
+<!-- No images will be visible in your live-feed until you approve them. To do that click the button labeled "Moderate
+ Uploaded Images" that will appear below when this is set to on (green).
+ Again, if image moderation
+is set to "on" you won't see any images in the live feed until you moderate them by setting them to "approved" by
+ clicking the green thumbs up in the top right corner of the image while in moderation mode.</p> -->
 <!-- end moderation checkbox  -->
+
+<p class="slidersidetext">Click the "Setup" button again to hide this when you are ready:) </p> 
 
 
 
 <br>
-<!-- Trigger/Open the QR Modal -->
-<button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i> Your Event QR Code </button>
 
+<!-- <br><br>
+<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file">One Click Download </a>  -->
+</div>
+<!-- END OF SETUP DIV -->
+
+
+ 
+
+
+
+
+<!-- moderation button div starts here -->
+<div id="moderation_button_toggle">
+<a href="/moderation/<%= user.username %>" target="_blank"> <p class="eamodbutton" title="(this is where you will moderate incoming images)"><i class="fa-solid fa-circle-check" style="color: #ffffff;"></i> Moderate Uploaded Images </p></a>
+</div>
+<!-- moderation button div ENDS here -->
+
+<!-- UPLOAD IMAGES STARTS HERE -->
+ <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" title="(because uploading isn't just for guests. You can upload whatever you like, as long as it is a png, jpg or gif)"><i class="fa-solid fa-file-arrow-up" style="color: #f8f9fc;"></i> Upload Images </p></a>
+<!-- UPLOAD IMAGES ENDS HERE -->
+
+<!-- LIVEFEED BUTTON STARTS HERE -->
+    <a href="/livefeed_public/<%= user.username %>" target="_blank"> 
+      <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)"><i class="fa-solid fa-eye" style="color: #ffffff;"></i> View the Live Feed </p>
+      </a>
+<!-- LIVEFEED BUTTON ENDS HERE -->    
+  
+   
+<br><br>
+<!-- Trigger/Open the QR Modal -->
+<button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i><i class="fa-solid fa-qrcode" style="color: #ffffff;"></i> Your Event QR Code </button>
+<br><br>
+<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file"><i class="fa-solid fa-circle-down" style="color: #ffffff;"></i> One Click Download </a> 
 
 <!-- The QR Modal -->
 <div id="id01" class="w3-modal">
@@ -301,43 +356,9 @@ class="w3-button w3-display-topright">&times;</span>
 </div>
 </div>
 <br><br>
-<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file">One Click Download </a> 
-</div>
-<!-- END OF SETUP DIV -->
-
-
-<button class="eabutton" title="(Let's start uploading and maybe moderating images for the live feed)" onclick="OKGOFunction()">OK GO</button>
-<br>
-
-<div id="OKGOmenuopenclosed">
-<!-- moderation button div starts here -->
-<div id="moderation_button_toggle">
-<a href="/moderation/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is where you will moderate incoming images)">Moderate Uploaded Images </p></a>
-</div>
-<!-- moderation button div ENDS here -->
-
-<!-- UPLOAD IMAGES STARTS HERE -->
-
-
-
- <a href="/admin-upload/<%= user.username %>"> <p class="eabutton" 
-    title="(because uploading isn't just for guests. You can upload whatever you like, as long as it is a png, jpg or gif)">Upload Images </p></a>
- 
-<!-- UPLOAD IMAGES ENDS HERE -->
-
-
-
-
-    <br>
-    <a href="/livefeed_public/<%= user.username %>" target="_blank"> <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)">View the Live Feed </p></a>
-    
-  
-   
-<br><br>
-
     <!-- Trigger/Open the Help Modal -->
     <button onclick="document.getElementById('id02').style.display='block'"
-    class="eabutton">Help!</button>
+    class="eabutton"><i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> Help!</button>
     
     <!-- The help Modal -->
     <div id="id02" class="w3-modal">
@@ -383,7 +404,7 @@ class="w3-button w3-display-topright">&times;</span>
 
   
 
-</div>
+
 
 <script>
 
@@ -461,6 +482,24 @@ document.getElementById('moderationToggle').addEventListener('change', function(
   .catch((error) => {
     console.error('Error:', error);
   });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', async function() {
+  const username = '<%= user.username %>';
+  try {
+    const response = await fetch(`/checkModerationStatus/${username}`);
+    const data = await response.json();
+    const moderationToggle = document.getElementById('moderationToggle');
+    const moderationButtonToggleDiv = document.getElementById('moderation_button_toggle');
+
+    moderationToggle.checked = data.moderation;
+    moderationButtonToggleDiv.style.display = data.moderation ? 'block' : 'none';
+
+  } catch (error) {
+    console.error('Error fetching moderation status:', error);
+  }
 });
 
 // document.getElementById('moderationToggle').addEventListener('change', function() {

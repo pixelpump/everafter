@@ -1,188 +1,166 @@
+body {
+  background-color: rgb(0, 0, 0);
+  font-family: "Nunito", sans-serif;
+}
 
-body{
-    background-color: rgb(0, 0, 0);
-    font-family: 'Nunito', sans-serif;
-    }
-
-
-
-
-
-            #imageFeed {
-            background-color: rgba(62, 62, 62, 0.95);
-            overflow: scroll;
-            /* position: fixed;
+#imageFeed {
+  background-color: rgba(62, 62, 62, 0.95);
+  overflow: scroll;
+  /* position: fixed;
             bottom: 22px;
             left: 0; */
-            max-height: 100vh;
-            padding-top: 0px;
-            /* z-index: 9; This will make it float on top of the mainImage */
-            opacity: 1;
-            /* transition: opacity 1s ease-in-out; */
-            overflow-x: hidden; 
-            }
+  max-height: 100vh;
+  padding-top: 0px;
+  /* z-index: 9; This will make it float on top of the mainImage */
+  opacity: 1;
+  /* transition: opacity 1s ease-in-out; */
+  overflow-x: hidden;
+}
 
-            .image-wrapper {
-                position: relative;
-                display: inline-block;
-                padding-top: 40px;
-                padding-left: 40px;
-                
-              }
-    
-              .image-container {
-                
-              }
-              
-              
-              .button-wrapper {
-              padding-top: 30px;
-              }
-              .moderatebuttons {
-                
-                position: absolute;
-                top: 23px;
-                right: 3px;
-              
-              }
-              
- 
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 40px;
+  padding-left: 40px;
+}
+
+.image-container {
+}
+
+.button-wrapper {
+  padding-top: 30px;
+}
+.moderatebuttons {
+  position: absolute;
+  top: 23px;
+  right: 3px;
+}
+
 .refresh {
-position: absolute;
-top: 0px;
-right: 0px;
-opacity: .2;
-z-index: 999;
-max-width: 25%;
-    }
-    
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  opacity: 0.2;
+  z-index: 999;
+  max-width: 25%;
+}
+
 .closeslides {
- position: absolute;
- bottom: 200px;
- right: 0px;
- opacity: .2;
- z-index: 999;
- max-width: 25%;
-    }
-    
+  position: absolute;
+  bottom: 200px;
+  right: 0px;
+  opacity: 0.2;
+  z-index: 999;
+  max-width: 25%;
+}
 
+.delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: 0.3s;
+  padding-left: 4px;
+}
+.delete-icon:hover {
+  transform: scale(1.2);
+  transition: 0.3s;
+}
 
-      
-      .delete-icon {
-        position: absolute;
-        top: 0;
-        right: 0;
-        transition: .3s;
-        padding-left: 4px;
-      }
-      .delete-icon:hover {
-          
-          transform: scale(1.2);
-          transition: .3s;
-      }
-      
-
-.sidemenuwrapper{
-    position:absolute;
-    top:-2px;
-    right:43px;
-    opacity: 30%;
-    z-index: 99999;
+.sidemenuwrapper {
+  position: absolute;
+  top: -2px;
+  right: 43px;
+  opacity: 30%;
+  z-index: 99999;
 }
 
 @media screen and (max-width: 600px) {
   .sidemenuwrapper {
-    top:222px;
+    top: 222px;
   }
 }
 
+#sidemenu {
+  position: absolute;
+  top: 45px;
+  right: 43px;
+  max-width: 230px;
+  background-color: #333;
+  color: white;
+  z-index: 12;
+}
+@media screen and (max-width: 600px) {
+  #sidemenu {
+    top: 272px;
+  }
+}
+/* Style for links inside the menu */
+#sidemenu a {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  border-radius: 4px;
+}
 
+#sidemenu a:hover {
+  background-color: #555;
+}
 
-     #sidemenu {
-    position:absolute;
-    top:45px;
-    right:43px;
-    max-width: 230px;
-    background-color: #333;
-    color: white;
-    z-index: 12;
-            
-          }
-          @media screen and (max-width: 600px) {
-            #sidemenu {
-              top:272px;
-            }
-          }
-         /* Style for links inside the menu */
-    #sidemenu a {
-        display: block;
-        margin: 10px 0;
-        padding: 10px;
-        text-decoration: none;
-        color: white;
-        border-radius: 4px;
-      }
-  
-      #sidemenu a:hover {
-        background-color: #555;
-      }
+.menu-item {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #444;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
 
-      .menu-item {
-        display: block;
-        margin: 10px 0;
-        padding: 10px;
-        text-decoration: none;
-        color: white;
-        background-color: #444;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-align: center;
-      }
+@media screen and (max-width: 600px) {
+  .menu-item {
+    min-width: 77px;
+  }
+}
 
-      @media screen and (max-width: 600px) {
-        .menu-item {
-          min-width: 77px;
-        }
-      }
-  
-      .menu-item:hover {
-        background-color: #555;
-      }
+.menu-item:hover {
+  background-color: #555;
+}
 
-      #blurredmain {
-        visibility: hidden;
-      }
-      
-      #id01 {
-      
-        z-index: 11;
-      }
-        #myDIV {
-          width: 100%;
-          height: 100vh;
-          background-color: black;
-          
-        }
-      
-        #blurredmain {
-      
-        }
-      
-        .mainimage_blurred {
-          position: fixed;
-          z-index: 2;
-          filter: blur(55px);
-              width: 100%;
-              height: 100%;
-              transition: opacity 1s ease-in-out;
-              background-size: cover;
-              background-repeat: no-repeat;
-              background-position: center top;
-              background-attachment: fixed;
-        }
-      .preloader {
-        position: fixed;
-          bottom: 50vh;
-          right: 50vw;
-      }
+#blurredmain {
+  visibility: hidden;
+}
+
+#id01 {
+  z-index: 11;
+}
+#myDIV {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+}
+
+#blurredmain {
+}
+
+.mainimage_blurred {
+  position: fixed;
+  z-index: 2;
+  filter: blur(55px);
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s ease-in-out;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+}
+.preloader {
+  position: fixed;
+  bottom: 50vh;
+  right: 50vw;
+}

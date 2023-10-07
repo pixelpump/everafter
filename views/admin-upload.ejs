@@ -18,7 +18,7 @@
         
         <a href="/dashboard_paid"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
 
-
+        <img id="moderationImage" src="/images/moderation_notice_sm.png" alt="Moderation is on" style="display:none;">
         <br>
         <div id="thumbnails">
             <!-- Thumbnails will appear here -->
@@ -33,7 +33,15 @@
             </label>
             <input class="eabutton" type="file" id="sampleFile" name="sampleFile" multiple style="display:none;" />
             <br><br><p class="eabuttonsubtext">Click the button above to select an image file to upload to the big screen, and also to the host for safekeeping.</p>
-        </form>
+        </form><br><br>
+
+
+        <div id="moderationButton" style="display:none;">
+            <a href="/moderation/<%= userId %>" target="_blank">
+                <button class="eamodbutton">Moderate Uploaded Images</button>
+            </a>
+        </div> <br><br>
+
         <a href="/livefeed_public/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> 
         <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p> <br>
 
@@ -102,7 +110,32 @@
 
       /////////////////////////////END IMAGE UPLOAD //////////////////////////////////////////////////
 
-      
+      async function checkModerationStatus() {
+    const username = '<%= userId %>';  // Assume userId is the username; adjust if necessary
+    try {
+        const response = await fetch(`/checkModerationStatus/${username}`);
+        const data = await response.json();
+        const moderationButton = document.getElementById('moderationButton');
+        const moderationImage = document.getElementById('moderationImage');
+        
+        if(data.moderation) {
+            moderationButton.style.display = 'block';
+            moderationImage.style.display = 'block';
+        } else {
+            moderationButton.style.display = 'none';
+            moderationImage.style.display = 'none';
+        }
+
+    } catch (error) {
+        console.error('Error fetching moderation status:', error);
+    }
+}
+
+// Call the function when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    checkModerationStatus();
+    // ... rest of your DOMContentLoaded handler ...
+});
 
     </script>
 </body>

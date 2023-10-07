@@ -131,14 +131,14 @@ a {
 }
 @media (max-width: 600px) {
   .faqtext {
-      width: 60vw;
+      width: 98vw;
       
   }
 }
 
 @media (max-width: 800px) {
   .faqtext {
-      width: 70vw;
+      width: 98vw;
       
   }
 }
@@ -758,6 +758,37 @@ input[type="submit"].login:focus{outline: none;}
   text-align: center;
  }
 
+ .eamodbutton {
+  color: #f9f5f5;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 3.5em;
+  background: #35cc10e3;
+  border: 2px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px #14141480, -6px -6px 12px #2d292969;
+ }
+ 
+ .eamodbutton:active {
+  color: #bc4a4b;
+  box-shadow: inset 4px 4px 12px #580101,
+              inset -4px -4px 12px #430303;
+ }
+ .eamodbutton:hover {
+     background: #bc4a4b;
+     color: #eae9e9 !important;
+   
+ }
+ 
+ .eamodbutton > svg {
+   transition: transform .3s ease-in-out;
+ }
+ 
+ .eamodbutton:hover svg {
+   transform: translatey(-5px);
+   
+ }
 
 
 

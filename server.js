@@ -393,6 +393,23 @@ app.get('/checkLiveFeedStatus/:userId', async (req, res) => {
 });
 
 
+////for getting the state of moderation set by user //////////////
+
+app.get('/checkModerationStatus/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findOne({ username: userId });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.json({ moderation: user.moderation });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 
 
@@ -500,6 +517,33 @@ app.get('/dashboard_paid', ensurePaid, async (req, res) => {
       res.render('dashboard_paid', { user: req.user });  // Fallback if something fails
   }
 });
+
+
+app.get('/dashboard_paid2', ensurePaid, async (req, res) => {
+  try {
+      // Fetch user from the database
+      const user = await User.findOne({ username: req.user.username });
+
+      const qrCodeURL = `https://everafter.pics/public-upload/${user.username}`;
+      const options = { scale: 20 };
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeURL, options);
+
+      console.log("QR Code Data URL:", qrCodeDataURL);  // Log the data URL for debugging
+
+      res.render('dashboard_paid2', { 
+          user: user, 
+          qrCodeDataURL: qrCodeDataURL, 
+          liveFeedEnabled: user.liveFeedEnabled  // Pass the liveFeedEnabled field
+      });
+  } catch (error) {
+      console.error("Error:", error);
+      res.render('dashboard_paid2', { user: req.user });  // Fallback if something fails
+  }
+});
+
+
+
+
 
 app.get('/livefeed', ensurePaid, async (req, res) => {
   try {
@@ -705,6 +749,65 @@ app.post('/dashboard_paid/:userId/submit', upload.array('sampleFile', 10), async
 });
 
 ///////////////////////END UPLOAD FROM DASH TWEAK /////////////////////////////
+
+//////////////////DASHBOARD V2 ////////////////////////////////////////
+
+app.get('/dashboard_paid2/:userId', (req, res) => {
+  const userId = req.params.userId;
+  // You may want to check if this userId corresponds to a paid user
+  res.render('dashboard_paid', { userId });
+});
+  
+
+app.post('/dashboard_paid2/:userId/submit', upload.array('sampleFile', 10), async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const fileInfos = req.files.map(file => {
+      // Create a new image document for each uploaded file
+      const newImage = new Image({
+        userId: userId,
+        filename: file.filename,
+        status: 'pending'
+      });
+      
+      // Save the new image document to MongoDB
+      newImage.save();
+
+      return { name: file.filename, path: `/eauploads/${userId}/${file.filename}` };
+    });
+    
+    res.json({ success: true, files: fileInfos });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+app.post('/dashboard_paid2/:userId/submit', upload.array('sampleFile', 10), async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const fileInfos = req.files.map(file => {
+      // Create a new image document for each uploaded file
+      const newImage = new Image({
+        userId: userId,
+        filename: file.filename,
+        status: 'pending'
+      });
+      
+      // Save the new image document to MongoDB
+      newImage.save();
+
+      return { name: file.filename, path: `/eauploads/${userId}/${file.filename}` };
+    });
+    
+    res.json({ success: true, files: fileInfos });
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+///////////////////////END DASHBOARD V2 /////////////////////////////
 
 
 

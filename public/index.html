@@ -1,153 +1,420 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta property="og:title" content="Everafter: An Elegant Real-Time Photo Sharing for Events">
-    <meta property="og:description" content="Take complete control of your event photos.Full resolution, one click download.">
-    <meta property="og:image" content="https://everafter.pics/images/everafter_opengraph.png">
-    <meta property="og:url" content="https://everafter.pics">
-    <meta property="og:type" content="website">
-    <title>Everafter Pics </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <meta name="description" content="An elegant app for real-time photo sharing at weddings and events.">
-    <meta name="keywords" content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="/js/index.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMNZYYZD42"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="An elegant app for real-time photo sharing at weddings and events."
+    />
+    <meta
+      name="keywords"
+      content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography"
+    />
+    <meta
+      property="og:title"
+      content="Everafter: An Elegant Real-Time Photo Sharing for Events"
+    />
+    <meta
+      property="og:description"
+      content="Take complete control of your event photos.Full resolution, one click download."
+    />
+    <meta
+      property="og:image"
+      content="https://everafter.pics/images/everafter_opengraph.png"
+    />
+    <meta property="og:url" content="https://everafter.pics" />
+    <meta property="og:type" content="website" />
+    <title>Everafter Pics</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/index3style.css" />
+    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FMNZYYZD42"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  gtag('config', 'G-FMNZYYZD42');
-</script>
-<script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "j1edop3vjd");
-</script>
-
-<style>
-body {
-font-family: 'Nunito', sans-serif;
-    font-weight: 200;
-}
-</style>
-</head>
-<body>
-
-       
-
-    <header id="header">
-        <div class="vert-text">
-          <div class="p-img">
-          <img src="https://everafter.pics/images/ea_large_logo_full_blk.png" class="logoindex"/>
-      </div>
-
-      
-                  <h1 id="typer-size">                
-                      <!-- TEXTS -->
-                      <span id="typed"></span>
-                      <div id="typed-strings">
-                          
-                          <p>An elegant solution for event photography</p>
-                          <p>No reliance on social media</p>
-                          <p>No hashtags or apps</p>
-                          <p>Guests get a simple weblink to an upload page. </p>
-                          <p>During the event there's an elegant slideshow</p>
-                          <p>with tastefull effects</p>
-                          <p>and realtime image moderation...</p>
-                          <p>... because, well...</p>
-                          <p>people can be unpredictable.</p>
-                          <p>After the event, it's just one download</p>
-                          <p>Every photo in one place. </p>
-                          <p>Full resolution photos.</p>
-                          <p>Not tiny or compressed or cropped.</p>
-                          <p>And not scattered about the internets.</p>
-                          <p>It's a simple & elegant solution. </p>
-                          <p>Want to see it in action?</p>
-                          <p>Click the arrow below.</p>
-                          <p>The demo is compltetely free. </p>
-                          <p>Seriously. </p>
-                          <p>Heck, you don't even have to sign up. </p>
-                          <p>...</p>
-                          <p>Go ahead, click the arrow below.</p>
-                          <p>....</p>
-                          <p>.....</p>
-                          <p>......</p>
-                          <p>Or just use the scroll bar</p>
-                          <p>I'm not your mother.</p>
-                          <p>...</p>
-                          <p>....</p>
-                          <p>.....</p>
-                          <p>......</p>
-                          <p>You didn't click.</p>
-                          <p>Fine.</p>
-                          <p>I'll start over.</p>
-                          
-                          
-                          
-                      </div>
-                      <!-- TEXTS ENDS -->
-                  </h1>
-                  <!-- TITLE -->
-                  
-          <!--<h3>photos seen | photos saved | photos cherished</h3> -->
-          <a href="#contacts" class="nav-link" ><span class="demobuttonindex">D E M O</span></a>
-          <a href="#contacts" class="scroll-down nav-link"></a>
+      gtag("config", "G-FMNZYYZD42");
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "j1edop3vjd");
+    </script>
+  </head>
+  <body class="is-boxed has-animations">
+    <div class="body-wrap">
+      <header class="site-header">
+        <div class="container">
+          <div class="site-header-inner">
+            <div class="brand header-brand">
+              <h1 class="m-0">
+                <a href="#">
+                  <img
+                    class="header-logo-image"
+                    src="/images/ea_large_logo_full_blk.png"
+                    alt="Logo"
+                  />
+                </a>
+              </h1>
+            </div>
+          </div>
         </div>
       </header>
 
+      <main>
+        <section class="hero">
+          <div class="container">
+            <div class="hero-inner">
+              <div class="hero-copy">
+                <h1 class="hero-title mt-0">
+                  Crowdsource your event photography!
+                </h1>
+                <p class="hero-paragraph">
+                  Everyone has a great camera in their pocket these days. Make
+                  it simple for them to share their amazing photos with you!
+                </p>
+                <div class="hero-cta">
+                  <a class="button button-primary" href="/logindemo"
+                    >FREE DEMO</a
+                  ><!-- <a class="button" href="#">FREE DEMO</a>-->
+                </div>
+              </div>
+              <div class="hero-figure anime-element">
+                <svg
+                  class="placeholder"
+                  width="528"
+                  height="396"
+                  viewBox="0 0 528 396"
+                >
+                  <rect width="528" height="396" style="fill: transparent" />
+                </svg>
+                <div
+                  class="hero-figure-box hero-figure-box-01"
+                  data-rotation="45deg"
+                >
+                  <img src="/images/2.png" />
+                </div>
+                <div
+                  class="hero-figure-box hero-figure-box-02"
+                  data-rotation="-45deg"
+                >
+                  <img src="/images/5.jpg" />
+                </div>
+                <div
+                  class="hero-figure-box hero-figure-box-03"
+                  data-rotation="0deg"
+                >
+                  <img src="/images/9.png" />
+                </div>
+                <div
+                  class="hero-figure-box hero-figure-box-04"
+                  data-rotation="-135deg"
+                >
+                  <img src="/images/17.png" />
+                </div>
+                <div class="hero-figure-box hero-figure-box-05">
+                  <img src="/images/18.png" />
+                </div>
+                <div class="hero-figure-box hero-figure-box-06">
+                  <img src="/images/kidsrunning.png" />
+                </div>
+                <div class="hero-figure-box hero-figure-box-07">
+                  <img src="/images/1.jpg" />
+                </div>
+                <div
+                  class="hero-figure-box hero-figure-box-08"
+                  data-rotation="-22deg"
+                >
+                  <img src="/images/1.jpg" />
+                </div>
+                <div
+                  class="hero-figure-box hero-figure-box-09"
+                  data-rotation="-52deg"
+                >
+                  <img src="/images/9.png" />
+                </div>
+                <div
+                  class="hero-figure-box hero-figure-box-10"
+                  data-rotation="-50deg"
+                >
+                  <img src="/images/1.jpg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <!-- FOOTER  -->
-      <footer id="contacts">
-        <div class="eatextwall">
-          <div class="row">
-            <div class="text-center">
-              <a href="/logindemo" class="ieabutton">Free Demo </a> <br><br>
-                      <hr class="style17">
-      <!-- 		Wall of text		 -->
+        <section class="features section">
+          <div class="container">
+            <div class="features-inner section-inner has-bottom-divider">
+              <div class="features-wrap">
+                <div class="feature text-center is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img src="/images/oneclick.png" alt="Feature 01" />
+                    </div>
+                    <h4 class="feature-title mt-24">One Click Download</h4>
+                    <p class="text-sm mb-0">
+                      When your event is over, all of your images are in one
+                      place. A single click gets them all. No chasing down
+                      guests. No over compressed and cropped images. Simple.
+                    </p>
+                  </div>
+                </div>
+                <div class="feature text-center is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img src="/images/uploadicon.png" alt="uploads image" />
+                    </div>
+                    <h4 class="feature-title mt-24">Easy Uploads</h4>
+                    <p class="text-sm mb-0">
+                      Guests can easily upload their own photos. No app to
+                      download, no social media apps, heck, they don't even have
+                      to log in.
+                    </p>
+                  </div>
+                </div>
+                <div class="feature text-center is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img src="/images/qricon.png" alt="Feature 03" />
+                    </div>
+                    <h4 class="feature-title mt-24">Auto Generated QR Code</h4>
+                    <p class="text-sm mb-0">
+                      We generate a QR code for you, in advance. You can print
+                      it directly on to placecards on the table, add it to your
+                      invitations or even broadcast it to the big screen.
+                    </p>
+                  </div>
+                </div>
+                <div class="feature text-center is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img src="/images/feedicon.png" alt="Feature 04" />
+                    </div>
+                    <h4 class="feature-title mt-24">
+                      Elegant Custom Photo Montage
+                    </h4>
+                    <p class="text-sm mb-0">
+                      As images are uploaded they can be viewed on any device,
+                      including large screens you may have set up at your event.
+                      If you choose, you can also moderate images before they go
+                      "live."
+                    </p>
+                  </div>
+                </div>
+                <div class="feature text-center is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img src="/images/fullresicon.png" alt="Feature 05" />
+                    </div>
+                    <h4 class="feature-title mt-24">Full Resolution Photos</h4>
+                    <p class="text-sm mb-0">
+                      Unlike images shared via social media, Everafter images
+                      remain exactly as they were shot. They are not cropped or
+                      compressed and can later be printed in large format.
+                    </p>
+                  </div>
+                </div>
+                <div class="feature text-center is-revealing">
+                  <div class="feature-inner">
+                    <div class="feature-icon">
+                      <img src="/images/setupicon.png" alt="Feature 06" />
+                    </div>
+                    <h4 class="feature-title mt-24">Easy Set Up</h4>
+                    <p class="text-sm mb-0">
+                      Just sign up and everything is already set up. No stress.
+                      A simple toggle sets everything private or public -
+                      another toggles image moderation. That's it.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <div class="textjustify">
-        
-           <p> With Everafter, your guests are incentivised to share their photos at your event in real time. Not only can they effortlessly upload high-resolution
-              images directly to a private, secure platform that you control, but they get a dopamine hit when they see their photo up on the big screen.</p>
- 
-              <p>No more sifting through social media tags or waiting for that one friend to send their photos 'when they get a chance.' With a few
-           clicks, these cherished images are displayed elegantly on any big screen during the event, creating a dynamic, real-time photo gallery everyone can enjoy.</p>
- 
-           <p>The great thing about Everafter is how easily your guests will be able to start uploading. No hashtags, no tagging events or specific people and no installing apps. 
-             Everyone has a web browser on their phone and that's all your guests need to use Everafter. Simple. </p>
- 
-           <p> And when the event wraps up? You, the host, can easily download all these images in a single zip file, retaining the original quality.
-          No watermarks, no data mining, and no third-party interference. Just pure, unadulterated memories, ready for you to relive, share, or
-           archive. Everafter is more than a photo-sharing app; it's your key to owning your event's visual legacy.</p>
+        <section class="pricing section">
+          <div class="container-sm">
+            <div class="pricing-inner section-inner">
+              <div class="pricing-header text-center">
+                <h2 class="section-title mt-0">Sign Up Now!</h2>
+                <p class="section-paragraph mb-0">It's simple and secure.</p>
+              </div>
+              <div class="pricing-tables-wrap">
+                <div class="pricing-table">
+                  <div class="pricing-table-inner is-revealing">
+                    <div class="pricing-table-main">
+                      <div class="pricing-table-header pb-24">
+                        <div class="pricing-table-price">
+                          <span class="pricing-table-price-currency h2">$</span
+                          ><span class="pricing-table-price-amount h1">35</span
+                          ><span class="text-xs"> USD per event</span>
+                        </div>
+                      </div>
+                      <div
+                        class="pricing-table-features-title text-xs pt-24 pb-24"
+                      >
+                        What you will get
+                      </div>
+                      <ul class="pricing-table-features list-reset text-xs">
+                        <li>
+                          <span
+                            >14 days unlimited upload and download per
+                            event</span
+                          >
+                        </li>
+                        <li>
+                          <span
+                            >An Elegant Live Feed of Images (to broadcast to a
+                            big screen)</span
+                          >
+                        </li>
+                        <li>
+                          <span
+                            >Personalized QR Code Generated for your Event</span
+                          >
+                        </li>
+                        <li>
+                          <span>One Click Download of All Images</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="pricing-table-cta mb-8">
+                      <a
+                        class="button button-primary button-shadow button-block"
+                        href="/signup"
+                        >Sign Up Here</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-           <p>Still have more questions? Read our <a href="/faq.html">FAQ here</a>. Or contact us directly at <a href="mailto:info@everafter.pics">info@everafter.pics</a></p>
- 
-        </div>
-        <hr class="style17"><br>
-        <a href="/signup" class="ieabutton">Sign Up</a> <br><br><br><br>
-        <a href="/login" class="ieabutton">Log in</a> <br><br>
-        
-           <br><br><br><br>
-     <p class="tinytext">Copyright © 2023 Everafter.pics</p>
-     <a href="/loggingout">Logout</a> || <a href="/privacy.html">Privacy</a> || <a href="/terms.html">Terms</a> || <a href="/faq.html">F.A.Q.</a>
-     <br><br>
-  
+        <section class="cta section">
+          <div class="container">
+            <div class="cta-inner section-inner">
+              <h3 class="section-title mt-0">
+                Still not convinced? Try a completely free demo.
+              </h3>
+              <div class="cta-cta">
+                <a
+                  class="button button-primary button-wide-mobile"
+                  href="/logindemo"
+                  >FREE DEMO</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container">
+          <div class="site-footer-inner">
+            <div class="brand footer-brand">
+              <a href="#">
+                <img
+                  class="footer-logo-image"
+                  src="/images/ea_large_logo_full_blk3.png"
+                  alt="Logo"
+                />
+              </a>
+            </div>
+            <ul class="footer-links list-reset">
+              <li>
+                <a href="terms.html">Terms</a>
+              </li>
+              <li>
+                <a href="privacy.html">Privacy</a>
+              </li>
+              <li>
+                <a href="faq.html">FAQ's</a>
+              </li>
+              <li>
+                <a href="/login">Log in</a>
+              </li>
+            </ul>
+            <ul class="footer-social-links list-reset">
+              <li>
+                <a href="#">
+                  <span class="screen-reader-text">Facebook</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.023 16L6 9H3V6h3V4c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V6H13l-1 3H9.28v7H6.023z"
+                      fill="#0270D7"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="screen-reader-text">Twitter</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 3c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4C.7 7.7 1.8 9 3.3 9.3c-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H0c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4C15 4.3 15.6 3.7 16 3z"
+                      fill="#0270D7"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="screen-reader-text">Google</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.9 7v2.4H12c-.2 1-1.2 3-4 3-2.4 0-4.3-2-4.3-4.4 0-2.4 2-4.4 4.3-4.4 1.4 0 2.3.6 2.8 1.1l1.9-1.8C11.5 1.7 9.9 1 8 1 4.1 1 1 4.1 1 8s3.1 7 7 7c4 0 6.7-2.8 6.7-6.8 0-.5 0-.8-.1-1.2H7.9z"
+                      fill="#0270D7"
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+            <div class="footer-copyright">
+              &copy; 2023 Everafter, all rights reserved
             </div>
           </div>
         </div>
       </footer>
-</body>
+    </div>
+
+    <script src="/js/main.min.js"></script>
+  </body>
 </html>

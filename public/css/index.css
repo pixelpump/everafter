@@ -116,7 +116,7 @@ header .vert-text .scroll-down::before {
     background-clip: text;
 }
 #contacts:hover{
-	background: #fa337f53;
+	background: #2d0615c3;
 	color: #fff;
 }
 #contacts .social {
