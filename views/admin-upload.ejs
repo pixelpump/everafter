@@ -1,142 +1,201 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Everafter Admin Uploader</title>
-    <meta name="description" content="An app for real-time photo sharing at weddings and events.">
-    <meta name="keywords" content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography">
-    <meta name="description" content="Everafter" />
+    <meta
+      name="description"
+      content="An elegant app for real-time photo sharing at weddings and events."
+    />
+    <meta
+      name="keywords"
+      content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography"
+    />
+    <meta
+      property="og:title"
+      content="Everafter: Elegant Real-Time Photo Sharing for Events"
+    />
+    <meta
+      property="og:description"
+      content="An app for real-time photo sharing at weddings and events. Take complete control of your event photos."
+    />
+    <meta
+      property="og:image"
+      content="https://everafter.pics/images/everafter_opengraph.png"
+    />
+    <meta property="og:url" content="https://everafter.pics" />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script
+      src="https://kit.fontawesome.com/c72e3efc2c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="maincontainer">
-        
-        <a href="/dashboard_paid"><img class="logo" src="/images/ea_large_logo_full_blk.png"></a>
+      <a href="/dashboard_paid"
+        ><img class="logo" src="/images/ea_large_logo_full_blk.png"
+      /></a>
 
-        <img id="moderationImage" src="/images/moderation_notice_sm.png" alt="Moderation is on" style="display:none;">
-        <br>
-        <div id="thumbnails">
-            <!-- Thumbnails will appear here -->
-        </div>
-        <div id="successMessage" style="display:none;">
-            Thanks! Successful Upload!
-       </div>
-<br>
-        <form id='uploadForm' action='/admin-upload/<%= userId %>/submit' method='post' enctype="multipart/form-data">
-            <label for="sampleFile" class="eabutton">
-               Select an Image for Upload
-            </label>
-            <input class="eabutton" type="file" id="sampleFile" name="sampleFile" multiple style="display:none;" />
-            <br><br><p class="eabuttonsubtext">Click the button above to select an image file to upload to the big screen, and also to the host for safekeeping.</p>
-        </form><br><br>
+      <img
+        id="moderationImage"
+        src="/images/moderation_notice_sm.png"
+        alt="Moderation is on"
+        style="display: none"
+      />
+      <br />
+      <div id="thumbnails">
+        <!-- Thumbnails will appear here -->
+      </div>
+      <div id="successMessage" style="display: none">
+        Thanks! Successful Upload!
+      </div>
+      <br />
+      <div class="uploadparentcontainer">
+        <form
+          id="uploadForm"
+          action="/admin-upload/<%= userId %>/submit"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <label for="sampleFile" class="eabutton">
+            Select an Image for Upload
+          </label>
+          <input
+            class="eabutton"
+            type="file"
+            id="sampleFile"
+            name="sampleFile"
+            multiple
+            style="display: none"
+          />
+          <br /><br />
+          <p class="eabuttonsubtext">
+            Click the button above to select an image file to upload to the big
+            screen, and also to the host for safekeeping.
+          </p>
+        </form>
+      </div>
+      <br /><br />
 
+      <div id="moderationButton" style="display: none">
+        <a href="/moderation/<%= userId %>" target="_blank">
+          <button class="eamodbutton">Moderate Uploaded Images</button>
+        </a>
+      </div>
+      <br /><br />
 
-        <div id="moderationButton" style="display:none;">
-            <a href="/moderation/<%= userId %>" target="_blank">
-                <button class="eamodbutton">Moderate Uploaded Images</button>
-            </a>
-        </div> <br><br>
+      <a
+        href="/livefeed_public/<%= userId %>"
+        class="eabutton"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Live</a
+      >
+      <p class="eabuttonsubtext">
+        Click above to get the live feed of what everone is uploading right here
+        on your device.
+      </p>
+      <br />
 
-        <a href="/livefeed_public/<%= userId %>" class="eabutton" target="_blank" rel="noopener noreferrer"> Live</a> 
-        <p class="eabuttonsubtext">Click above to get the live feed of what everone is uploading right here on your device.</p> <br>
-
-        <a href="/dashboard_paid" class="eabutton">Back to your Dashboard</a> 
-        <p class="eabuttonsubtext">Click above to go back to your admin dashboard.</p>
+      <a href="/dashboard_paid" class="eabutton">Back to your Dashboard</a>
+      <p class="eabuttonsubtext">
+        Click above to go back to your admin dashboard.
+      </p>
     </div>
 
-
-
     <script>
+      /////////////////////////////////////IMAGE UPLOAD/////////////////////////////////////////
+      document.addEventListener("DOMContentLoaded", function () {
+        const uploadForm = document.getElementById("uploadForm");
+        const successMessage = document.getElementById("successMessage");
+        const thumbnails = document.getElementById("thumbnails");
 
+        // Make sure userId is defined
+        const userId = "<%= typeof userId !== 'undefined' ? userId : '' %>";
+        if (!userId) {
+          console.error("userId is not defined");
+          return;
+        }
 
-/////////////////////////////////////IMAGE UPLOAD/////////////////////////////////////////
-        document.addEventListener('DOMContentLoaded', function() {
-            const uploadForm = document.getElementById('uploadForm');
-            const successMessage = document.getElementById('successMessage');
-            const thumbnails = document.getElementById('thumbnails');
-    
-            // Make sure userId is defined
-            const userId = "<%= typeof userId !== 'undefined' ? userId : '' %>";
-            if (!userId) {
-                console.error('userId is not defined');
-                return;
-            }
-    
-            uploadForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-    
-                const formData = new FormData(uploadForm);
-    
-                fetch(`/admin-upload/${userId}/submit`, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Show the success message
-                    successMessage.style.display = 'block'; 
-    
-                    // Clear previous thumbnails
-                    thumbnails.innerHTML = '';
-    
-                   // Show thumbnails for uploaded images
-                    data.files.forEach(file => {
-                        const img = document.createElement('img');
-                        img.src = file.path;  // Using file.path directly
-                        img.width = 150;
-                        img.style.padding = '5px';  // Add padding of 10 pixels
-                        thumbnails.appendChild(img);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            });
+        uploadForm.addEventListener("submit", function (event) {
+          event.preventDefault();
 
-            // Get the file input element
-            const fileInput = document.getElementById('sampleFile');
+          const formData = new FormData(uploadForm);
 
-            // Listen for changes to the file input element
-            fileInput.addEventListener('change', function() {
-                // Trigger the form submit
-                uploadForm.dispatchEvent(new Event('submit'));
+          fetch(`/admin-upload/${userId}/submit`, {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Show the success message
+              successMessage.style.display = "block";
+
+              // Clear previous thumbnails
+              thumbnails.innerHTML = "";
+
+              // Show thumbnails for uploaded images
+              data.files.forEach((file) => {
+                const img = document.createElement("img");
+                img.src = file.path; // Using file.path directly
+                img.width = 150;
+                img.style.padding = "5px"; // Add padding of 10 pixels
+                thumbnails.appendChild(img);
+              });
+            })
+            .catch((error) => {
+              console.error("Error:", error);
             });
         });
+
+        // Get the file input element
+        const fileInput = document.getElementById("sampleFile");
+
+        // Listen for changes to the file input element
+        fileInput.addEventListener("change", function () {
+          // Trigger the form submit
+          uploadForm.dispatchEvent(new Event("submit"));
+        });
+      });
 
       /////////////////////////////END IMAGE UPLOAD //////////////////////////////////////////////////
 
       async function checkModerationStatus() {
-    const username = '<%= userId %>';  // Assume userId is the username; adjust if necessary
-    try {
-        const response = await fetch(`/checkModerationStatus/${username}`);
-        const data = await response.json();
-        const moderationButton = document.getElementById('moderationButton');
-        const moderationImage = document.getElementById('moderationImage');
-        
-        if(data.moderation) {
-            moderationButton.style.display = 'block';
-            moderationImage.style.display = 'block';
-        } else {
-            moderationButton.style.display = 'none';
-            moderationImage.style.display = 'none';
+        const username = "<%= userId %>"; // Assume userId is the username; adjust if necessary
+        try {
+          const response = await fetch(`/checkModerationStatus/${username}`);
+          const data = await response.json();
+          const moderationButton = document.getElementById("moderationButton");
+          const moderationImage = document.getElementById("moderationImage");
+
+          if (data.moderation) {
+            moderationButton.style.display = "block";
+            moderationImage.style.display = "block";
+          } else {
+            moderationButton.style.display = "none";
+            moderationImage.style.display = "none";
+          }
+        } catch (error) {
+          console.error("Error fetching moderation status:", error);
         }
+      }
 
-    } catch (error) {
-        console.error('Error fetching moderation status:', error);
-    }
-}
-
-// Call the function when the document is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    checkModerationStatus();
-    // ... rest of your DOMContentLoaded handler ...
-});
-
+      // Call the function when the document is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        checkModerationStatus();
+        // ... rest of your DOMContentLoaded handler ...
+      });
     </script>
-</body>
+  </body>
 </html>

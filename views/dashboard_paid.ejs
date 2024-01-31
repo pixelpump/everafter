@@ -10,9 +10,7 @@
     <meta property="og:url" content="https://everafter.pics">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-    <!--<script src="/js/ea.js"></script> -->
+    <link rel="stylesheet" href="/css/paiddashboardstyles.css">
     <script src="https://kit.fontawesome.com/c72e3efc2c.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,193 +55,6 @@
   
 
 </script>
-
-<style>
-.w3-image{max-width:100%;height:auto}img{vertical-align:middle}a{color:inherit}
-.w3-modal{z-index:3;display:none;padding-top:100px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.4)}
-.w3-modal-content{margin:auto;background-color:#fff;position:relative;padding:0;outline:0;width:600px}
-.w3-display-topleft{position:absolute;left:0;top:0}.w3-display-topright{position:absolute;right:0;top:0}
-.w3-display-bottomleft{position:absolute;left:0;bottom:0}.w3-display-bottomright{position:absolute;right:0;bottom:0}
-.w3-display-middle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%)}
-.w3-display-left{position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)}
-.w3-display-right{position:absolute;top:50%;right:0%;transform:translate(0%,-50%);-ms-transform:translate(0%,-50%)}
-.w3-display-topmiddle{position:absolute;left:50%;top:0;transform:translate(-50%,0%);-ms-transform:translate(-50%,0%)}
-.w3-display-bottommiddle{position:absolute;left:50%;bottom:0;transform:translate(-50%,0%);-ms-transform:translate(-50%,0%)}
-.w3-display-container:hover .w3-display-hover{display:block}.w3-display-container:hover span.w3-display-hover{display:inline-block}.w3-display-hover{display:none}
-.w3-display-position{position:absolute}
-    /* The container */
-    .livecheck {
-  /*display: block;*/
-  position: relative;
-  padding-left: 35px;
-  padding-top: 5px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: .7em;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  transition: all .3s;
-}
-
-/* Hide the browser's default checkbox */
-.livecheck input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  top: 7px;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #72122C;
-  border: 0.25em solid currentColor;
-  border-radius: 0.15em;
-  transition: all .3s;
-}
-
-/* On mouse-over, add a grey background color */
-.livecheck:hover input ~ .checkmark {
-  background-color: #189136;
-  transition: all .3s;
-}
-
-/* When the checkbox is checked, add a blue background */
-.livecheck input:checked ~ .checkmark {
-  background-color: green;
-  transition: all .3s;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.livecheck input:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark/indicator */
-.livecheck .checkmark:after {
-  left: 8px;
-  top: 4px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  transition: all .3s;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #27dc0f;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #08973a;
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-.slidersidetext {
-
-  padding-top: 5px;
-  margin-bottom: 12px;
-  /* max-width: 300px; */
-  cursor: pointer;
-  /* font-size: .7em; */
-
-}
-#setupmenuopenclosed {
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    /* overflow: hidden; */
-    max-height: 0; /* This will initially hide the content */
-    opacity: 0;
-    text-align: center; 
-    margin-bottom: 50px;
-    max-width: 275px;
-    z-index: -1;
-}
-
-#OKGOmenuopenclosed {
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    overflow: hidden;
-    max-height: 0; /* This will initially hide the content */
-    opacity: 0;
-    text-align: center;
-    padding-bottom: 50px;
-}
-#setupFunction {
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    overflow: hidden;
-    max-height: 0; /* This will initially hide the content */
-    opacity: 0;
-}
-.dashboardtext {
-  max-width: 300px;
-}
-  </style>
-
-
-
 </head>
 <body>
  
@@ -271,11 +82,29 @@ input:checked + .slider:before {
 
 <div id="setupmenuopenclosed" >
 
-  <!-- livefeed checkbox  -->
-<label for="liveFeedToggle" class="livecheck">
+  <!-- LIVEFEED BUTTON STARTS HERE -->
+  <a href="/livefeed_public/<%= user.username %>" target="_blank"> 
+    <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)"><i class="fa-solid fa-eye" style="color: #ffffff;"></i> Public Live Feed </p>
+    </a>
+<!-- LIVEFEED BUTTON ENDS HERE -->    
+ <!-- DOWNLOAD BUTTON STARTS HERE -->
+<button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i><i class="fa-solid fa-qrcode" style="color: #ffffff;"></i> Your Event QR Code </button>
+<br><br><br><br>
+<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file"><i class="fa-solid fa-circle-down" style="color: #ffffff;"></i> One Click Download </a> 
+<br><br> <br>
+<!-- DOWNLOAD BUTTON ENDS HERE -->
+
+  <!-- livefeed checkbox 
+<label for="liveFeedToggle" class="switch">
 <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
-<span class="checkmark"></span>
-</label>
+<span class="checkmark">check</span>
+</label> -->
+
+<label class="switch"> 
+  <input type="checkbox" id="liveFeedToggle" <%= liveFeedEnabled ? "checked" : "" %>>
+  <span class="slider round"></span>
+  </label>
+
 <!-- End livefeed checkbox  -->
 <br><br><span class="dashboardtext">Toggle the switch above to turn the "View Live Feed" Button on (green) or off for all Guests. <br><br>
   <!-- Turn this off (not green) if you want to keep everything really private. Guests won't get a link to the live feed from  
@@ -305,7 +134,7 @@ is set to "on" you won't see any images in the live feed until you moderate them
 
 
 
-<br>
+<br><br><br><br>
 
 <!-- <br><br>
 <a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file">One Click Download </a>  -->
@@ -329,17 +158,17 @@ is set to "on" you won't see any images in the live feed until you moderate them
 <!-- UPLOAD IMAGES ENDS HERE -->
 
 <!-- LIVEFEED BUTTON STARTS HERE -->
-    <a href="/livefeed_public/<%= user.username %>" target="_blank"> 
+    <!-- <a href="/livefeed_public/<%= user.username %>" target="_blank"> 
       <p class="eabutton" title="(this is what you can send to the big screen. it opens here in a new window)"><i class="fa-solid fa-eye" style="color: #ffffff;"></i> View the Live Feed </p>
-      </a>
+      </a> -->
 <!-- LIVEFEED BUTTON ENDS HERE -->    
   
    
 <br><br>
 <!-- Trigger/Open the QR Modal -->
-<button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i><i class="fa-solid fa-qrcode" style="color: #ffffff;"></i> Your Event QR Code </button>
+<!-- <button onclick="document.getElementById('id01').style.display='block'"class="eabutton" title="(for easy sharing the upload link with your guests)"></i><i class="fa-solid fa-qrcode" style="color: #ffffff;"></i> Your Event QR Code </button>
 <br><br>
-<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file"><i class="fa-solid fa-circle-down" style="color: #ffffff;"></i> One Click Download </a> 
+<a href="/download/<%= user.username %>"" class="eabutton" title="Grab every image from your event in a single zip file"><i class="fa-solid fa-circle-down" style="color: #ffffff;"></i> One Click Download </a>  -->
 
 <!-- The QR Modal -->
 <div id="id01" class="w3-modal">
@@ -370,8 +199,10 @@ class="w3-button w3-display-topright">&times;</span>
           <h3>Everafter is really simple</h3>
           <p>Upload a file and it becomes viewable on your own custom live feed. That's really the main bit. </p> 
           <p>To upload an image, guests don't even need to be logged in, they just need a simple web link.
-            They can get that link easily by either scanning the QR code that is generated for you when you click on the QR Code button in the dashboard (or the one we just generated for you below), or they can just type it out as 
-            they are usually pretty simple, it will be something like everafter.pics/livefeed/yourusername. When guests visit that link, they are presented with a nice little interface where they can immediately start uploading files.
+            They can get that link easily by either scanning the QR code that is generated for you when you
+             click on the QR Code button in the dashboard (or the one we just generated for you below), or they can just type it out as 
+            they are usually pretty simple, it will be something like everafter.pics/livefeed/yourusername.
+             When guests visit that link, they are presented with a nice little interface where they can immediately start uploading files.
             There's also a handy link for them to view the live feed that they can view directly on their own device.</p>
 
             <img src="<%= qrCodeDataURL %>" alt="Your QR Code" class="smallqr"><br><br>
@@ -379,19 +210,25 @@ class="w3-button w3-display-topright">&times;</span>
 
 
           <h3>You are in control</h3>
-          <p>The primary account possesses moderator functions. Essentially, this grants the ability to oversee uploads and, if necessary, delete files. To moderate images,
-             the user should click the toolbar <i class="fa-solid fa-gear" style="color: #96969e;"></i> located at the top right corner of the Live Feed page and then select the <i class="fa-solid fa-image" style="color: #96969e;"></i> moderation icon. This action will display a gallery
-              of all uploaded images. Each image will feature a <i class="fa-solid fa-delete-left" style="color: #d90d0d;"></i> red delete icon in its top right corner. A single click on this red icon will remove the image from the Live
-               Feed. Subsequently, the removed image will be archived in a "deleted" folder, which will be incorporated into the one-click downloadable zip file after the
-                event concludes."</p>
+          <p>The primary account possesses moderator functions. Essentially,
+             this grants the ability to oversee uploads and, if necessary, remove those pictures deemed to be inappropriate. To enable 
+            image moderation, select "settings" from your main dashboard, then toggle the grey switch, it will then turn green indicating that image moderation is enabled.</p>
 
+            <img src="/images/moderation_turnon.png"alt="using the moderation functions image" class="smallqr"> <br><br>
 
-          
+            <p>You will now see a bright green button labeled "Moderate Uploaded Images" in your dashboard. To moderate images click that button and a new tab will open presenting 
+             the moderation panel.</p>
+
 
             <img src="/images/help_moderate.png"alt="using the moderation functions image" class="smallqr"> <br><br>
+            <p>To remove an image from the live feed simply click the red thumbs down image in the top right corner of the image you'd like to remove. To reverse this process, click the green thumbs up.
+            Note! - When image moderation is on, no images will show up in the main public feed until they have been given the green thumbs up. If you decide to turn off 
+            moderation after images have been already uploaded with the moderation feature on, you will still need to go back and approve those images for them to be seen in the main feed. 
+            </p>
           
             <h3>You get the goods</h3>
-            <p>When the event is over, the event host can download every file that was shared by guests in one convenient zip file. Archive it for saffety, or because you aren't scraping images from some social media platform, for printing.
+            <p>When the event is over, the event host can download every file that was shared by guests in one convenient
+               zip file. Archive it for safety, or because you aren't scraping images from some social media platform, for printing.
               <br><br><br><br>
              <p class="eacenter">Still have questions? Read our <a href="/faq.html"target="_blank">F.A.Q. here </a>, or contact us at <a href="mailto:customersupport@everafter.pics"target="_blank">  customersupport@everafter.pics</a></p>  
           </div>
@@ -420,7 +257,7 @@ class="w3-button w3-display-topright">&times;</span>
 function setupFunction() {
     var x = document.getElementById("setupmenuopenclosed");
     if (x.style.maxHeight === "0px" || x.style.maxHeight === '') {
-        x.style.maxHeight = "500px";  // or whatever maximum height you expect the content to have
+        x.style.maxHeight = "600px";  // or whatever maximum height you expect the content to have
         x.style.opacity = "1";
     } else {
         x.style.maxHeight = "0px";

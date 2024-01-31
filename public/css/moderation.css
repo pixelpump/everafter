@@ -76,12 +76,13 @@ body {
 
 @media screen and (max-width: 600px) {
   .sidemenuwrapper {
-    top: 222px;
+    top: 6px;
+    right: 6px;
   }
 }
 
 #sidemenu {
-  position: absolute;
+  /* position: absolute; */
   top: 45px;
   right: 43px;
   max-width: 230px;

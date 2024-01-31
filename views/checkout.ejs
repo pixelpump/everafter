@@ -1,92 +1,121 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>Everafter payment</title>
-    <meta name="description" content="An app for real-time photo sharing at weddings and events.">
-    <meta name="keywords" content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography">
-  
+    <meta
+      name="description"
+      content="An app for real-time photo sharing at weddings and events."
+    />
+    <meta
+      name="keywords"
+      content="Event photograph sharing, Photo sharing app, Event planning, Wedding photography,Wedding TV, Wedding screen, TV at wedding, Party photography, Concert photography, Event photo upload, Private photo sharing, Event slideshow, Real-time photo sharing, Best photo sharing app for events, How to collect wedding photos from guests, Real-time slideshow for parties, Secure photo upload for events, Event photography tips and tricks, Crowd-sourced event photography, Photo sharing solutions for event planners, Download event photos in bulk, Private directory for event photos, Share full-resolution photos online, Corporate event photo sharing, Festival photography app, Art gallery opening photography, Charity event photo collection, School event photography, Sports event photo sharing, Family reunion photo app, Church event photography, Trade show photo upload, Virtual event photography"
+    />
+
     <meta name="description" content="Everafter" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/checkout.css">
-    <link rel="stylesheet" href="/css/w3.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/checkout.css" />
+    <link rel="stylesheet" href="/css/w3.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://js.stripe.com/v3/"></script>
     <script src="/js/checkout.js" defer></script>
 
-
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMNZYYZD42"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FMNZYYZD42"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  gtag('config', 'G-FMNZYYZD42');
-</script>
+      gtag("config", "G-FMNZYYZD42");
+    </script>
 
-<script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "j1edop3vjd");
-</script>
-   
-</head>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "j1edop3vjd");
+    </script>
+  </head>
 
-
-
-<body>
-    
+  <body>
     <div class="checkoutcontainer">
-        
-        <!-- <a href="./"><img class="productimage" src="/images/ea_large_logo_full_blk.png"></a> -->
-    <!--<h1>Everafter Payment</h1> -->
+      <!-- <a href="./"><img class="productimage" src="/images/ea_large_logo_full_blk.png"></a> -->
+      <!--<h1>Everafter Payment</h1> -->
 
-    <section>
-      <div class="product">
-        <a href="./"><img class= "productimage" src="/images/el_wide_logo_full_blk.png" alt="Everafter Image logo" /></a>
-        <div class="chkdescription">
-          <h4>One Everafter Event</h4>
-          <p>One Payment, Non Recurring.</p>
-          <h5>$35.00 USD</h5>
-          <img class= "stripepowered" src="/images/stripepowered.png" alt="Stripe logo" />
-          <!-- <p class="signup_info">Please enter your credit card information below and then click "Pay Now" to purchase Everafter for one event.</p> -->
+      <section>
+        <div class="product">
+          <a href="./"
+            ><img
+              class="productimage"
+              src="/images/el_wide_logo_full_blk.png"
+              alt="Everafter Image logo"
+          /></a>
+          <div class="chkdescription">
+            <h4>One Everafter Event</h4>
+            <p>One Payment, Non Recurring.</p>
+            <h5>$35.00 USD</h5>
+
+            <a href="<%= qrCodeDataURL %>" download
+              ><img
+                class="qrcheckout"
+                src="<%= qrCodeDataURL %>"
+                alt="Your QR Code"
+                class="w3-image eacenter"
+            /></a>
+            <br />
+            <img
+              class="stripepowered"
+              src="/images/stripepowered.png"
+              alt="Stripe logo"
+            />
+            <!-- <p class="signup_info">Please enter your credit card information below and then click "Pay Now" to purchase Everafter for one event.</p> -->
+          </div>
         </div>
+        <!-- Display a payment form -->
+        <form id="payment-form">
+          <div id="link-authentication-element">
+            <!--Stripe.js injects the Link Authentication Element-->
+          </div>
+          <div id="payment-element">
+            <!--Stripe.js injects the Payment Element-->
+          </div>
+          <button id="submit">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Pay now</span>
+          </button>
+          <div id="payment-message" class="hidden"></div>
+        </form>
+      </section>
+
+      <div id="messages" role="alert" style="display: none"></div>
+      <br />
+
+      <div class="checkout_notes">
+        Already paid? No worries, you might just have to
+        <a href="/login"> login again.</a>
       </div>
-      <!-- Display a payment form -->
-    <form id="payment-form">
-      <div id="link-authentication-element">
-        <!--Stripe.js injects the Link Authentication Element-->
-      </div>
-      <div id="payment-element">
-        <!--Stripe.js injects the Payment Element-->
-      </div>
-      <button id="submit">
-        <div class="spinner hidden" id="spinner"></div>
-        <span id="button-text">Pay now</span>
-      </button>
-      <div id="payment-message" class="hidden"></div>
-    </form>
-    </section>
-
-
-    
-
-
-
-  <div id="messages" role="alert" style="display: none;"></div>
-  <br>
-
-<div class="checkout_notes">Already paid? No worries, you might just have to <a href="/login"> login again.</a></div>
-<br><br>
-</div>
-
-
-</body>
+      <br /><br />
+    </div>
+  </body>
 </html>

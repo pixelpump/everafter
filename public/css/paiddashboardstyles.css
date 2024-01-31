@@ -1,0 +1,265 @@
+.w3-image {
+  max-width: 100%;
+  height: auto;
+}
+img {
+  vertical-align: middle;
+}
+a {
+  color: inherit;
+}
+.w3-modal {
+  z-index: 3;
+  display: none;
+  padding-top: 100px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.w3-modal-content {
+  margin: auto;
+  background-color: #fff;
+  position: relative;
+  padding: 0;
+  outline: 0;
+  width: 600px;
+}
+.w3-display-topleft {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.w3-display-topright {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.w3-display-bottomleft {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.w3-display-bottomright {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.w3-display-middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+.w3-display-left {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(0%, -50%);
+  -ms-transform: translate(-0%, -50%);
+}
+.w3-display-right {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translate(0%, -50%);
+  -ms-transform: translate(0%, -50%);
+}
+.w3-display-topmiddle {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, 0%);
+}
+.w3-display-bottommiddle {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, 0%);
+}
+.w3-display-container:hover .w3-display-hover {
+  display: block;
+}
+.w3-display-container:hover span.w3-display-hover {
+  display: inline-block;
+}
+.w3-display-hover {
+  display: none;
+}
+.w3-display-position {
+  position: absolute;
+}
+/* The container */
+.livecheck {
+  /*display: block;*/
+  position: relative;
+  padding-left: 35px;
+  padding-top: 5px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 0.7em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all 0.3s;
+}
+
+/* Hide the browser's default checkbox */
+.livecheck input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #72122c;
+  border: 0.25em solid currentColor;
+  border-radius: 0.15em;
+  transition: all 0.3s;
+}
+
+/* On mouse-over, add a grey background color */
+.livecheck:hover input ~ .checkmark {
+  background-color: #189136;
+  transition: all 0.3s;
+}
+
+/* When the checkbox is checked, add a blue background */
+.livecheck input:checked ~ .checkmark {
+  background-color: green;
+  transition: all 0.3s;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.livecheck input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.livecheck .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  transition: all 0.3s;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #27dc0f;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #08973a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.slidersidetext {
+  padding-top: 5px;
+  margin-bottom: 12px;
+  /* max-width: 300px; */
+  cursor: pointer;
+  /* font-size: .7em; */
+}
+#setupmenuopenclosed {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  /* overflow: hidden; */
+  max-height: 0; /* This will initially hide the content */
+  opacity: 0;
+  text-align: center;
+  margin-bottom: 50px;
+  max-width: 275px;
+  z-index: -1;
+}
+
+#OKGOmenuopenclosed {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  overflow: hidden;
+  max-height: 0; /* This will initially hide the content */
+  opacity: 0;
+  text-align: center;
+  padding-bottom: 50px;
+}
+#setupFunction {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  overflow: hidden;
+  max-height: 0; /* This will initially hide the content */
+  opacity: 0;
+}
+.dashboardtext {
+  max-width: 300px;
+}

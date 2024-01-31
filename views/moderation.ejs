@@ -31,7 +31,7 @@
   <div class="sidemenuwrapper">
    <!-- SIDE MENU STARTS-->
    <button onclick="showhidemainmenu()"class="menu-item"title="Toggle this menu"><i class="fa-solid fa-gear" style="color: #f0f0f0;"></i></button>
-  </div>
+  
    <div id="sidemenu">
     <a href="javascript:window.location.href=window.location.href" class="menu-item" title="Refresh all the images"><i class="fa-solid fa-arrows-rotate" style="color: #f0f0f0;"></i></a>
     <!-- <a href="javascript:void(0);" onclick="toggleImageFeed()" class="menu-item" title="Toggle Moderation mode"><i class="fa-solid fa-image" style="color: #f0f0f0;"></i></a> -->
@@ -54,7 +54,7 @@
      
     </div> -->
   </div>
- 
+</div>
 
 
   
@@ -184,7 +184,7 @@ function fetchMainFeedImages() {
   }
 }
 
-function renderImages(data) {
+function renderImages(data) { 
   // Update imageArray for main feed
   imageArray = data.files.filter(file => file.status === 'approved').map(file => file.filename);
   
@@ -452,6 +452,19 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Fetch latest images every 5 seconds

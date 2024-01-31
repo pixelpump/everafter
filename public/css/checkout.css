@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
 }
@@ -141,14 +140,13 @@ button:disabled {
   }
 }
 
-.chkdescription{
-
+.chkdescription {
   padding-top: 12px;
   text-align: center;
 }
 .stripepowered {
   width: 44vw;
-    max-width: 350px;
+  max-width: 350px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -158,3 +156,6 @@ button:disabled {
   }
 }
 
+.qrcheckout {
+  max-width: 100px;
+}
