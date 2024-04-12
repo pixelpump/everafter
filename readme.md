@@ -1,4 +1,4 @@
-Everafter Alfha .001
+Everafter Alfha .002
 
 to do
 
@@ -9,7 +9,7 @@ Add full image moderation - images are queued up until approved.
 
 Intergrate Google OAth?
 
-Owner  gallery - eg:
+Owner gallery - eg:
 https://codepen.io/cameronknight/pen/ExyMeyQ
 
 Image CDN- store images serve reduced images enable full res dload in a zip.
@@ -25,13 +25,10 @@ owner changes livefeed bg color - see https://codepen.io/argyleink/pen/MWZyMXG
 
 VIDEO UPLOADS? e.g. for guests who can't attend.
 
-
-
 DO Root
 CanimLake1967
 aPdxP$^3R!9rPKc
 fH6J5f_jwv+XFA6a
-
 
 pm2 start server.js
 
@@ -47,7 +44,6 @@ pm2 [list|ls|status]
 pm2 monit
 
 as per https://pm2.keymetrics.io/docs/usage/quick-start/
-
 
 sudo systemctl start apache2
 sudo systemctl stop apache2
