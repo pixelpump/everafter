@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Receiver Everafter</title>
+    <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <script>
+      const context = cast.framework.CastReceiverContext.getInstance();
+      const playerManager = context.getPlayerManager();
+
+      context.start();
+
+      playerManager.setMessageInterceptor(
+        cast.framework.messages.MessageType.LOAD,
+        (request) => {
+          if (request.media && request.media.entity) {
+            document.getElementById("image").src = request.media.entity;
+          }
+          return request;
+        }
+      );
+    </script>
+  </head>
+  <body>
+    <img id="image" style="width: 100%; height: 100%" />
+  </body>
+</html>
