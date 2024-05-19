@@ -25,6 +25,34 @@
           autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
         });
       }
+
+      function castTab() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+          navigator.mediaDevices.getDisplayMedia({
+            video: true,
+            audio: true
+          }).then(stream => {
+            const videoTrack = stream.getVideoTracks()[0];
+            const castContext = cast.framework.CastContext.getInstance();
+            const castSession = castContext.getCurrentSession();
+            const mediaInfo = new chrome.cast.media.MediaInfo(URL.createObjectURL(stream), 'video/mp4');
+
+            const request = new chrome.cast.media.LoadRequest(mediaInfo);
+            castSession.loadMedia(request).then(
+              () => {
+                console.log('Tab casting initiated');
+              },
+              errorCode => {
+                console.log('Error code: ' + errorCode);
+              }
+            );
+          }).catch(error => {
+            console.error('Error accessing display media:', error);
+          });
+        } else {
+          alert('Display media not supported');
+        }
+      }
     </script>
 
 </head>
@@ -40,37 +68,7 @@ function showhidemainmenu() {
   }
 }
 
-function castTab() {
-  if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
-    navigator.mediaDevices.getDisplayMedia({
-      video: {
-        cursor: "always"
-      },
-      audio: false
-    }).then(stream => {
-      let videoTrack = stream.getVideoTracks()[0];
-      let mediaStream = new MediaStream([videoTrack]);
 
-      const castContext = cast.framework.CastContext.getInstance();
-      const castSession = castContext.getCurrentSession();
-      const mediaInfo = new chrome.cast.media.MediaInfo('', 'video/x-matroska');
-
-      mediaInfo.streamType = chrome.cast.media.StreamType.LIVE;
-      mediaInfo.contentUrl = URL.createObjectURL(mediaStream);
-
-      const request = new chrome.cast.media.LoadRequest(mediaInfo);
-      castSession.loadMedia(request).then(() => {
-        console.log('Tab casting initiated');
-      }).catch(error => {
-        console.error('Error:', error);
-      });
-    }).catch(error => {
-      console.error('Error accessing display media:', error);
-    });
-  } else {
-    alert('Display media not supported');
-  }
-}
 </script>
 
 <body> 
