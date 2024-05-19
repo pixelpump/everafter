@@ -39,6 +39,38 @@ function showhidemainmenu() {
     x.style.display = "none";
   }
 }
+
+function castTab() {
+  if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+    navigator.mediaDevices.getDisplayMedia({
+      video: {
+        cursor: "always"
+      },
+      audio: false
+    }).then(stream => {
+      let videoTrack = stream.getVideoTracks()[0];
+      let mediaStream = new MediaStream([videoTrack]);
+
+      const castContext = cast.framework.CastContext.getInstance();
+      const castSession = castContext.getCurrentSession();
+      const mediaInfo = new chrome.cast.media.MediaInfo('', 'video/x-matroska');
+
+      mediaInfo.streamType = chrome.cast.media.StreamType.LIVE;
+      mediaInfo.contentUrl = URL.createObjectURL(mediaStream);
+
+      const request = new chrome.cast.media.LoadRequest(mediaInfo);
+      castSession.loadMedia(request).then(() => {
+        console.log('Tab casting initiated');
+      }).catch(error => {
+        console.error('Error:', error);
+      });
+    }).catch(error => {
+      console.error('Error accessing display media:', error);
+    });
+  } else {
+    alert('Display media not supported');
+  }
+}
 </script>
 
 <body> 
