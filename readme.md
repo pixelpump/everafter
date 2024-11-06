@@ -1,50 +1,29 @@
-Everafter Alfha .002
+# Everafter
 
-to do
+Everafter is a web application designed to facilitate image uploads and gallery management, offering a dynamic platform for users to share and interact with visual content. Currently in its alpha version 0.001, the project is under active development, with several planned features aimed at enhancing user experience and functionality.
 
-Ad vibrate on new image upload https://codepen.io/eDroid/pen/Vzmvvo
+## Table of Contents
 
-Add option to disable the Slideshow entirely.
-Add full image moderation - images are queued up until approved.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Planned Features](#planned-features)
+- [Contributing](#contributing)
+- [License](#license)
 
-Intergrate Google OAth?
+## Features
 
-Owner gallery - eg:
-https://codepen.io/cameronknight/pen/ExyMeyQ
+As of the current alpha release, Everafter includes the following features:
 
-Image CDN- store images serve reduced images enable full res dload in a zip.
+- **Image Uploads**: Users can upload images to the platform, contributing to a shared gallery.
 
-upload button animation eg:
-https://codepen.io/coopergoeke/pen/wvaYMbJ
+- **Live Feed**: A real-time feed displays newly uploaded images, fostering community engagement.
 
-moderation of uploads for the live feed.
+## Installation
 
-user add comment to uploaded image
+To set up Everafter locally, follow these steps:
 
-owner changes livefeed bg color - see https://codepen.io/argyleink/pen/MWZyMXG
+1. **Clone the Repository**:
 
-VIDEO UPLOADS? e.g. for guests who can't attend.
-
-DO Root
-CanimLake1967
-aPdxP$^3R!9rPKc
-fH6J5f_jwv+XFA6a
-
-pm2 start server.js
-
-$ pm2 restart app_name
-$ pm2 reload app_name
-$ pm2 stop app_name
-$ pm2 delete app_name
-
-pm2 logs
-
-pm2 [list|ls|status]
-
-pm2 monit
-
-as per https://pm2.keymetrics.io/docs/usage/quick-start/
-
-sudo systemctl start apache2
-sudo systemctl stop apache2
-sudo systemctl restart apache2ls
+   ```bash
+   git clone https://github.com/pixelpump/everafter.git
