@@ -1,7 +1,6 @@
 # Everafter
 
-Everafter is a web application designed to facilitate image uploads and gallery management, offering a dynamic platform for users to share and interact with visual content. Currently in its alpha version 0.001, the project is under active development, with several planned features aimed at enhancing user experience and functionality.
-
+Everafter is a web application designed to facilitate image uploads and gallery management, offering a dynamic platform for users to share and interact with visual content. It was intended as a method for event coordinators to gather imagery shot at events from attendees.
 ## Table of Contents
 
 - [Features](#features)
