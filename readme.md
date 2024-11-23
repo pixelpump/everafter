@@ -1,4 +1,4 @@
-# Everafter
+# Everafter .01
 
 Everafter is a web application designed to facilitate image uploads and gallery management, offering a dynamic platform for users to share and interact with visual content. Currently in its alpha version 0.001, the project is under active development, with several planned features aimed at enhancing user experience and functionality.
 ![Alt text](/ea_large_logo_full_blk.png?raw=true "Optional Title")
