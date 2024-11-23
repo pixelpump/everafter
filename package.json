@@ -26,5 +26,8 @@
     "qrcode": "^1.5.3",
     "rimraf": "^5.0.1",
     "stripe": "^13.4.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9"
   }
 }
